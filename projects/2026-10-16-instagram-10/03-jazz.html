@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>03 — Джаз</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  :root { --paper: #f0e9dc; --ink: #141414; --red: #d8392b; --soft: #6f6a62; }
+  body, .canvas { background: var(--paper); color: var(--ink); }
+  svg { position: absolute; inset: 0; }
+  .meta {
+    position: absolute; top: 64px; left: 80px; right: 80px;
+    display: flex; justify-content: space-between;
+    font: 400 19px/1 'IBM Plex Mono'; letter-spacing: .14em; text-transform: uppercase; color: var(--soft);
+  }
+  .meta b { font-weight: 700; color: var(--red); letter-spacing: .04em; }
+  h1 {
+    position: absolute; left: 0; right: 0; top: 944px; text-align: center;
+    font: 900 214px/1 'Unbounded'; letter-spacing: -0.035em;
+  }
+  .data {
+    position: absolute; left: 80px; right: 80px; bottom: 72px;
+    display: flex; justify-content: space-between;
+    font: 400 21px/1 'IBM Plex Mono'; color: var(--soft);
+  }
+  .data b { font-weight: 400; color: var(--ink); }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="meta"><span>Фестиваль · № 03</span><b>5/4</b></div>
+  <h1>ДЖАЗ</h1>
+  <div class="data">
+    <span><b>24—26</b> октября</span>
+    <span>три ночи</span>
+    <span>темп <b>174</b> уд/мин</span>
+  </div>
+</main>
+<script src="gen.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const random = rng(1959);
+  const ink = '#141414';
+  const red = '#d8392b';
+
+  // Партитура: 5 долей × 8 тактов, группировка 3 + 2 (сильные доли — 1-я и 4-я).
+  const cols = 5;
+  const rows = 8;
+  const x0 = 80;
+  const x1 = 1000;
+  const y0 = 150;
+  const rowH = 88;
+  const colW = (x1 - x0) / cols;
+  const D = 60;
+
+  // Тактовые черты и линии строк.
+  for (let r = 0; r < rows; r++) {
+    const cy = y0 + rowH * (r + 0.5);
+    svgEl(svg, 'line', { x1: x0, y1: cy, x2: x1, y2: cy, stroke: ink, 'stroke-width': 0.8, 'stroke-opacity': 0.22 });
+  }
+  for (const x of [x0, x1]) {
+    svgEl(svg, 'line', { x1: x, y1: y0 + 14, x2: x, y2: y0 + rowH * rows - 14, stroke: ink, 'stroke-width': 1.2, 'stroke-opacity': 0.5 });
+  }
+  // Пунктир между группами «3» и «2».
+  const split = x0 + colW * 3;
+  svgEl(svg, 'line', {
+    x1: split, y1: y0 + 14, x2: split, y2: y0 + rowH * rows - 14,
+    stroke: red, 'stroke-width': 1.2, 'stroke-dasharray': '2 7', 'stroke-opacity': 0.8,
+  });
+
+  const shapes = {
+    circle: (g, cx, cy, fill) => svgEl(g, 'circle', { cx, cy, r: D / 2, fill }),
+    half: (g, cx, cy, fill) => svgEl(g, 'path', { d: `M${cx - D / 2},${cy + D / 4} A${D / 2},${D / 2} 0 0 1 ${cx + D / 2},${cy + D / 4} Z`, fill }),
+    bar: (g, cx, cy, fill) => svgEl(g, 'rect', { x: cx - 11, y: cy - D / 2, width: 22, height: D, fill }),
+    short: (g, cx, cy, fill) => svgEl(g, 'rect', { x: cx - 11, y: cy - D / 4, width: 22, height: D / 2, fill }),
+    dot: (g, cx, cy, fill) => svgEl(g, 'circle', { cx, cy, r: 11, fill }),
+    ring: (g, cx, cy, fill) => svgEl(g, 'circle', { cx, cy, r: D / 2 - 2, fill: 'none', stroke: fill, 'stroke-width': 4 }),
+  };
+  const base = [['circle', red], ['bar', ink], ['short', ink], ['half', red], ['dot', ink]];
+  const alternatives = { bar: ['ring', 'dot', 'short'], short: ['bar', 'dot'], dot: ['short', 'ring'] };
+
+  const g = svgEl(svg, 'g');
+  for (let r = 0; r < rows; r++) {
+    const cy = y0 + rowH * (r + 0.5);
+    const resolved = r === 0 || r === rows - 1;
+    for (let c = 0; c < cols; c++) {
+      let [kind, color] = base[c];
+      let shift = 0;
+      if (!resolved) {
+        if (alternatives[kind] && random() < 0.4) kind = alternatives[kind][Math.floor(random() * alternatives[kind].length)];
+        if (random() < 0.28) shift = 34; // синкопа: удар чуть позже доли
+        if (c !== 0 && c !== 3 && random() < 0.12) continue; // пауза
+      }
+      const cx = x0 + colW * (c + 0.5) + shift;
+      shapes[kind](g, cx, cy, color);
+    }
+  }
+
+  // Номера тактов слева от сетки.
+  for (let r = 0; r < rows; r++) {
+    svgEl(svg, 'text', {
+      x: x0 - 14, y: y0 + rowH * (r + 0.5) + 5, 'text-anchor': 'end', fill: '#6f6a62',
+      style: "font: 400 13px 'IBM Plex Mono'",
+    }, String(r + 1));
+  }
+</script>
+</body>
+</html>

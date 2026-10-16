@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>09 — Медленное чтение</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  :root { --desk: #e6ded0; --page: #f8f3ea; --ink: #1d1b18; --red: #a8322a; --soft: #857c6e; }
+  body, .canvas { background: var(--desk); color: var(--ink); }
+  svg { position: absolute; inset: 0; }
+  h1 {
+    position: absolute; left: 0; right: 0; top: 92px; text-align: center;
+    font: 400 84px/1 'Arsenal SC'; letter-spacing: .06em;
+  }
+  .sub {
+    position: absolute; left: 0; right: 0; top: 200px; text-align: center;
+    font: 400 19px/1 'IBM Plex Mono'; letter-spacing: .2em; text-transform: uppercase; color: var(--soft);
+  }
+  .data {
+    position: absolute; left: 80px; right: 80px; bottom: 72px;
+    display: flex; justify-content: space-between;
+    font: 400 20px/1 'IBM Plex Mono'; color: var(--soft);
+  }
+  .data b { font-weight: 400; color: var(--ink); }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <h1>Медленное чтение</h1>
+  <div class="sub">Глава IV</div>
+  <div class="data">
+    <span>с. <b>112—113</b></span>
+    <span><b>20</b> страниц в день</span>
+  </div>
+</main>
+<script src="gen.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const random = rng(1637);
+  const ink = '#1d1b18';
+  const red = '#a8322a';
+  const pageTop = 300;
+  const bottom = 1196;
+  const pages = [[84, 536], [544, 996]];
+
+  const defs = svgEl(svg, 'defs');
+  const shadow = svgEl(defs, 'filter', { id: 'lift', x: '-10%', y: '-10%', width: '120%', height: '120%' });
+  svgEl(shadow, 'feDropShadow', { dx: 0, dy: 8, stdDeviation: 12, 'flood-color': '#5a4a32', 'flood-opacity': 0.18 });
+  const gutter = svgEl(defs, 'linearGradient', { id: 'gutter', x1: '0', x2: '1' });
+  svgEl(gutter, 'stop', { offset: '0', 'stop-color': '#000', 'stop-opacity': 0 });
+  svgEl(gutter, 'stop', { offset: '0.5', 'stop-color': '#3a2a14', 'stop-opacity': 0.16 });
+  svgEl(gutter, 'stop', { offset: '1', 'stop-color': '#000', 'stop-opacity': 0 });
+
+  svgEl(svg, 'rect', { x: pages[0][0], y: pageTop, width: pages[1][1] - pages[0][0], height: bottom - pageTop, fill: '#f8f3ea', filter: 'url(#lift)' });
+  svgEl(svg, 'rect', { x: 540 - 36, y: pageTop, width: 72, height: bottom - pageTop, fill: 'url(#gutter)' });
+
+  const lineH = 25;
+  const barH = 6.5;
+  const gap = 7;
+  let underline = null;
+
+  pages.forEach(([px0, px1], p) => {
+    const inner = 46;
+    const outer = 52;
+    const left = p === 0 ? px0 + outer : px0 + inner;
+    const right = p === 0 ? px1 - inner : px1 - outer;
+    const width = right - left;
+    let y = pageTop + 70;
+    if (p === 0) {
+      // Начало главы: номер и пустая строка.
+      svgEl(svg, 'text', { x: (left + right) / 2, y: y + 30, 'text-anchor': 'middle', fill: ink, style: "font: 400 30px 'Arsenal SC'; letter-spacing: .2em" }, 'IV');
+      y += 92;
+    }
+    let lineInPara = 0;
+    let paraLen = 4 + Math.floor(random() * 6);
+    const lastLine = bottom - 92;
+    let lineNo = 0;
+    while (y <= lastLine) {
+      const indent = lineInPara === 0 ? 30 : 0;
+      const isLast = lineInPara === paraLen - 1;
+      const available = isLast ? width * (0.35 + random() * 0.4) : width - indent;
+      const words = [];
+      let used = 0;
+      while (used < available - 20) {
+        const w = 12 + random() * 58;
+        if (used + w > available) break;
+        words.push(w);
+        used += w + gap;
+      }
+      const totalWords = words.reduce((a, b) => a + b, 0);
+      const spacing = isLast || words.length < 2 ? gap : (available - totalWords) / (words.length - 1);
+      let x = left + indent;
+      words.forEach((w, i) => {
+        svgEl(svg, 'rect', { x: x.toFixed(1), y: (y - barH).toFixed(1), width: w.toFixed(1), height: barH, rx: 1.2, fill: ink, 'fill-opacity': 0.72 });
+        if (p === 1 && lineNo === 27 && (i === 2 || i === 3)) {
+          underline = underline || { x, y };
+          underline.x2 = x + w;
+        }
+        x += w + spacing;
+      });
+      lineInPara++;
+      lineNo++;
+      if (isLast) {
+        lineInPara = 0;
+        paraLen = 4 + Math.floor(random() * 6);
+      }
+      y += lineH;
+    }
+    // Колонцифра.
+    svgEl(svg, 'text', {
+      x: p === 0 ? left : right, y: bottom - 34, 'text-anchor': p === 0 ? 'start' : 'end', fill: '#857c6e',
+      style: "font: 400 15px 'IBM Plex Serif'",
+    }, p === 0 ? '112' : '113');
+  });
+
+  // Пометка читателя: подчёркнутые слова и заметка на нижнем поле.
+  if (underline) {
+    const { x, y, x2 } = underline;
+    svgEl(svg, 'path', {
+      d: `M${x - 2},${y + 5} C${x + 30},${y + 7} ${x2 - 30},${y + 3} ${x2 + 4},${y + 6}`,
+      fill: 'none', stroke: red, 'stroke-width': 2.2, 'stroke-linecap': 'round',
+    });
+    svgEl(svg, 'text', {
+      x: 596, y: bottom - 34, fill: red, transform: `rotate(-3 596 ${bottom - 34})`,
+      style: "font: 400 30px 'Caveat'",
+    }, '…но поле слишком узко');
+  }
+</script>
+</body>
+</html>

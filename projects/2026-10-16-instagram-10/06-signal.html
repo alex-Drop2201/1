@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>06 — Сигнал</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  :root { --void: #07080b; --white: #eef0f4; --dim: #6f7689; --blue: #3d6bff; }
+  body, .canvas { background: var(--void); color: var(--white); }
+  svg { position: absolute; inset: 0; }
+  .meta {
+    position: absolute; top: 64px; left: 80px; right: 80px;
+    display: flex; justify-content: space-between;
+    font: 400 18px/1 'Geist Mono'; letter-spacing: .16em; text-transform: uppercase; color: var(--dim);
+  }
+  h1 {
+    position: absolute; left: 74px; top: 1052px;
+    font: 500 150px/1 'Pixelify Sans'; letter-spacing: .02em;
+  }
+  .data {
+    position: absolute; left: 80px; right: 80px; bottom: 72px;
+    display: flex; justify-content: space-between;
+    font: 400 20px/1 'Geist Mono'; color: var(--dim);
+  }
+  .data b { font-weight: 400; color: var(--white); }
+  .data .blue { color: var(--blue); }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="meta"><span>Эксперимент № 06</span><span>1801</span></div>
+  <h1>СИГНАЛ</h1>
+  <div class="data">
+    <span>источников <b>2</b></span>
+    <span>λ <b>0,5 мкм</b></span>
+    <span>максимум <b class="blue">нулевой</b></span>
+  </div>
+</main>
+<script src="gen.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const s1 = [486, 150];
+  const s2 = [594, 150];
+  const lambda = 24;
+  const step = 24;
+  const x0 = 84;
+  const y0 = 222;
+  const cols = 39;
+  const rows = 34;
+
+  // Источники — два кольца с точкой.
+  for (const [i, [x, y]] of [s1, s2].entries()) {
+    svgEl(svg, 'circle', { cx: x, cy: y, r: 9, fill: 'none', stroke: '#eef0f4', 'stroke-width': 1.4 });
+    svgEl(svg, 'circle', { cx: x, cy: y, r: 2.4, fill: '#eef0f4' });
+    svgEl(svg, 'text', {
+      x: x + (i ? 20 : -20), y: y + 5, 'text-anchor': i ? 'start' : 'end', fill: '#6f7689',
+      style: "font: 400 15px 'Geist Mono'; letter-spacing: .08em",
+    }, i ? 'S2' : 'S1');
+  }
+
+  // Поле точек: радиус пропорционален интенсивности двух интерферирующих волн.
+  const dots = svgEl(svg, 'g');
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const x = x0 + c * step;
+      const y = y0 + r * step;
+      const d1 = Math.hypot(x - s1[0], y - s1[1]);
+      const d2 = Math.hypot(x - s2[0], y - s2[1]);
+      const phase = (Math.PI * (d1 - d2)) / lambda;
+      const intensity = Math.cos(phase) ** 2;
+      const fall = 1 / (1 + ((d1 + d2) / 2 / 1100) ** 2);
+      const radius = 0.7 + 9.2 * intensity * fall;
+      const central = Math.abs(d1 - d2) < lambda * 0.5;
+      svgEl(dots, 'circle', {
+        cx: x, cy: y, r: radius.toFixed(2),
+        fill: central ? '#3d6bff' : '#eef0f4',
+        'fill-opacity': central ? 1 : (0.35 + 0.65 * intensity).toFixed(2),
+      });
+    }
+  }
+</script>
+</body>
+</html>

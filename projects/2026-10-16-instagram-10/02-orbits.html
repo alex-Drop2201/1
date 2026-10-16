@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>02 — Орбиты</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  :root { --night: #0a0f24; --gold: #d9b46a; --pale: #efe6d2; --dim: #8389a8; }
+  body, .canvas { background: radial-gradient(900px 700px at 50% 38%, #141c3d, var(--night) 70%); color: var(--pale); }
+  svg { position: absolute; inset: 0; }
+  .meta {
+    position: absolute; top: 64px; left: 80px; right: 80px;
+    display: flex; justify-content: space-between;
+    font: 500 18px/1 'Jura'; letter-spacing: .2em; text-transform: uppercase; color: var(--dim);
+  }
+  h1 {
+    position: absolute; left: 0; right: 0; top: 860px; text-align: center;
+    font: 400 150px/1 'Poiret One'; letter-spacing: .16em; padding-left: .16em; color: var(--pale);
+  }
+  .legend {
+    position: absolute; left: 150px; right: 150px; top: 1080px;
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 90px; row-gap: 14px;
+    font: 300 21px/1 'Jura'; color: var(--dim);
+  }
+  .legend div { display: grid; grid-template-columns: 50px 1fr auto; }
+  .legend i { font-style: normal; color: var(--gold); }
+  .legend .earth { color: var(--pale); }
+  .legend .earth i { color: #7fb2ff; }
+  .rule { position: absolute; left: 150px; right: 150px; top: 1050px; height: 1px; background: color-mix(in srgb, var(--gold) 35%, transparent); }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="meta"><span>Наблюдение № 02</span><span>14.02.1990 · 6 млрд км</span></div>
+  <h1>Орбиты</h1>
+  <div class="rule"></div>
+  <div class="legend" id="legend"></div>
+</main>
+<script src="gen.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const random = rng(19900214);
+  const C = [540, 470];
+  const tilt = -14;
+  const gold = '#d9b46a';
+
+  const planets = [
+    ['I', 'Меркурий', 0.39, 3], ['II', 'Венера', 0.72, 4.5], ['III', 'Земля', 1.0, 4.5], ['IV', 'Марс', 1.52, 3.5],
+    ['V', 'Юпитер', 5.2, 9], ['VI', 'Сатурн', 9.58, 7.5], ['VII', 'Уран', 19.2, 6], ['VIII', 'Нептун', 30.05, 6],
+  ];
+  const radius = (au) => 30 + 95 * Math.log(au / 0.39 + 1);
+  const flat = 0.36;
+
+  // Звёздное поле, не заходящее на заголовок и легенду.
+  const stars = svgEl(svg, 'g');
+  for (let i = 0; i < 900; i++) {
+    const x = 40 + random() * 1000;
+    const y = 40 + random() * 1270;
+    if (y < 110 || (y > 840 && y < 1250 && x > 110 && x < 970)) continue;
+    const big = random() < 0.04;
+    svgEl(stars, 'circle', {
+      cx: x.toFixed(1), cy: y.toFixed(1), r: (big ? 1.3 + random() * 0.6 : 0.35 + random() * 0.6).toFixed(2),
+      fill: '#efe6d2', 'fill-opacity': (0.15 + random() * (big ? 0.7 : 0.45)).toFixed(2),
+    });
+  }
+
+  const defs = svgEl(svg, 'defs');
+  const glow = svgEl(defs, 'radialGradient', { id: 'glow' });
+  svgEl(glow, 'stop', { offset: '0', 'stop-color': '#f2d28b', 'stop-opacity': '0.55' });
+  svgEl(glow, 'stop', { offset: '1', 'stop-color': '#f2d28b', 'stop-opacity': '0' });
+  const beam = svgEl(defs, 'linearGradient', { id: 'beam', x1: '0', x2: '1' });
+  svgEl(beam, 'stop', { offset: '0', 'stop-color': '#efe6d2', 'stop-opacity': '0' });
+  svgEl(beam, 'stop', { offset: '0.5', 'stop-color': '#efe6d2', 'stop-opacity': '0.10' });
+  svgEl(beam, 'stop', { offset: '1', 'stop-color': '#efe6d2', 'stop-opacity': '0' });
+
+  const system = svgEl(svg, 'g', { transform: `rotate(${tilt} ${C[0]} ${C[1]})` });
+  svgEl(system, 'circle', { cx: C[0], cy: C[1], r: 70, fill: 'url(#glow)' });
+  svgEl(system, 'circle', { cx: C[0], cy: C[1], r: 9, fill: '#f2d28b' });
+
+  const labels = svgEl(svg, 'g');
+  planets.forEach(([num, name, au, size], i) => {
+    const rx = radius(au);
+    const ry = rx * flat;
+    svgEl(system, 'ellipse', {
+      cx: C[0], cy: C[1], rx: rx.toFixed(2), ry: ry.toFixed(2), fill: 'none',
+      stroke: gold, 'stroke-width': i >= 4 ? 1.1 : 0.9, 'stroke-opacity': 0.5,
+    });
+    const isEarth = name === 'Земля';
+    const angle = isEarth ? 2.25 : random() * Math.PI * 2;
+    const px = C[0] + rx * Math.cos(angle);
+    const py = C[1] + ry * Math.sin(angle);
+    if (isEarth) {
+      // Луч рассеянного света, пересекающий крошечную голубую точку.
+      svgEl(system, 'rect', {
+        x: px - 520, y: py - 9, width: 1040, height: 18, fill: 'url(#beam)',
+        transform: `rotate(${62} ${px} ${py})`,
+      });
+    }
+    if (name === 'Сатурн') {
+      svgEl(system, 'ellipse', {
+        cx: px, cy: py, rx: size * 2.1, ry: size * 0.6, fill: 'none', stroke: '#e8c98a', 'stroke-width': 1.2,
+        transform: `rotate(${-18} ${px} ${py})`,
+      });
+    }
+    svgEl(system, 'circle', { cx: px, cy: py, r: size, fill: isEarth ? '#7fb2ff' : '#e8c98a' });
+
+    // Подпись номера в повёрнутой системе координат → переводим в экранные.
+    const t = (tilt * Math.PI) / 180;
+    const sx = C[0] + (px - C[0]) * Math.cos(t) - (py - C[1]) * Math.sin(t);
+    const sy = C[1] + (px - C[0]) * Math.sin(t) + (py - C[1]) * Math.cos(t);
+    svgEl(labels, 'text', {
+      x: sx + size + 8, y: sy - size - 6, fill: isEarth ? '#cfe0ff' : gold,
+      stroke: '#0c1229', 'stroke-width': 4, 'paint-order': 'stroke',
+      style: "font: 500 15px 'Jura'; letter-spacing: .08em",
+    }, num);
+  });
+
+  const legend = document.getElementById('legend');
+  const order = [0, 4, 1, 5, 2, 6, 3, 7];
+  for (const i of order) {
+    const [num, name, au] = planets[i];
+    const row = document.createElement('div');
+    if (name === 'Земля') row.className = 'earth';
+    row.innerHTML = `<i>${num}</i><span>${name}</span><span>${String(au).replace('.', ',')} а. е.</span>`;
+    legend.appendChild(row);
+  }
+</script>
+</body>
+</html>

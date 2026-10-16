@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>01 — Утренний ритуал</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  :root { --paper: #eee6d8; --ink: #3a2517; --soft: #8b6c55; --accent: #c0532a; }
+  body, .canvas { background: var(--paper); color: var(--ink); }
+  svg { position: absolute; inset: 0; }
+  .meta {
+    position: absolute; top: 64px; left: 80px; right: 80px;
+    display: flex; justify-content: space-between;
+    font: 400 19px/1 'IBM Plex Mono'; letter-spacing: .14em; text-transform: uppercase; color: var(--soft);
+  }
+  h1 {
+    position: absolute; left: 76px; top: 1066px;
+    font: italic 400 104px/1 'Lora'; letter-spacing: -0.01em;
+  }
+  .data {
+    position: absolute; left: 80px; right: 80px; bottom: 72px;
+    display: flex; justify-content: space-between;
+    padding-top: 22px; border-top: 1.5px solid color-mix(in srgb, var(--ink) 60%, transparent);
+    font: 400 21px/1 'IBM Plex Mono'; color: var(--soft);
+  }
+  .data b { font-weight: 400; color: var(--ink); }
+  .data .hot { color: var(--accent); }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="meta"><span>Наблюдение № 01</span><span>07:12</span></div>
+  <h1>Утренний ритуал</h1>
+  <div class="data">
+    <span>доза <b class="hot">18 г</b></span>
+    <span>вода <b>36 мл</b></span>
+    <span>экстракция <b>28 с</b></span>
+    <span><b>93 °C</b></span>
+  </div>
+</main>
+<script src="gen.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const random = rng(1807);
+  const C = [540, 572];
+  const ink = '#3a2517';
+  const accent = '#c0532a';
+
+  // Мягкое пятно в центре — дно чашки.
+  const defs = svgEl(svg, 'defs');
+  const grad = svgEl(defs, 'radialGradient', { id: 'stain' });
+  svgEl(grad, 'stop', { offset: '0', 'stop-color': ink, 'stop-opacity': '0.10' });
+  svgEl(grad, 'stop', { offset: '1', 'stop-color': ink, 'stop-opacity': '0' });
+  svgEl(svg, 'circle', { cx: C[0], cy: C[1], r: 180, fill: 'url(#stain)' });
+
+  // 28 колец — по одному на секунду экстракции; 18-е (доза) выделено.
+  // Общий изгиб нарастает от центра к краю (как годовые кольца), собственный шум колец мал — линии не пересекаются.
+  const rings = 28;
+  const shared = angularNoise(random, 5);
+  for (let i = 0; i < rings; i++) {
+    const r = 96 + i * 10;
+    const own = angularNoise(random, 6);
+    const pts = [];
+    for (let k = 0; k < 120; k++) {
+      const a = (k / 120) * Math.PI * 2;
+      const rr = r + (i * 0.55) * shared(a) + 1.1 * own(a);
+      pts.push([C[0] + rr * Math.cos(a), C[1] + rr * Math.sin(a)]);
+    }
+    const isDose = i === 17;
+    const width = isDose ? 2.6 : (i % 7 === 6 ? 1.9 : 0.7 + random() * 0.7);
+    svgEl(svg, 'path', {
+      d: smoothClosed(pts), fill: 'none',
+      stroke: isDose ? accent : ink,
+      'stroke-width': width.toFixed(2),
+      'stroke-opacity': isDose ? 1 : (0.45 + (i / rings) * 0.45).toFixed(2),
+    });
+  }
+
+  // Кромка пятна: плотный ободок, как у высохшей капли.
+  const rimNoise = angularNoise(random, 7);
+  for (const [r, w, o] of [[383, 5, 0.38], [387, 1.2, 0.8]]) {
+    const pts = [];
+    for (let k = 0; k < 160; k++) {
+      const a = (k / 160) * Math.PI * 2;
+      const rr = r * (1 + 0.012 * rimNoise(a));
+      pts.push([C[0] + rr * Math.cos(a), C[1] + rr * Math.sin(a)]);
+    }
+    svgEl(svg, 'path', { d: smoothClosed(pts), fill: 'none', stroke: ink, 'stroke-width': w, 'stroke-opacity': o });
+  }
+
+  // Шкала-циферблат: 60 минут утреннего часа, 12-я минута отмечена.
+  for (let m = 0; m < 60; m++) {
+    const a = (m / 60) * Math.PI * 2 - Math.PI / 2;
+    const major = m % 5 === 0;
+    const r1 = 410;
+    const r2 = major ? 430 : 419;
+    const hot = m === 12;
+    svgEl(svg, 'line', {
+      x1: C[0] + r1 * Math.cos(a), y1: C[1] + r1 * Math.sin(a),
+      x2: C[0] + (hot ? 440 : r2) * Math.cos(a), y2: C[1] + (hot ? 440 : r2) * Math.sin(a),
+      stroke: hot ? accent : ink, 'stroke-width': hot ? 2.4 : (major ? 1.4 : 0.8),
+      'stroke-opacity': hot ? 1 : (major ? 0.75 : 0.4),
+    });
+  }
+  for (const [m, label] of [[15, '15'], [30, '30'], [45, '45']]) {
+    const a = (m / 60) * Math.PI * 2 - Math.PI / 2;
+    svgEl(svg, 'text', {
+      x: C[0] + 456 * Math.cos(a), y: C[1] + 456 * Math.sin(a) + 6,
+      'text-anchor': 'middle', fill: '#8b6c55',
+      style: "font: 400 16px 'IBM Plex Mono'; letter-spacing: .08em",
+    }, label);
+  }
+
+  // Перекрестие центра — точка отсчёта наблюдения.
+  for (const [dx, dy] of [[1, 0], [0, 1]]) {
+    svgEl(svg, 'line', {
+      x1: C[0] - 14 * dx, y1: C[1] - 14 * dy, x2: C[0] + 14 * dx, y2: C[1] + 14 * dy,
+      stroke: ink, 'stroke-width': 1, 'stroke-opacity': 0.6,
+    });
+  }
+</script>
+</body>
+</html>

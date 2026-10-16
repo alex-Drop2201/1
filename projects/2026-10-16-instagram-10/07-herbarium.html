@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>07 — Гербарий</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  :root { --paper: #f1ecdf; --ink: #2f4433; --soft: #7d8770; --rust: #b5562b; }
+  body, .canvas { background: var(--paper); color: var(--ink); }
+  svg { position: absolute; inset: 0; }
+  h1 {
+    position: absolute; left: 74px; top: 62px;
+    font: italic 400 118px/1 'Playfair Display'; letter-spacing: -0.01em;
+  }
+  .tab {
+    position: absolute; right: 80px; top: 92px; text-align: right;
+    font: italic 400 22px/1.5 'IBM Plex Serif'; color: var(--soft);
+  }
+  .tab b { font: 400 30px/1 'IBM Plex Serif'; color: var(--ink); letter-spacing: .08em; font-style: normal; }
+  .foot {
+    position: absolute; left: 80px; right: 80px; bottom: 72px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font: italic 400 20px/1 'IBM Plex Serif'; color: var(--soft);
+  }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <h1>Гербарий</h1>
+  <div class="tab"><b>TAB. I</b><br>Folia</div>
+  <div class="foot"><span></span><span>Philosophia botanica · MDCCLI</span></div>
+</main>
+<script src="gen.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const random = rng(1751);
+  const ink = '#2f4433';
+  const rust = '#b5562b';
+
+  // Формы листа: полуширина по длине (t = 0 у основания, 1 у верхушки).
+  const pinnate = [
+    ['lanceolatum', 26, (t) => Math.sin(Math.PI * t ** 0.78) ** 1.15],
+    ['ovatum', 50, (t) => Math.sin(Math.PI * t ** 0.62)],
+    ['obovatum', 48, (t) => Math.sin(Math.PI * t ** 1.55)],
+    ['ellipticum', 44, (t) => Math.sin(Math.PI * t)],
+    ['cordatum', 0, null],
+    ['lineare', 9, (t) => Math.min(1, t * 9, (1 - t) * 5) ** 0.6],
+    ['orbiculare', 0, null],
+    ['spathulatum', 40, (t) => Math.sin(Math.PI * t ** 2.3) ** 0.75],
+    ['oblongum', 30, (t) => Math.sin(Math.PI * t) ** 0.33],
+    ['rhomboideum', 48, (t) => (1 - Math.abs(2 * t - 1)) ** 0.95],
+    ['deltoideum', 58, (t) => Math.min(1, t * 7) * (1 - t) ** 1.05],
+    ['acuminatum', 44, (t) => Math.sin(Math.PI * t ** 0.68) * (t < 0.62 ? 1 : ((1 - t) / 0.38) ** 1.7)],
+  ];
+
+  const gridX = [80, 1000];
+  const gridY = [258, 1180];
+  const cellW = (gridX[1] - gridX[0]) / 3;
+  const cellH = (gridY[1] - gridY[0]) / 4;
+  const L = 150;
+
+  // Рамки ячеек — тонкая таблица атласа.
+  for (let i = 0; i <= 3; i++) {
+    svgEl(svg, 'line', { x1: gridX[0] + cellW * i, y1: gridY[0], x2: gridX[0] + cellW * i, y2: gridY[1], stroke: ink, 'stroke-width': 0.6, 'stroke-opacity': 0.25 });
+  }
+  for (let i = 0; i <= 4; i++) {
+    svgEl(svg, 'line', { x1: gridX[0], y1: gridY[0] + cellH * i, x2: gridX[1], y2: gridY[0] + cellH * i, stroke: ink, 'stroke-width': 0.6, 'stroke-opacity': 0.25 });
+  }
+
+  function leaf(g, kind, W, f, color) {
+    // Основание листа в (0, L/2), верхушка в (0, -L/2); черешок вниз.
+    const base = L / 2;
+    const fill = color === rust ? 0.16 : 0.07;
+    const veinStyle = { fill: 'none', stroke: color, 'stroke-width': 0.8, 'stroke-opacity': 0.55, 'stroke-linecap': 'round' };
+    svgEl(g, 'line', { x1: 0, y1: base, x2: 0, y2: base + 24, stroke: color, 'stroke-width': 1.6, 'stroke-linecap': 'round' });
+
+    if (kind === 'cordatum' || kind === 'orbiculare') {
+      const pts = [];
+      for (let k = 0; k < 96; k++) {
+        const a = (k / 96) * Math.PI * 2;
+        if (kind === 'cordatum') {
+          const s = 4.3;
+          pts.push([16 * Math.sin(a) ** 3 * s, (13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a)) * s - 2]);
+        } else {
+          pts.push([62 * Math.sin(a), -2 + 62 * Math.cos(a)]);
+        }
+      }
+      // Пальчатое жилкование из точки прикрепления.
+      const hub = kind === 'cordatum' ? [0, 5 * 4.3 - 2] : [0, 60];
+      svgEl(g, 'path', { d: smoothClosed(pts), fill: color, 'fill-opacity': fill, stroke: color, 'stroke-width': 1.4 });
+      svgEl(g, 'line', { x1: 0, y1: hub[1], x2: 0, y2: base, stroke: color, 'stroke-width': 1.6 });
+      for (const k of [8, 16, 24, 40, 48, 56, 72, 80, 88]) {
+        const p = pts[k];
+        if (Math.abs(p[0]) < 2 && p[1] > hub[1] - 5) continue;
+        const end = [p[0] * 0.88 + hub[0] * 0.12, p[1] * 0.88 + hub[1] * 0.12];
+        svgEl(g, 'path', { d: `M${hub[0]},${hub[1]} Q${end[0] * 0.35},${(hub[1] + end[1]) / 2} ${end[0].toFixed(1)},${end[1].toFixed(1)}`, ...veinStyle });
+      }
+      return;
+    }
+
+    const right = [];
+    const left = [];
+    const steps = 40;
+    for (let k = 0; k <= steps; k++) {
+      const t = k / steps;
+      const w = W * f(t);
+      right.push([w, base - L * t]);
+      left.unshift([-w, base - L * t]);
+    }
+    const outline = right.concat(left.slice(1, -1));
+    svgEl(g, 'path', { d: smoothClosed(outline), fill: color, 'fill-opacity': fill, stroke: color, 'stroke-width': 1.4, 'stroke-linejoin': 'round' });
+    svgEl(g, 'line', { x1: 0, y1: base, x2: 0, y2: base - L, stroke: color, 'stroke-width': 1.1 });
+    // Перистое жилкование: пары жилок, уходящих к краю чуть выше точки выхода.
+    for (let t = 0.12; t < 0.86; t += 0.09) {
+      for (const side of [1, -1]) {
+        const tt = Math.min(0.97, t + 0.1);
+        const w = W * f(tt) * 0.86;
+        if (w < 4) continue;
+        const sy = base - L * t;
+        const ey = base - L * tt;
+        svgEl(g, 'path', { d: `M0,${sy.toFixed(1)} Q${(side * w * 0.45).toFixed(1)},${(sy - 3).toFixed(1)} ${(side * w).toFixed(1)},${ey.toFixed(1)}`, ...veinStyle });
+      }
+    }
+  }
+
+  pinnate.forEach(([name, W, f], i) => {
+    const col = i % 3;
+    const row = Math.floor(i / 3);
+    const cx = gridX[0] + cellW * (col + 0.5);
+    const cy = gridY[0] + cellH * row + cellH / 2 - 12;
+    const angle = (random() - 0.5) * 16;
+    const color = i === 6 ? rust : ink;
+    const g = svgEl(svg, 'g', { transform: `translate(${cx} ${cy}) rotate(${angle.toFixed(2)}) scale(0.92)` });
+    leaf(g, name, W, f, color);
+    svgEl(svg, 'text', {
+      x: gridX[0] + cellW * col + 14, y: gridY[0] + cellH * row + 26, fill: '#7d8770',
+      style: "font: 400 15px 'IBM Plex Serif'; letter-spacing: .06em",
+    }, String(i + 1));
+    svgEl(svg, 'text', {
+      x: cx, y: gridY[0] + cellH * (row + 1) - 14, 'text-anchor': 'middle', fill: i === 6 ? rust : '#5b6a55',
+      style: "font: italic 400 16px 'IBM Plex Serif'",
+    }, name);
+  });
+
+  // Масштабная линейка 0–5.
+  const rx = 80;
+  const ry = 1273; // на одной базовой линии с подписью справа
+  svgEl(svg, 'line', { x1: rx, y1: ry, x2: rx + 150, y2: ry, stroke: ink, 'stroke-width': 1 });
+  for (let k = 0; k <= 5; k++) {
+    svgEl(svg, 'line', { x1: rx + k * 30, y1: ry, x2: rx + k * 30, y2: ry - (k % 5 === 0 ? 10 : 6), stroke: ink, 'stroke-width': 1 });
+  }
+  svgEl(svg, 'text', { x: rx + 162, y: ry + 1, fill: '#7d8770', style: "font: italic 400 18px 'IBM Plex Serif'" }, '5 cm');
+</script>
+</body>
+</html>

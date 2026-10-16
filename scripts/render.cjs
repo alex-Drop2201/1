@@ -122,6 +122,8 @@ async function renderFile(browser, port, file, opts) {
   const failed = [];
   page.on('response', (r) => r.status() >= 400 && failed.push(`${r.status()} ${r.url()}`));
   page.on('requestfailed', (r) => failed.push(`ошибка ${r.url()}`));
+  const scriptErrors = [];
+  page.on('pageerror', (err) => scriptErrors.push(err.message));
 
   await page.goto(`http://127.0.0.1:${port}/${rel}`, { waitUntil: 'networkidle' });
   const metaSize = await page.$eval('meta[name="size"]', (m) => m.content).catch(() => null);
@@ -188,6 +190,7 @@ async function renderFile(browser, port, file, opts) {
   for (const f of failed) console.warn(`⚠ не загрузилось: ${f}`);
   for (const f of missingFonts) console.warn(`⚠ шрифт не загрузился: ${f}`);
   for (const t of overflow) console.warn(`⚠ текст выходит за край макета: «${t}»`);
+  for (const e of scriptErrors) console.warn(`⚠ ошибка JavaScript на странице: ${e}`);
 }
 
 async function main() {

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>08 — Марафон</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  :root { --black: #0c0d0c; --lime: #c8ff3a; --red: #ff4a2e; --dim: #6c706a; --pale: #e8ebe3; }
+  body, .canvas { background: var(--black); color: var(--pale); }
+  svg { position: absolute; inset: 0; }
+  .meta {
+    position: absolute; top: 64px; left: 80px; right: 80px;
+    display: flex; justify-content: space-between;
+    font: 400 18px/1 'Tektur'; letter-spacing: .18em; text-transform: uppercase; color: var(--dim);
+  }
+  .big {
+    position: absolute; left: 70px; top: 1040px;
+    font: 700 250px/0.82 'Big Shoulders'; color: var(--lime); letter-spacing: -0.01em;
+  }
+  .side {
+    position: absolute; right: 80px; top: 1062px; text-align: right;
+    font: 400 20px/1.75 'Tektur'; color: var(--dim);
+  }
+  .side .title { font: 500 34px/1.2 'Tektur'; letter-spacing: .22em; color: var(--pale); margin-bottom: 14px; margin-right: -.22em; }
+  .side b { font-weight: 500; color: var(--pale); }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="meta"><span>Протокол № 08</span><span>490 г. до н. э.</span></div>
+  <div class="big">42,195</div>
+  <div class="side">
+    <div class="title">МАРАФОН</div>
+    <div>финиш <b id="finish"></b></div>
+    <div>средний темп <b id="pace"></b></div>
+  </div>
+</main>
+<script src="gen.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const random = rng(42195);
+  const lime = '#c8ff3a';
+  const red = '#ff4a2e';
+
+  // Время на каждый километр, сек: ровный темп, «стена» после 30-го, упрямое возвращение.
+  const splits = [];
+  for (let km = 1; km <= 42; km++) {
+    let pace = 249 + (random() - 0.5) * 8;
+    if (km === 1) pace += 6;
+    if (km >= 29 && km <= 36) pace += 46 * Math.sin(((km - 28) / 9) * Math.PI) ** 1.4;
+    if (km > 36) pace += 12 - (km - 36) * 1.5;
+    splits.push(pace);
+  }
+  splits.push(splits[41] * 0.195 * 0.94); // последние 195 метров — финишный спурт
+  const wall = splits.indexOf(Math.max(...splits.slice(0, 42)));
+
+  const total = splits.reduce((a, b) => a + b, 0);
+  const hms = (s) => `${Math.floor(s / 3600)}:${String(Math.floor((s % 3600) / 60)).padStart(2, '0')}:${String(Math.round(s % 60)).padStart(2, '0')}`;
+  document.getElementById('finish').textContent = hms(total);
+  const avg = total / 42.195;
+  document.getElementById('pace').textContent = `${Math.floor(avg / 60)}:${String(Math.round(avg % 60)).padStart(2, '0')}/км`;
+
+  const x0 = 170;
+  const y0 = 128;
+  const step = 19.8;
+  const barH = 11;
+  const len = (s) => 300 + (s - 240) * 5.4;
+
+  // Средний темп — пунктирная вертикаль.
+  const avgX = x0 + len(avg);
+  svgEl(svg, 'line', {
+    x1: avgX, y1: y0 - 14, x2: avgX, y2: y0 + step * 42 + barH + 14,
+    stroke: '#e8ebe3', 'stroke-width': 1, 'stroke-dasharray': '2 6', 'stroke-opacity': 0.45,
+  });
+
+  splits.forEach((s, i) => {
+    const y = y0 + i * step;
+    // Последний отрезок — доля 0,195 от полосы своего темпа.
+    const w = i === 42 ? len(s / 0.195) * 0.195 : len(s);
+    const isWall = i === wall;
+    svgEl(svg, 'rect', { x: x0, y, width: w.toFixed(1), height: barH, fill: isWall ? red : lime, 'fill-opacity': i === 42 ? 1 : 0.92 });
+    const km = i + 1;
+    if (km === 1 || km % 5 === 0 || i === 42) {
+      svgEl(svg, 'text', {
+        x: x0 - 22, y: y + barH - 1, 'text-anchor': 'end', fill: '#6c706a',
+        style: "font: 400 15px 'Tektur'; letter-spacing: .06em",
+      }, i === 42 ? '42,2' : String(km));
+    }
+    if (isWall) {
+      svgEl(svg, 'text', {
+        x: x0 + w + 18, y: y + barH - 1, fill: red,
+        style: "font: 500 16px 'Tektur'; letter-spacing: .16em",
+      }, `${km} КМ · СТЕНА`);
+    }
+  });
+</script>
+</body>
+</html>

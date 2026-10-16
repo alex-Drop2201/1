@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>04 — Прилив</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  :root { --air: #edf1f0; --deep: #0f3a4c; --mist: #7f9ea8; }
+  body, .canvas { background: var(--air); color: var(--deep); }
+  svg { position: absolute; inset: 0; }
+  .meta {
+    position: absolute; top: 64px; left: 80px; right: 80px;
+    display: flex; justify-content: space-between;
+    font: 400 18px/1 'Geist Mono'; letter-spacing: .16em; text-transform: uppercase; color: var(--mist);
+  }
+  h1 {
+    position: absolute; left: 74px; top: 150px;
+    font: italic 400 132px/1 'IBM Plex Serif'; letter-spacing: -0.02em;
+  }
+  .sub {
+    position: absolute; left: 82px; top: 312px;
+    font: 400 20px/1.5 'Geist Mono'; color: var(--mist); letter-spacing: .04em;
+  }
+  .data {
+    position: absolute; left: 80px; right: 80px; bottom: 72px;
+    display: flex; justify-content: space-between;
+    font: 400 20px/1 'Geist Mono'; color: var(--mist);
+  }
+  .data b { font-weight: 400; color: var(--deep); }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="meta"><span>Наблюдение № 04</span><span>широта 69° с.</span></div>
+  <h1>Прилив</h1>
+  <div class="sub">M2 · 12 ч 25 мин</div>
+  <div class="data">
+    <span>полная вода <b>04:52</b></span>
+    <span>малая вода <b>11:04</b></span>
+    <span>амплитуда <b>4,2 м</b></span>
+  </div>
+</main>
+<script src="gen.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const random = rng(1242);
+  const horizon = 500;
+  const bottom = 1200;
+  const moon = [820, 236, 34];
+  const N = 78;
+
+  const defs = svgEl(svg, 'defs');
+  // Дорожка отражения: линии бледнеют в расширяющейся полосе под луной.
+  const blur = svgEl(defs, 'filter', { id: 'soft', x: '-50%', y: '-10%', width: '200%', height: '120%' });
+  svgEl(blur, 'feGaussianBlur', { stdDeviation: 16 });
+  const mask = svgEl(defs, 'mask', { id: 'path', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: 1080, height: 1350 });
+  svgEl(mask, 'rect', { x: 0, y: 0, width: 1080, height: 1350, fill: 'white' });
+  svgEl(mask, 'polygon', {
+    points: `${moon[0] - 6},${horizon} ${moon[0] + 6},${horizon} ${moon[0] + 150},${bottom + 20} ${moon[0] - 150},${bottom + 20}`,
+    fill: 'black', 'fill-opacity': 0.72, filter: 'url(#soft)',
+  });
+
+  // Луна и пунктир притяжения.
+  svgEl(svg, 'circle', { cx: moon[0], cy: moon[1], r: moon[2], fill: '#dfe7e7', stroke: '#0f3a4c', 'stroke-width': 1.4 });
+  svgEl(svg, 'line', {
+    x1: moon[0], y1: moon[1] + moon[2] + 14, x2: moon[0], y2: horizon - 18,
+    stroke: '#0f3a4c', 'stroke-width': 1, 'stroke-dasharray': '2 6', 'stroke-opacity': 0.6,
+  });
+  svgEl(svg, 'line', { x1: 80, y1: horizon, x2: 1000, y2: horizon, stroke: '#0f3a4c', 'stroke-width': 0.6, 'stroke-opacity': 0.35 });
+
+  const sea = svgEl(svg, 'g', { mask: 'url(#path)' });
+  const yAt = (k) => horizon + (bottom - horizon) * Math.pow(k / N, 1.75);
+  for (let k = 1; k <= N; k++) {
+    const t = k / N;
+    const y = yAt(k);
+    const gap = Math.min(y - yAt(k - 1), k < N ? yAt(k + 1) - y : Infinity);
+    const amp = gap * 0.36;
+    const lambda = 60 + 300 * t;
+    const p1 = random() * Math.PI * 2;
+    const p2 = random() * Math.PI * 2;
+    const pts = [];
+    for (let x = 80; x <= 1000; x += 8) {
+      const swell = Math.sin((x / 1080) * Math.PI * 1.3 + t * 2.2);
+      const v = 0.55 * Math.sin((2 * Math.PI * x) / lambda + p1) + 0.3 * Math.sin((2 * Math.PI * x) / (lambda * 0.47) + p2) + 0.15 * swell;
+      pts.push([x, y + amp * v]);
+    }
+    svgEl(sea, 'path', {
+      d: smoothOpen(pts), fill: 'none',
+      stroke: colorAt([[0, '#a9c3cb'], [0.5, '#4f7d8c'], [1, '#0f3a4c']], t),
+      'stroke-width': (0.5 + 1.9 * Math.pow(t, 1.3)).toFixed(2), 'stroke-linecap': 'round',
+    });
+  }
+</script>
+</body>
+</html>
