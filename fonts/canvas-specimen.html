@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x3300">
+<title>Шрифты canvas-design</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/fonts/canvas-fonts.css">
+<style>
+  body { background: var(--c-light); color: var(--c-dark); }
+  .canvas { padding: 56px 64px; display: flex; flex-direction: column; gap: 12px; }
+  .row { border-top: 2px solid #d9d6cf; padding-top: 12px; }
+  .name { font: 600 22px/1 'Inter'; color: #77737f; margin-bottom: 10px; }
+  .sample { font-size: 46px; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+</style>
+</head>
+<body>
+  <main class="canvas" id="list"></main>
+  <script>
+    // Список семейств берётся из fonts.css — образец всегда соответствует тому, что лежит в fonts/.
+    const sheet = [...document.styleSheets].flatMap((s) => {
+      try { return [...s.cssRules]; } catch { return []; }
+    });
+    const faces = sheet.flatMap((r) => r.styleSheet ? [...r.styleSheet.cssRules] : [r])
+      .filter((r) => r instanceof CSSFontFaceRule && r.parentStyleSheet.href.endsWith("canvas-fonts.css"));
+    const families = {};
+    for (const f of faces) {
+      const fam = f.style.getPropertyValue('font-family').replace(/['"]/g, '');
+      (families[fam] ||= new Set()).add(f.style.getPropertyValue('font-weight'));
+    }
+    const list = document.getElementById('list');
+    for (const [fam, weights] of Object.entries(families).sort()) {
+      const w = [...weights].sort((a, b) => a - b);
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `<div class="name">${fam} · ${w.join(' ')}</div>` +
+        `<div class="sample" style="font-family:'${fam}';font-weight:${w[w.length - 1]}">Design Дизайн 0123</div>`;
+      list.appendChild(row);
+    }
+  </script>
+</body>
+</html>

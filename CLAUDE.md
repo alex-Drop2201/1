@@ -12,6 +12,7 @@ templates/          шаблоны: post.html (4:5), story.html (9:16), carousel
 projects/           готовые работы: projects/ГГГГ-ММ-ДД-коротко-латиницей/
 scripts/render.cjs  HTML → PNG/JPG/PDF через Playwright (Chromium)
 scripts/get_font.py скачать шрифт с Google Fonts и пересобрать fonts/fonts.css
+.claude/skills/     скилы проекта (canvas-design)
 ```
 
 Макет — это HTML-страница: вёрстка на CSS, рендер в картинку скриптом. Пути к общим файлам — от корня репозитория
@@ -59,6 +60,20 @@ Inter, Manrope, Montserrat, Rubik — текст и универсальные; 
 Playfair Display (+ italic) — антиква; Caveat — рукописный. Образец: `fonts/export/specimen.png`.
 Добавить новый: `python3 scripts/get_font.py "Название" 400 700 [--italic]`, затем `node scripts/render.cjs fonts/specimen.html`
 обновит образец. Проверять, что у шрифта есть кириллица (видно на образце).
+
+## Скил canvas-design
+
+Установлен в `.claude/skills/canvas-design/` — копия `skills/canvas-design` из github.com/anthropics/skills без изменений.
+Применять для художественных постеров и арт-работ: сначала философия дизайна (.md), потом визуал (.png/.pdf).
+Как совмещать с этим репозиторием:
+
+- Всё класть в `projects/<папка>/`: `philosophy.md`, исходник макета и `export/`.
+- Рисовать через наш HTML-рендер (CSS, SVG, `<canvas>`) — тогда работают проверки вылета текста и шрифтов. Python + Pillow тоже допустим.
+- Шрифты скила подключаются строкой `<link rel="stylesheet" href="/fonts/canvas-fonts.css">`; образцы — `fonts/export/canvas-specimen.png`.
+- Кириллица есть только у Arsenal SC, Geist Mono, IBM Plex Mono, IBM Plex Serif, JetBrains Mono, Jura, Lora, Pixelify Sans,
+  Poiret One, Tektur. Для русского текста брать их или шрифты из `fonts/`; остальные шрифты скила — только для латиницы и цифр.
+- Обновить скил: `GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/anthropics/skills <папка>` и скопировать
+  `skills/canvas-design` поверх `.claude/skills/canvas-design`.
 
 ## Видео и анимация
 

@@ -27,5 +27,6 @@ python3 scripts/get_font.py "Playfair Display" 400 700 --italic
 - `brand/` — цвета, шрифты и логотипы бренда
 - `fonts/` — шрифты с кириллицей (лицензия SIL OFL)
 - `scripts/` — рендер и загрузка шрифтов
+- `.claude/skills/canvas-design/` — скил [canvas-design](https://github.com/anthropics/skills/tree/main/skills/canvas-design) для арт-постеров (Apache 2.0, шрифты — OFL)
 
 Подробные правила работы и форматы — в [CLAUDE.md](CLAUDE.md).

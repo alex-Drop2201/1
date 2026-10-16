@@ -1,0 +1,55 @@
+/* Шрифты скила canvas-design (.claude/skills/canvas-design/canvas-fonts). Подключать: /fonts/canvas-fonts.css */
+@font-face { font-family: 'Arsenal SC'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/ArsenalSC-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Big Shoulders'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/BigShoulders-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Big Shoulders'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/BigShoulders-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Boldonse'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Boldonse-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/BricolageGrotesque-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/BricolageGrotesque-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Crimson Pro'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/CrimsonPro-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Crimson Pro'; font-style: italic; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/CrimsonPro-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'Crimson Pro'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/CrimsonPro-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'DM Mono'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/DMMono-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Erica One'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/EricaOne-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/GeistMono-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/GeistMono-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Gloock'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Gloock-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/IBMPlexMono-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/IBMPlexMono-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'IBM Plex Serif'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/IBMPlexSerif-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'IBM Plex Serif'; font-style: italic; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/IBMPlexSerif-BoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'IBM Plex Serif'; font-style: italic; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/IBMPlexSerif-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'IBM Plex Serif'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/IBMPlexSerif-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/InstrumentSans-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Instrument Sans'; font-style: italic; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/InstrumentSans-BoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Instrument Sans'; font-style: italic; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/InstrumentSans-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/InstrumentSans-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/InstrumentSerif-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/InstrumentSerif-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Italiana'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Italiana-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/JetBrainsMono-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/JetBrainsMono-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Jura'; font-style: normal; font-weight: 300; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Jura-Light.ttf') format('truetype'); }
+@font-face { font-family: 'Jura'; font-style: normal; font-weight: 500; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Jura-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Libre Baskerville'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/LibreBaskerville-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Lora-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: italic; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Lora-BoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: italic; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Lora-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'Lora'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Lora-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'National Park'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/NationalPark-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'National Park'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/NationalPark-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Nothing You Could Do'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/NothingYouCouldDo-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Outfit'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Outfit-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Outfit'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Outfit-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Pixelify Sans'; font-style: normal; font-weight: 500; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/PixelifySans-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Poiret One'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/PoiretOne-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Red Hat Mono'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/RedHatMono-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Red Hat Mono'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/RedHatMono-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Silkscreen'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Silkscreen-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Smooch Sans'; font-style: normal; font-weight: 500; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/SmoochSans-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Tektur'; font-style: normal; font-weight: 500; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Tektur-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Tektur'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/Tektur-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Work Sans'; font-style: normal; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/WorkSans-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Work Sans'; font-style: italic; font-weight: 700; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/WorkSans-BoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'Work Sans'; font-style: italic; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/WorkSans-Italic.ttf') format('truetype'); }
+@font-face { font-family: 'Work Sans'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/WorkSans-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Young Serif'; font-style: normal; font-weight: 400; font-display: block; src: url('/.claude/skills/canvas-design/canvas-fonts/YoungSerif-Regular.ttf') format('truetype'); }
