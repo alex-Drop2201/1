@@ -1,0 +1,48 @@
+/* Бренд-токены. Цвета и шрифты — заглушки: поменяйте под свой бренд, и все шаблоны подхватят. */
+@import url('/fonts/fonts.css');
+
+:root {
+  --c-bg: #111014;
+  --c-surface: #1c1b21;
+  --c-fg: #f6f4ef;
+  --c-muted: #9a97a3;
+  --c-accent: #ff5a36;
+  --c-accent-2: #ffd23f;
+  --c-light: #f6f4ef;
+  --c-dark: #111014;
+
+  --font-display: 'Unbounded', 'Inter', sans-serif;
+  --font-text: 'Manrope', 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-condensed: 'Oswald', sans-serif;
+  --font-hand: 'Caveat', cursive;
+
+  --pad: 80px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { background: var(--c-bg); }
+
+body {
+  color: var(--c-fg);
+  font-family: var(--font-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* Холст во весь размер макета (размер задаётся <meta name="size">). */
+.canvas {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Слайд карусели: каждый [data-slide] рендерится отдельной картинкой. */
+[data-slide] {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}

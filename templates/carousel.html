@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Карусель 4:5</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<style>
+  [data-slide] {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--pad);
+    background: var(--c-bg);
+  }
+  [data-slide].light { background: var(--c-light); color: var(--c-dark); }
+  .num { font: 700 32px/1 var(--font-display); color: var(--c-accent); }
+  h1 { font: 900 120px/0.95 var(--font-display); letter-spacing: -0.03em; text-transform: uppercase; }
+  h2 { font: 700 84px/1.02 var(--font-serif); }
+  p { font: 500 40px/1.35 var(--font-text); max-width: 860px; }
+  .swipe { font: 700 32px/1 var(--font-text); letter-spacing: .06em; text-transform: uppercase; color: var(--c-muted); }
+</style>
+</head>
+<body>
+  <section data-slide>
+    <span class="num">01 / 03</span>
+    <h1>5 идей<br>для поста</h1>
+    <span class="swipe">Листайте →</span>
+  </section>
+  <section data-slide class="light">
+    <span class="num">02 / 03</span>
+    <h2>Один слайд — одна мысль</h2>
+    <p>Крупный заголовок и пара строк пояснения. Мелкий текст в ленте не читают.</p>
+  </section>
+  <section data-slide>
+    <span class="num">03 / 03</span>
+    <h2>Сохраните, чтобы не потерять</h2>
+    <span class="swipe">@ваш_аккаунт</span>
+  </section>
+</body>
+</html>

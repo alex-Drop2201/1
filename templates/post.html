@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Пост 4:5</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<style>
+  .canvas {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--pad);
+    background:
+      radial-gradient(900px 700px at 85% 10%, color-mix(in srgb, var(--c-accent) 55%, transparent), transparent 70%),
+      var(--c-bg);
+  }
+  .tag {
+    align-self: flex-start;
+    font: 700 28px/1 var(--font-text);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 18px 28px;
+    border: 3px solid var(--c-fg);
+    border-radius: 999px;
+  }
+  h1 {
+    font: 900 112px/0.95 var(--font-display);
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  h1 em { font-style: normal; color: var(--c-accent-2); }
+  .bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
+  .lead { font: 500 38px/1.3 var(--font-text); color: var(--c-muted); max-width: 640px; }
+  .date { font: 700 44px/1 var(--font-display); color: var(--c-accent-2); white-space: nowrap; }
+</style>
+</head>
+<body>
+  <main class="canvas">
+    <span class="tag">Анонс</span>
+    <h1>Большой<br>заголовок<br><em>поста</em></h1>
+    <div class="bottom">
+      <p class="lead">Короткий подзаголовок в одну-две строки: что, где и зачем.</p>
+      <span class="date">24.10</span>
+    </div>
+  </main>
+</body>
+</html>
