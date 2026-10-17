@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>По референсу 009</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<style>
+  /* Референс 009: фон #262626 без фактуры; две строки белого жирного гротеска прописными,
+     по центру, блок занимает y 46,6–52,5 % и x 20–80 % холста. */
+  body, .canvas { background: #262626; }
+  .q {
+    position: absolute; left: 0; right: 0; top: 628px; text-align: center;
+    font: 700 29px/1.2 'Inter'; color: #ffffff; text-transform: uppercase; letter-spacing: 0;
+  }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <div class="q" id="q"><span>Господь — пастырь мой;</span><br><span id="wide">я ни в чём не буду нуждаться.</span></div>
+</main>
+<script src="kit.js"></script>
+<script>
+  // Длинная строка — на 60 % ширины, как в референсе (x 20–80 %); блок по вертикали на 46,6–52,5 %.
+  afterFonts(["700 29px 'Inter'"], () => {
+    const q = document.getElementById('q');
+    const w = document.getElementById('wide').getBoundingClientRect().width;
+    q.style.fontSize = `${(29 * 640) / w}px`;
+    q.style.top = `${(1350 - q.offsetHeight) / 2 - 12}px`;
+  });
+</script>
+</body>
+</html>

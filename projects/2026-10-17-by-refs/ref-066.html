@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>По референсу 066</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<style>
+  /* Референс 066: белый лист, крошечный рисунок тонкой чёрной линией в центре (x 33–65 %, y 38–61 %):
+     бокал с выплёскивающимся вином и батон; под ним тонкая рукописная подпись с широкими пробелами. */
+  body, .canvas { background: #ffffff; }
+  .cap {
+    position: absolute; left: 0; right: 0; top: 806px; text-align: center;
+    font: 400 42px/1 'Caveat'; color: #1a1a1a; word-spacing: .55em;
+  }
+  svg { position: absolute; inset: 0; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="cap">чаша моя преисполнена</div>
+</main>
+<script src="kit.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const defs = svgEl(svg, 'defs');
+  sketchFilter(defs, 'sketch', 2, 0.06, 6);
+  const g = svgEl(svg, 'g', {
+    filter: 'url(#sketch)', fill: 'none', stroke: '#1a1a1a', 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+  });
+  const add = (d, extra = {}) => svgEl(g, 'path', { d, ...extra });
+  // Бокал: чаша, ножка, основание.
+  const cx = 423;
+  add(`M${cx - 46},540 C${cx - 74},604 ${cx - 42},656 ${cx},656 C${cx + 42},656 ${cx + 74},604 ${cx + 46},540`);
+  add(`M${cx - 50},540 C${cx - 20},532 ${cx + 25},532 ${cx + 50},540`);
+  add(`M${cx},654 L${cx + 1},760`);
+  add(`M${cx - 36},766 C${cx - 20},758 ${cx + 22},758 ${cx + 38},766 C${cx + 22},772 ${cx - 20},772 ${cx - 36},766 Z`);
+  // Уровень вина и выплеск через край.
+  add(`M${cx - 52},566 C${cx - 20},556 ${cx + 10},572 ${cx + 46},552`);
+  add(`M${cx + 40},548 C${cx + 56},512 ${cx + 84},500 ${cx + 92},520 C${cx + 80},516 ${cx + 66},524 ${cx + 60},546`);
+  add(`M${cx + 96},532 l2,6`, { 'stroke-width': 3 });
+  // Батон с надрезами.
+  add('M500,768 C488,706 548,684 600,686 C660,688 708,708 706,752 C704,780 520,786 500,768 Z');
+  for (const x of [540, 572, 604, 636, 666]) add(`M${x},716 q8,10 6,26`, { 'stroke-width': 2 });
+</script>
+</body>
+</html>

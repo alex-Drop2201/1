@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>По референсу 012</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Референс 012 (сторис): серый фон #3c3c3e с зерном; тонкая красная (#c15555) вертикаль по центру
+     сверху (11,7–36 %) и снизу (62,7–87 %); между ними наклонный жирный заголовок с «выдавленными»
+     копиями вниз; внизу разрядкой две строки информации. Нижняя часть подтянута над безопасной зоной сторис. */
+  :root { --bg: #3c3c3e; --red: #c15555; }
+  body, .canvas { background: var(--bg); }
+  .rule { position: absolute; left: 539px; width: 3px; background: var(--red); }
+  .title { position: absolute; left: 0; right: 0; top: 820px; height: 300px; }
+  .layer {
+    position: absolute; left: 0; right: 0; text-align: center;
+    font: 900 132px/0.95 'Montserrat'; letter-spacing: -0.02em; text-transform: uppercase;
+    transform: rotate(-5deg) skewX(-10deg); color: var(--red);
+  }
+  .info {
+    position: absolute; left: 0; right: 0; top: 1508px; text-align: center;
+    font: 800 30px/1.25 'Montserrat'; letter-spacing: .32em; text-transform: uppercase; color: var(--red); padding-left: .32em;
+  }
+</style>
+</head>
+<body>
+<main class="canvas grain-light">
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="distress">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="5" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.45" result="holes"/>
+      <feComposite in="SourceGraphic" in2="holes" operator="in"/>
+    </filter>
+  </svg>
+  <div class="rule" style="top: 225px; height: 470px;"></div>
+  <div class="title">
+    <div class="layer" style="top: 27px; color: #6e3434; filter: url(#distress);">Сегодня<br>19:00</div>
+    <div class="layer" style="top: 18px; color: #874040; filter: url(#distress);">Сегодня<br>19:00</div>
+    <div class="layer" style="top: 9px; color: #a04a4a; filter: url(#distress);">Сегодня<br>19:00</div>
+    <div class="layer" style="top: 0;">Сегодня<br>19:00</div>
+  </div>
+  <div class="rule" style="top: 1203px; height: 270px;"></div>
+  <div class="info">Молодёжный вечер<br>ссылка в профиле</div>
+</main>
+</body>
+</html>

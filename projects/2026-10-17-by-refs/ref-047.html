@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>По референсу 047</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<style>
+  /* Референс 047: сливочный фон #f1ecce, в правом нижнем углу едва заметный холодный отлив;
+     над рисунком две строки рукописных печатных строчных; ниже стол в перспективе с бокалом,
+     хлебом, тарелкой, виноградом и вазой — всё одной коричневой линией #6a4c3c.
+     Координаты рисунка перенесены из референса с масштабом 1,8. */
+  :root { --bg: #f1ecce; --brown: #6a4c3c; }
+  body { background: var(--bg); }
+  .canvas { background: radial-gradient(520px 420px at 108% 104%, #dfe6df, rgba(241,236,206,0) 70%), var(--bg); }
+  .cap {
+    position: absolute; left: 0; width: 1058px; top: 404px; text-align: center;
+    font: 400 44px/0.95 'Pangolin'; color: var(--brown); letter-spacing: .04em;
+  }
+  svg { position: absolute; inset: 0; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <div class="cap">скорее бы к столу<br>Господню.</div>
+  <svg id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+</main>
+<script src="kit.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const defs = svgEl(svg, 'defs');
+  sketchFilter(defs, 'sketch', 4, 0.05, 3);
+  const g = svgEl(svg, 'g', {
+    filter: 'url(#sketch)', fill: 'none', stroke: '#6a4c3c', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+  });
+  const random = rng(47);
+  const P = (x, y) => [((x - 6) * 1.8).toFixed(1), ((y - 56) * 1.8 - 135).toFixed(1)];
+  const path = (pts) => 'M' + pts.map(([x, y]) => P(x, y).join(',')).join(' L');
+  const add = (d, extra = {}) => svgEl(g, 'path', { d, ...extra });
+
+  // Столешница и её торец.
+  add(path([[178, 485], [462, 483], [492, 580], [142, 580], [178, 485]]));
+  add(path([[142, 580], [142, 587], [492, 587], [492, 580]]));
+  // Ножки парами со штриховкой.
+  for (const [a, b] of [[176, 222], [396, 444]]) {
+    add(path([[a, 587], [a + 2, 674]]));
+    add(path([[b, 587], [b - 1, 672]]));
+    for (let i = 0; i < 4; i++) {
+      const x = a + 9 + i * ((b - a - 18) / 3);
+      const y0 = 596 + random() * 12;
+      add(path([[x, y0], [x + 1, y0 + 26 + random() * 30]]), { 'stroke-width': 2.4 });
+    }
+  }
+  // Бокал: край на y 425, чаша до 463, ножка до 512, основание — как в референсе.
+  const [gx, gy] = P(225, 425).map(Number);
+  add(`M${gx - 50},${gy} C${gx - 58},${gy + 78} ${gx + 58},${gy + 78} ${gx + 50},${gy}`);
+  add(`M${gx - 50},${gy} C${gx - 24},${gy - 12} ${gx + 24},${gy - 12} ${gx + 50},${gy}`);
+  add(path([[225, 461], [226, 510]]));
+  svgEl(g, 'ellipse', { cx: P(227, 512)[0], cy: P(227, 512)[1], rx: 30, ry: 9 });
+  // Тарелка — двойной овал.
+  svgEl(g, 'ellipse', { cx: P(244, 540)[0], cy: P(244, 540)[1], rx: 86, ry: 28 });
+  svgEl(g, 'ellipse', { cx: P(244, 540)[0], cy: P(244, 540)[1], rx: 58, ry: 16, 'stroke-width': 2.6 });
+  // Хлеб с надрезами.
+  svgEl(g, 'ellipse', { cx: P(338, 503)[0], cy: P(338, 503)[1], rx: 72, ry: 32 });
+  for (const x of [318, 336, 354]) add(path([[x - 7, 496], [x + 5, 509]]), { 'stroke-width': 2.8 });
+  // Виноград: две грозди кружков.
+  for (const [cx, cy, n] of [[282, 497, 12], [383, 526, 11]]) {
+    for (let i = 0; i < n; i++) {
+      const [x, y] = P(cx + (random() - 0.5) * 40, cy + (random() - 0.5) * 22).map(Number);
+      svgEl(g, 'circle', { cx: x, cy: y, r: 11 + random() * 3, 'stroke-width': 2.8 });
+    }
+  }
+  // Ваза с веточками.
+  add(path([[404, 466], [405, 526], [418, 526], [418, 466]]));
+  for (const [x2, y2] of [[366, 418], [394, 405], [420, 408], [448, 420]]) {
+    add(path([[410, 470], [x2, y2]]), { 'stroke-width': 2.8 });
+    for (let k = 1; k <= 3; k++) {
+      const t = k / 4;
+      const [x, y] = P(410 + (x2 - 410) * t, 470 + (y2 - 470) * t).map(Number);
+      svgEl(g, 'ellipse', { cx: x + 10, cy: y - 4, rx: 9, ry: 4.5, transform: `rotate(-30 ${x + 10} ${y - 4})`, 'stroke-width': 2.4 });
+      svgEl(g, 'ellipse', { cx: x - 10, cy: y - 4, rx: 9, ry: 4.5, transform: `rotate(30 ${x - 10} ${y - 4})`, 'stroke-width': 2.4 });
+    }
+  }
+</script>
+</body>
+</html>

@@ -23,6 +23,7 @@
 @font-face { font-family: 'Oswald'; font-style: normal; font-weight: 400; font-display: block; src: url('Oswald/Oswald-400.ttf') format('truetype'); }
 @font-face { font-family: 'Oswald'; font-style: normal; font-weight: 600; font-display: block; src: url('Oswald/Oswald-600.ttf') format('truetype'); }
 @font-face { font-family: 'Oswald'; font-style: normal; font-weight: 700; font-display: block; src: url('Oswald/Oswald-700.ttf') format('truetype'); }
+@font-face { font-family: 'Pangolin'; font-style: normal; font-weight: 400; font-display: block; src: url('Pangolin/Pangolin-400.ttf') format('truetype'); }
 @font-face { font-family: 'Playfair Display'; font-style: italic; font-weight: 400; font-display: block; src: url('Playfair-Display/Playfair-Display-400-italic.ttf') format('truetype'); }
 @font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 400; font-display: block; src: url('Playfair-Display/Playfair-Display-400.ttf') format('truetype'); }
 @font-face { font-family: 'Playfair Display'; font-style: italic; font-weight: 700; font-display: block; src: url('Playfair-Display/Playfair-Display-700-italic.ttf') format('truetype'); }

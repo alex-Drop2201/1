@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>По референсу 070</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<style>
+  /* Референс 070 (сторис): чёрный фон; вверху слева жирная надпись в две строки, справа четыре точки и дата;
+     по центру мелкая строка прописными с широкими пробелами (x 16–75 %), под ней огромный строчный
+     геометрический гротеск в две строки: первая x 15,5–84 %, вторая со сдвигом вправо и значком чаши с хлебом;
+     ниже мелкая строка; внизу подпись с подчёркиванием. Верх и низ сдвинуты в безопасную зону сторис. */
+  :root { --fg: #EEF1EA; }
+  body, .canvas { background: #000; color: var(--fg); }
+  .brand { position: absolute; left: 82px; top: 262px; font: 800 46px/0.86 'Montserrat'; letter-spacing: -0.045em; text-transform: uppercase; }
+  .dots { position: absolute; right: 82px; top: 262px; text-align: right; font: 800 46px/0.86 'Montserrat'; letter-spacing: -0.045em; }
+  .dots i { display: inline-block; width: 32px; height: 32px; border-radius: 50%; background: var(--fg); margin-left: 6px; }
+  .small { position: absolute; left: 172px; font: 700 34px/1 'Montserrat'; letter-spacing: .06em; word-spacing: .7em; text-transform: uppercase; white-space: nowrap; }
+  .mark { position: absolute; left: 160px; font: 800 168px/0.84 'Montserrat'; letter-spacing: -0.055em; white-space: nowrap; }
+  .mark span { display: block; }
+  .mark .l2 { padding-left: 0.16em; }
+  .ref { position: absolute; left: 0; right: 0; top: 1236px; text-align: center; font: 700 27px/1 'Montserrat'; letter-spacing: .04em; text-transform: uppercase; }
+  .tag { position: absolute; left: 194px; right: 194px; top: 1512px; text-align: center; font: 600 23px/1 'Montserrat'; letter-spacing: .03em; word-spacing: .3em; text-transform: uppercase; padding-bottom: 18px; border-bottom: 3px solid var(--fg); }
+  svg { position: absolute; inset: 0; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <div class="brand">Вечеря<br>Господня</div>
+  <div class="dots"><i></i><i></i><i></i><i></i><br>01.11</div>
+  <div class="small" id="small">Делайте это</div>
+  <div class="mark" id="mark"><span id="l1">в память</span><span class="l2" id="l2">обо Мне</span></div>
+  <div class="ref">Луки 22:19</div>
+  <div class="tag">Воскресное служение · 10:00</div>
+  <svg id="art" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+</main>
+<script src="kit.js"></script>
+<script>
+  afterFonts(["800 168px 'Montserrat'", "700 34px 'Montserrat'"], () => {
+    const mark = document.getElementById('mark');
+    // Первая строка — на 68 % ширины, как «memória» в референсе; блок начинается на 41,9 % высоты.
+    fitWidth(document.getElementById('l1'), 736);
+    mark.style.fontSize = document.getElementById('l1').style.fontSize;
+    document.getElementById('l1').style.fontSize = '';
+    // Вторая строка вместе со значком (~190 px) не должна заходить дальше 89 % ширины.
+    const l2 = document.getElementById('l2').getBoundingClientRect();
+    const limit = 960 - 190;
+    if (l2.right > limit) {
+      const k = (limit - l2.left) / (l2.right - l2.left);
+      mark.style.fontSize = `${parseFloat(mark.style.fontSize) * k}px`;
+    }
+    mark.style.top = '804px';
+    const small = document.getElementById('small');
+    small.style.top = `${804 - small.offsetHeight - 14}px`;
+    // Значок чаши с хлебом сразу после второй строки.
+    const r = document.getElementById('l2').getBoundingClientRect();
+    const svg = document.getElementById('art');
+    const x = r.right + 16;
+    const base = r.bottom - 30;
+    const s = { fill: 'none', stroke: '#EEF1EA', 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+    svgEl(svg, 'path', { d: `M${x},${base - 104} L${x + 70},${base - 104} C${x + 68},${base - 44} ${x + 2},${base - 44} ${x},${base - 104} Z M${x + 35},${base - 60} L${x + 35},${base} M${x + 14},${base} L${x + 56},${base}`, ...s });
+    const bx = x + 84;
+    const by = base - 34;
+    svgEl(svg, 'ellipse', { cx: bx + 30, cy: by, rx: 34, ry: 25, transform: `rotate(-35 ${bx + 30} ${by})`, ...s });
+    svgEl(svg, 'path', { d: `M${bx + 12},${by + 12} l14,-20 M${bx + 30},${by + 14} l14,-20`, ...s, 'stroke-width': 6 });
+  });
+</script>
+</body>
+</html>
