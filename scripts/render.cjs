@@ -150,6 +150,8 @@ async function renderFile(browser, port, file, opts) {
     for (let node = walker.nextNode(); node; node = walker.nextNode()) {
       const text = node.textContent.trim();
       if (!text) continue;
+      // data-bleed — надпись намеренно уходит за край (как в референсе), её не проверяем.
+      if (node.parentElement && node.parentElement.closest('[data-bleed]')) continue;
       const range = document.createRange();
       range.selectNodeContents(node);
       const r = range.getBoundingClientRect();

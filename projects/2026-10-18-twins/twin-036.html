@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1440">
+<title>Близнец референса 036 — воскресные встречи</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 036 (3:4): сверху фото-лента 0–19 %, снизу 81–100 %, между ними сочный зелёный с зерном;
+     у верхнего края зелёного мелкие узкие подписи слева и справа; в центре значок, узкий гротеск,
+     узкая антиква крупнее и время узким гротеском — всё чёрным. */
+  :root { --green: #5FB05B; --ink: #111; }
+  body, .canvas { background: var(--green); color: var(--ink); }
+  .tiny { top: 281px; font: 600 17px/1.05 'Oswald'; text-transform: uppercase; letter-spacing: -0.01em; }
+  .c { left: 0; right: 0; text-align: center; white-space: nowrap; }
+  .sans { font: 700 70px/1 'Oswald'; text-transform: uppercase; letter-spacing: -0.01em; }
+  .serif { font: 700 116px/1 'Playfair Display'; text-transform: uppercase; letter-spacing: -0.02em; transform: scaleX(.72); }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="slot" style="left: 0; top: 0; width: 1080px; height: 272px;" data-ph="assets/ph-036-1.png"
+       data-need="люди общаются, улыбки, по пояс; горизонтальная лента" data-label="24,24"></div>
+  <div class="abs tiny" style="left: 4px;">Ссылка в профиле</div>
+  <div class="abs tiny" style="left: 891px;">Живём лучше<br>вместе</div>
+  <svg class="art" id="mark" width="1080" height="1440" viewBox="0 0 1080 1440"></svg>
+  <div class="abs c sans" style="top: 606px;">Воскресные</div>
+  <div class="abs c serif" style="top: 668px;">встречи</div>
+  <div class="abs c sans" style="top: 765px;">10:00 &amp; 12:30</div>
+  <div class="slot" style="left: 0; top: 1166px; width: 1080px; height: 274px;" data-ph="assets/ph-036-2.png"
+       data-need="встреча у входа: рукопожатие, «дай пять», смех" data-label="24,1190"></div>
+</main>
+<script src="twin.js"></script>
+<script>
+  initSlots();
+  // Значок: круг с горизонтальной чертой и звёздочка — на месте логотипа референса.
+  const svg = document.getElementById('mark');
+  const s = { fill: 'none', stroke: '#111', 'stroke-width': 3, 'stroke-linecap': 'round' };
+  svgEl(svg, 'circle', { cx: 530, cy: 547, r: 22, ...s });
+  svgEl(svg, 'line', { x1: 530, y1: 547, x2: 566, y2: 547, ...s });
+  for (let i = 0; i < 4; i++) {
+    const a = (i * Math.PI) / 4;
+    svgEl(svg, 'line', { x1: 572 - 20 * Math.cos(a), y1: 547 - 20 * Math.sin(a), x2: 572 + 20 * Math.cos(a), y2: 547 + 20 * Math.sin(a), ...s });
+  }
+</script>
+</body>
+</html>

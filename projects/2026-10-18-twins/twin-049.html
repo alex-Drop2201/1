@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Близнец референса 049 — Святая Вечеря</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 049 (вертикальный постер, у нас — сторис): светлый фон, к низу серее; сверху строка
+     «день — время — AM» разнесена по ширине; крупная каллиграфия и под ней огромный тяжёлый гротеск
+     с градиентом от серого к чёрному; ниже предметное фото (бокал вина и хлеб, длинные тени);
+     внизу адрес в две строки по центру. По вертикали подогнано под безопасную зону сторис. */
+  :root { --ink: #111; }
+  body { background: #e9e9e7; }
+  .canvas { background: linear-gradient(180deg, #F3F3F1 0%, #F1F1EF 60%, #D3D2D0 100%); color: var(--ink); }
+  .row { left: 151px; right: 162px; top: 268px; display: flex; justify-content: space-between; font: 800 27px/1 'Inter'; text-transform: uppercase; letter-spacing: -0.01em; }
+  .script { left: 120px; top: 380px; font: 400 230px/1 'Great Vibes'; color: #2a2a2a; white-space: nowrap; }
+  .heavy { left: 97px; top: 590px; font: 900 200px/0.9 'Inter'; letter-spacing: -0.05em; text-transform: uppercase; white-space: nowrap;
+           background: linear-gradient(180deg, #6d6d6d 0%, #1a1a1a 55%, #000 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .addr { left: 0; right: 0; top: 1500px; text-align: center; font: 400 27px/1.4 'Inter'; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="abs row"><span>Воскресенье</span><span>10:00</span><span>1 ноября</span></div>
+  <div class="slot" style="left: 108px; top: 845px; width: 864px; height: 620px; background: #efefed;" data-ph="assets/ph-049-1.png"
+       data-need="предметка: стакан вина и хлеб на белом, жёсткий свет, длинные тени" data-label="128,1380"></div>
+  <div class="abs script" id="script">Святая</div>
+  <div class="abs heavy" id="heavy">Вечеря</div>
+  <div class="abs addr">Адрес церкви — улица, дом<br>Название церкви</div>
+</main>
+<script src="twin.js"></script>
+<script>
+  initSlots();
+  afterFonts(["900 100px 'Inter'", "400 100px 'Great Vibes'"], () => {
+    fitWidth(document.getElementById('heavy'), 886);
+    fitWidth(document.getElementById('script'), 640);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1440">
+<title>Близнец референса 037 — дом Отца</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 037 (3:4): верхняя половина — светло-серое поле с мелким моноширинным текстом по сетке
+     (центр сверху, время по центру, город слева и справа на 31 %, две подписи по углам на 43 %);
+     нижняя половина — плёночное фото людей у входа. */
+  :root { --gray: #DBD9DA; --ink: #141414; }
+  body, .canvas { background: var(--gray); color: var(--ink); }
+  .m { font: 400 27px/1.2 'IBM Plex Mono'; text-transform: uppercase; letter-spacing: .02em; white-space: nowrap; }
+  .c { left: 0; right: 0; text-align: center; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="abs m c" style="top: 52px;">Воскресенья в<br>Доме Отца</div>
+  <div class="abs m c" style="top: 222px;">10:00<br>12:30</div>
+  <div class="abs m" style="left: 216px; top: 438px;">Ваш город</div>
+  <div class="abs m" style="left: 708px; top: 438px;">Ваш район</div>
+  <div class="abs m" style="left: 48px; top: 607px;">Дом<br>поклонения</div>
+  <div class="abs m" style="right: 48px; top: 607px; text-align: right;">Место встречи<br>с Иисусом</div>
+  <div class="slot" style="left: 0; top: 720px; width: 1080px; height: 720px;" data-ph="assets/ph-037-1.png"
+       data-need="люди у входа в церковь, солнечный день, плёночные тёплые цвета" data-label="24,1360"></div>
+</main>
+<script src="twin.js"></script>
+<script>initSlots();</script>
+</body>
+</html>

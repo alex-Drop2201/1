@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1080">
+<title>Близнец референса 015 — для гостей</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 015 («можно вариант для гостей»), сам флаер без макета-подложки: чёрный фон с огромными
+     бледными словами по углам; оранжевая плашка 1 (x 9–75 %, y 9–41 %) с узким сверхжирным словом,
+     перед ней вырезанный человек в ч/б; плашка 2 (x 32–85 %, y 45–72 %); справа дата столбиком;
+     слева время; ниже рамка «вход свободный», спикер оранжевым, справа инфо и тёмная плашка с адресом. */
+  :root { --orange: #F4502A; --bg: #181818; }
+  body, .canvas { background: var(--bg); color: #fff; }
+  .ghost { font: 900 300px/0.8 'Fira Sans Extra Condensed'; text-transform: uppercase; white-space: nowrap;
+           background: linear-gradient(180deg, #4a4a4a, #1c1c1c 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .block { position: absolute; background: var(--orange); overflow: hidden; }
+  .block span { position: absolute; left: 12px; top: 0; font: 900 200px/0.8 'Fira Sans Extra Condensed'; color: #121212;
+                text-transform: uppercase; white-space: nowrap; transform-origin: left top; }
+  .date { left: 846px; top: 279px; font: 900 58px/0.92 'Fira Sans Extra Condensed'; letter-spacing: .02em;
+          background: linear-gradient(180deg, #fff, #9a9a9a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .time { left: 130px; top: 662px; font: 800 58px/0.95 'Montserrat'; letter-spacing: -0.03em;
+          background: linear-gradient(180deg, #fff, #a5a5a5); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .free { left: 342px; top: 815px; width: 246px; height: 49px; border: 2px solid var(--orange); display: flex; align-items: center; justify-content: center;
+          font: 500 23px/1 'Montserrat'; color: var(--orange); letter-spacing: .01em; }
+  .spk-label { left: 300px; top: 940px; width: 120px; transform: rotate(-90deg); font: 700 13px/1 'Montserrat'; letter-spacing: .14em; text-transform: uppercase; text-align: center; }
+  .spk { left: 368px; top: 889px; font: 800 52px/0.92 'Montserrat'; letter-spacing: -0.03em; color: var(--orange); text-transform: uppercase; }
+  .info { left: 708px; top: 830px; font: 700 14px/1.35 'Montserrat'; text-transform: uppercase; letter-spacing: .02em; }
+  .addr { left: 691px; top: 908px; width: 266px; height: 95px; background: #232323; padding: 16px 18px; font: 700 14px/1.45 'Montserrat'; text-transform: uppercase; letter-spacing: .02em; }
+</style>
+</head>
+<body>
+<main class="canvas grain-light">
+  <div class="abs ghost" data-bleed style="left: 800px; top: -40px;">Ждём</div>
+  <div class="abs ghost" data-bleed style="left: -60px; top: 880px;">тебя</div>
+  <div class="block" style="left: 98px; top: 95px; width: 711px; height: 347px;"><span id="w1" data-bleed>Ждём</span></div>
+  <svg class="art" id="person" width="1080" height="1080" viewBox="0 0 1080 1080"></svg>
+  <div class="block" style="left: 341px; top: 490px; width: 578px; height: 283px;"><span id="w2" data-bleed>тебя</span></div>
+  <div class="abs date">25<br>10<br>26</div>
+  <div class="abs time">10:00<br>12:30</div>
+  <div class="abs free">Вход свободный</div>
+  <div class="abs spk-label">Проповедь</div>
+  <div class="abs spk">Пастор<br>Иван</div>
+  <div class="abs info">Подробнее<br>ссылка в профиле</div>
+  <div class="abs addr">Наша церковь<br>адрес здесь<br>город, улица</div>
+  <div class="need" style="left: 560px; top: 150px;">Фото: поющий человек с микрофоном, ч/б, без фона (PNG)</div>
+</main>
+<script src="twin.js"></script>
+<script>
+  // Вырезанный человек стоит перед первой плашкой и касается второй.
+  drawBust(document.getElementById('person'), 330, 140, 400, 357, { fill: '#8d8a86' });
+
+  afterFonts(["900 100px 'Fira Sans Extra Condensed'", "800 52px 'Montserrat'"], () => {
+    // Слово растягиваем по ширине плашки и по высоте до ~95 %, как сверхузкий шрифт референса.
+    for (const [id, w, h] of [['w1', 690, 347], ['w2', 556, 283]]) {
+      const el = document.getElementById(id);
+      fitWidth(el, w);
+      const r = el.getBoundingClientRect();
+      const capH = parseFloat(el.style.fontSize) * 0.69;
+      const k = (h * 0.9) / capH;
+      el.style.transform = `scaleY(${k.toFixed(3)})`;
+      el.style.top = `${h * 0.05 - (parseFloat(el.style.fontSize) * 0.8 - capH) * 0.5 * k}px`;
+    }
+  });
+</script>
+</body>
+</html>

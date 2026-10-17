@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1440">
+<title>Близнец референса 072 — В Его присутствии</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 072 (3:4): светлая шершавая бумага с крапом; сверху по центру название церкви, значок и красный
+     бейдж; огромный узкий заголовок — первая строка чёрным, вторая красным; под ним мелкий текст слева;
+     ч/б фото людей в объятиях с полутоном занимает центр и низ; справа дата узким шрифтом (чёрный + красный);
+     на фото белым «проповедь / имя»; внизу чёрная полоса со скошенным краем: призыв красным, время, адрес. */
+  :root { --paper: #E8E9E8; --ink: #111; --red: #D10A0A; }
+  body, .canvas { background: var(--paper); color: var(--ink); }
+  .cond { font-family: 'Fira Sans Extra Condensed'; font-weight: 900; text-transform: uppercase; white-space: nowrap; }
+  .t1 { left: 210px; top: 196px; font-size: 200px; line-height: .8; color: var(--ink); transform-origin: left top; }
+  .t2 { left: 172px; top: 455px; font-size: 200px; line-height: .8; color: var(--red); transform-origin: left top; }
+  .small { left: 172px; top: 655px; font: 800 17px/1.02 'Oswald'; text-transform: uppercase; z-index: 5; }
+  .name { left: 250px; top: 80px; text-align: right; font: 700 25px/0.95 'Oswald'; text-transform: uppercase; }
+  .badge { left: 637px; top: 86px; padding: 8px 16px; border-radius: 10px; background: var(--red); color: #fff; font: 700 24px/0.95 'Oswald'; text-transform: uppercase; }
+  .date { left: 925px; top: 860px; font: 700 64px/0.9 'Fira Sans Extra Condensed'; text-transform: uppercase; z-index: 5; }
+  .date .r { color: var(--red); }
+  .spk { left: 0; right: 0; top: 1020px; text-align: center; font: 700 46px/0.95 'Oswald'; color: #fff; text-transform: uppercase; z-index: 5; }
+  .band { position: absolute; left: 0; right: 0; bottom: 0; height: 290px; background: #0f0f0f; clip-path: polygon(0 18%, 100% 4%, 100% 100%, 0 100%); z-index: 4; }
+  .bottom { left: 128px; right: 66px; top: 1330px; display: flex; align-items: center; justify-content: space-between; z-index: 5; }
+  .join { font: 900 62px/1 'Fira Sans Extra Condensed'; color: var(--red); text-transform: uppercase; }
+  .time { font: 300 58px/1 'Oswald'; color: #fff; }
+  .time b { font-weight: 300; color: var(--red); }
+  .where { font: 700 26px/1 'Montserrat'; color: #fff; text-transform: uppercase; letter-spacing: -0.01em; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <svg class="art" id="specks" width="1080" height="1440" viewBox="0 0 1080 1440"></svg>
+  <div class="abs name">Название<br>вашей<br>церкви</div>
+  <svg class="art" id="icon" width="1080" height="1440" viewBox="0 0 1080 1440"></svg>
+  <div class="abs badge">Служение<br>в среду</div>
+  <div class="slot" style="left: 170px; top: 605px; width: 845px; height: 760px; filter: grayscale(1) contrast(1.15);" data-ph="assets/ph-072-1.png"
+       data-need="люди обнимаются кругом, молятся вместе; ч/б, крупно" data-label="190,1150"></div>
+  <div class="abs cond t1" id="t1">В Его</div>
+  <div class="abs cond t2" id="t2">присутствии</div>
+  <div class="abs small">Время<br>поклонения,<br>единства<br>и обновления</div>
+  <div class="abs date">Ср<br>21-е<br><span class="r">окт<br>2026.</span></div>
+  <div class="abs spk">Проповедь<br>пастор Иван</div>
+  <div class="band"></div>
+  <div class="abs bottom"><span class="join">Приходи!</span><span class="time">19:00 <b>МСК</b></span><span class="where">@ главный зал<br>адрес церкви</span></div>
+</main>
+<script src="twin.js"></script>
+<script>
+  initSlots();
+  const random = rng(72);
+  const specks = document.getElementById('specks');
+  for (let i = 0; i < 900; i++) {
+    svgEl(specks, 'circle', { cx: (random() * 1080).toFixed(1), cy: (random() * 1440).toFixed(1), r: (0.4 + random() * 1.3).toFixed(2), fill: '#111', 'fill-opacity': (0.05 + random() * 0.2).toFixed(2) });
+  }
+  // Значок церкви в круге — на месте логотипа референса.
+  const icon = document.getElementById('icon');
+  const s = { fill: 'none', stroke: '#111', 'stroke-width': 3, 'stroke-linejoin': 'round' };
+  svgEl(icon, 'circle', { cx: 580, cy: 112, r: 44, ...s });
+  svgEl(icon, 'path', { d: 'M552,140 L552,112 L580,90 L608,112 L608,140 Z M572,140 L572,124 Q580,114 588,124 L588,140', ...s });
+  svgEl(icon, 'path', { d: 'M580,90 L580,52 M570,62 L590,62', ...s });
+
+  afterFonts(["900 100px 'Fira Sans Extra Condensed'", "700 25px 'Oswald'"], () => {
+    // Первая строка — x 19,5–76 %, вторая — x 16–86 %; по высоте растянуты до прописных 230 и 171 px.
+    for (const [id, w, cap] of [['t1', 610, 230], ['t2', 756, 171]]) {
+      const el = document.getElementById(id);
+      fitWidth(el, w);
+      const k = cap / (parseFloat(el.style.fontSize) * 0.69);
+      el.style.transform = `scaleY(${k.toFixed(3)})`;
+    }
+  });
+</script>
+</body>
+</html>

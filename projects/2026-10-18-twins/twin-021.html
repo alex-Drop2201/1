@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Близнец референса 021 — расписание недели</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 021 («для расписания»): тёмно-коричневый фон с едва заметными линиями рельефа; вверху слева
+     горчичный строчный заголовок в две строки и подпись от руки, справа логотип; четыре тёмные скруглённые
+     карточки «лесенкой» (фото слева / справа по очереди), в фото-плашке горчичного цвета ч/б люди без фона;
+     в карточке: дата, «что | время», название горчичным; внизу адрес, линия, контакт. */
+  :root { --bg: #2A2620; --card: #1E1B17; --mustard: #C09C54; --white: #F1EEE8; }
+  body, .canvas { background: var(--bg); color: var(--white); }
+  .head { left: 58px; top: 32px; font: 800 82px/0.78 'Montserrat'; letter-spacing: -0.06em; color: var(--mustard); }
+  .sign { left: 140px; top: 150px; font: 400 40px/1 'Great Vibes'; color: #d9d2c4; transform: rotate(-10deg); }
+  .logo { right: 76px; top: 52px; text-align: center; font: 800 40px/0.9 'Montserrat'; letter-spacing: -0.03em; text-transform: uppercase; transform: skewX(-8deg); }
+  .logo small { display: block; margin-top: 8px; font: 600 11px/1 'Montserrat'; letter-spacing: .3em; transform: none; }
+  .card { position: absolute; background: var(--card); border-radius: 34px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .pic { position: absolute; background: var(--mustard); border-radius: 24px; }
+  .txt { position: absolute; }
+  .txt .d { font: 500 33px/1 'Montserrat'; letter-spacing: -0.01em; text-transform: uppercase; }
+  .txt .c { margin-top: 12px; font: 400 21px/1.1 'Montserrat'; text-transform: uppercase; }
+  .txt .n { margin-top: 10px; font: 700 28px/1 'Montserrat'; color: var(--mustard); text-transform: uppercase; letter-spacing: -0.01em; }
+  .txt hr { width: 160px; border: 0; border-top: 1.5px solid var(--white); margin: 22px 0 18px; }
+  .foot { left: 58px; right: 58px; bottom: 50px; display: flex; align-items: flex-end; gap: 16px; font: 500 13px/1.25 'Montserrat'; text-transform: uppercase; }
+  .foot i { flex: 1; height: 1px; background: var(--white); margin-bottom: 4px; }
+  .foot .r { text-align: right; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <svg class="art" id="topo" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="abs head">эта<br>неделя</div>
+  <div class="abs sign">с нами</div>
+  <div class="abs logo">Наша<br>церковь<small>логотип</small></div>
+
+  <div class="card" style="left: 108px; top: 225px; width: 680px; height: 225px;"></div>
+  <div class="pic" style="left: 119px; top: 243px; width: 313px; height: 189px;"></div>
+  <div class="txt" style="left: 480px; top: 280px;"><div class="d">Вт 20 окт</div><div class="c">Молитва | 19:00</div><div class="n">Молитвенный вечер</div></div>
+
+  <div class="card" style="left: 246px; top: 476px; width: 730px; height: 229px;"></div>
+  <div class="pic" style="left: 633px; top: 493px; width: 317px; height: 196px;"></div>
+  <div class="txt" style="left: 302px; top: 532px;"><div class="d">Чт 22 окт</div><div class="c">Библия | 19:30</div><div class="n">Изучение Библии</div></div>
+
+  <div class="card" style="left: 108px; top: 724px; width: 680px; height: 221px;"></div>
+  <div class="pic" style="left: 119px; top: 742px; width: 313px; height: 190px;"></div>
+  <div class="txt" style="left: 480px; top: 778px;"><div class="d">Пт 23 окт</div><div class="c">Молодёжь | 19:00</div><div class="n">Молодёжный вечер</div></div>
+
+  <div class="card" style="left: 246px; top: 970px; width: 730px; height: 232px;"></div>
+  <div class="pic" style="left: 633px; top: 990px; width: 317px; height: 196px;"></div>
+  <div class="txt" style="left: 294px; top: 994px;"><div class="d">Вс 25 окт</div><div class="c">Служение | 10:00</div><div class="n">Первое служение</div><hr><div class="c" style="margin-top: 0">Служение | 12:30</div><div class="n">Второе служение</div></div>
+
+  <svg class="art" id="people" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="abs foot"><span>Адрес церкви<br>город, улица, дом</span><i></i><span class="r">Вопросы:<br>ссылка в профиле</span></div>
+  <div class="need" style="left: 640px; top: 1210px; max-width: 380px;">Фото: люди со служений без фона (PNG), по 1–3 на карточку</div>
+</main>
+<script src="twin.js"></script>
+<script>
+  // Едва заметные линии рельефа на фоне.
+  const topo = document.getElementById('topo');
+  const random = rng(2112);
+  for (let k = 0; k < 18; k++) {
+    const pts = [];
+    const base = -100 + k * 90;
+    for (let x = -40; x <= 1120; x += 80) pts.push([x, base + Math.sin(x / 160 + k) * 40 + random() * 20]);
+    svgEl(topo, 'path', { d: smoothOpen(pts), fill: 'none', stroke: '#3a342c', 'stroke-width': 1.2, 'stroke-opacity': 0.6 });
+  }
+  // Люди без фона в фото-плашках: голова первого выходит за верх плашки, как в референсе.
+  const people = document.getElementById('people');
+  const gray = { fill: '#8f8b85' };
+  drawBust(people, 190, 205, 170, 227, gray);
+  drawBust(people, 660, 520, 120, 169, gray); drawBust(people, 760, 505, 120, 184, gray); drawBust(people, 850, 525, 100, 164, gray);
+  drawBust(people, 140, 725, 130, 207, gray); drawBust(people, 250, 735, 140, 197, gray);
+  drawBust(people, 660, 970, 140, 216, gray); drawBust(people, 790, 985, 140, 201, gray);
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Близнец референса 003 — воскресенье</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 003: фото зала с поднятыми руками на весь кадр; служебная строка на 22,6 % высоты
+     (x 14–86,8 %, линия 32–61 %); три строки белого гротеска прописными, каждая выровнена на одну ширину 73 %
+     (x 13,9–86,4 %), верх строк на 26,2 / 35,0 / 43,7 % высоты. */
+  body, .canvas { background: #8f8a86; color: #F4F4F2; }
+  .meta { left: 151px; right: 143px; top: 298px; display: flex; align-items: center; gap: 18px; z-index: 5;
+          font: 700 15px/1 'Inter'; text-transform: uppercase; letter-spacing: -0.005em; }
+  .meta i { flex: 0 0 310px; height: 1.5px; background: #F4F4F2; }
+  .meta .r { margin-left: auto; }
+  .line { left: 150px; font: 900 128px/0.885 'Inter'; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap; z-index: 5; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="slot" style="left: 0; top: 0; width: 1080px; height: 1350px;" data-ph="assets/ph-003-1.png"
+       data-need="поклонение: зал со спины, поднятые руки; светлый верх кадра под текст" data-label="40,1220"></div>
+  <div class="abs meta"><span>Ты приглашён</span><i></i><span class="r">10:00 | 12:30</span></div>
+  <div class="abs line" id="l1">Почему стоит</div>
+  <div class="abs line" id="l2">прийти в это</div>
+  <div class="abs line" id="l3">воскресенье</div>
+</main>
+<script src="twin.js"></script>
+<script>
+  initSlots();
+  afterFonts(["900 100px 'Inter'"], () => {
+    [['l1', 354], ['l2', 472], ['l3', 590]].forEach(([id, capTop]) => {
+      const el = document.getElementById(id);
+      fitWidth(el, 788);
+      el.style.top = `${capTop - 0.079 * parseFloat(el.style.fontSize)}px`;
+    });
+  });
+</script>
+</body>
+</html>

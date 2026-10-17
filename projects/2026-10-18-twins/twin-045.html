@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Близнец референса 045 — увидимся в воскресенье</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 045: голубое небо с облаками; рекламный щит от 10 % ширины до правого края (y 23,7–71,7 %),
+     под ним тёмная балка с кронштейнами, слева площадка с перилами, по центру справа опора с лестницей;
+     на щите тёмно-коричневый плотный гротеск в три строки, оливковая звёздочка от руки слева сверху
+     и надпись от руки справа. Небо и щит нарисованы, фото не нужно. */
+  :root { --board: #DADAD8; --ink: #30240C; --sage: #A9A57E; }
+  body { background: #8fb1dc; }
+  .canvas { background: linear-gradient(180deg, #7FA6D8 0%, #9FBDE3 55%, #B4CBE8 100%); }
+  .board { left: 108px; top: 320px; width: 972px; height: 648px;
+           background: linear-gradient(180deg, #e2e2e0, var(--board) 60%, #cfcfcc); box-shadow: 0 2px 0 rgba(0,0,0,.08); }
+  .msg { left: 160px; top: 528px; font: 800 110px/0.97 'Inter'; letter-spacing: -0.055em; color: var(--ink); white-space: nowrap; }
+  .hand { left: 830px; top: 452px; font: 400 40px/1.02 'Pangolin'; color: var(--ink); text-transform: uppercase; transform: rotate(9deg); letter-spacing: .04em; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <svg class="art" id="sky" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <svg class="art" id="frame" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="abs board"></div>
+  <svg class="art" id="star" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="abs msg">Увидимся<br>в воскресенье<br>в 10:30!</div>
+  <div class="abs hand">приходи<br>&nbsp;как<br>&nbsp;есть</div>
+</main>
+<script src="twin.js"></script>
+<script>
+  // Облака: шум, отсечённый порогом и размытый, белым по небу.
+  const sky = document.getElementById('sky');
+  const defs = svgEl(sky, 'defs');
+  const f = svgEl(defs, 'filter', { id: 'clouds', x: 0, y: 0, width: '100%', height: '100%' });
+  svgEl(f, 'feTurbulence', { type: 'fractalNoise', baseFrequency: '0.0035 0.006', numOctaves: 5, seed: 12, result: 'n' });
+  svgEl(f, 'feColorMatrix', { in: 'n', type: 'matrix', values: '0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 -3.2 0 1.72', result: 'c' });
+  svgEl(f, 'feGaussianBlur', { in: 'c', stdDeviation: 2.5 });
+  svgEl(sky, 'rect', { width: 1080, height: 1350, filter: 'url(#clouds)', opacity: 0.92 });
+
+  // Конструкция щита: балка с кронштейнами, площадка с перилами, опора с лестницей.
+  const fr = document.getElementById('frame');
+  const dark = '#2b2d30';
+  svgEl(fr, 'rect', { x: 1000 - 70, y: 990, width: 0, height: 0 });
+  svgEl(fr, 'rect', { x: 840, y: 980, width: 78, height: 370, fill: '#3a3c40' });
+  svgEl(fr, 'rect', { x: 846, y: 980, width: 18, height: 370, fill: '#55585d' });
+  for (let y = 1000; y < 1350; y += 30) svgEl(fr, 'line', { x1: 930, y1: y, x2: 950, y2: y, stroke: dark, 'stroke-width': 3 });
+  svgEl(fr, 'line', { x1: 930, y1: 980, x2: 930, y2: 1350, stroke: dark, 'stroke-width': 3 });
+  svgEl(fr, 'line', { x1: 950, y1: 980, x2: 950, y2: 1350, stroke: dark, 'stroke-width': 3 });
+  svgEl(fr, 'rect', { x: 0, y: 968, width: 1080, height: 16, fill: dark });
+  for (const x of [148, 400, 640, 1010]) svgEl(fr, 'rect', { x, y: 984, width: 54, height: 30, fill: dark });
+  svgEl(fr, 'rect', { x: 0, y: 878, width: 140, height: 6, fill: dark });
+  for (let x = 6; x <= 136; x += 16) svgEl(fr, 'line', { x1: x, y1: 884, x2: x, y2: 968, stroke: dark, 'stroke-width': 3 });
+  svgEl(fr, 'rect', { x: 0, y: 960, width: 140, height: 8, fill: dark });
+
+  // Оливковая звёздочка от руки.
+  const star = document.getElementById('star');
+  const random = rng(45);
+  for (let i = 0; i < 4; i++) {
+    const a = (i * Math.PI) / 4 + 0.2;
+    const r = 34 + random() * 8;
+    svgEl(star, 'line', { x1: 192 - r * Math.cos(a), y1: 425 - r * Math.sin(a), x2: 192 + r * Math.cos(a), y2: 425 + r * Math.sin(a),
+      stroke: '#A9A57E', 'stroke-width': 7, 'stroke-linecap': 'round' });
+  }
+</script>
+</body>
+</html>

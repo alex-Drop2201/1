@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Близнец референса 006 — заметки с проповеди</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 006: тёмный гранжевый фон с горчичным дуотоном толпы; вверху слева белый рисованный овал
+     с надписью кистью и белая стрелка; поперёк кадра на 20–38 % высоты огромная надпись кистью горчичным;
+     по центру снизу вырезанный проповедник с толстой горчичной обводкой (x 25–85 %, от 33 % до низа);
+     слева овал с именем и стрелкой; справа внизу дата маркером на полоске скотча. */
+  :root { --mustard: #F0A80C; --dark: #1a1a1a; }
+  body, .canvas { background: var(--dark); }
+  .slot.bg .ph { filter: blur(34px) grayscale(1) contrast(1.4) brightness(.85); }
+  .duo { position: absolute; inset: 0; background: #C48C0E; mix-blend-mode: multiply; z-index: 2; }
+  .brush { font: 400 150px/1 'Comforter Brush'; color: var(--mustard); -webkit-text-stroke: 6px var(--mustard); white-space: nowrap; }
+  .title { left: 94px; top: 280px; transform: rotate(-4deg) scaleY(1.45); transform-origin: left center; z-index: 3; }
+  .tape { left: 702px; top: 1120px; width: 302px; height: 135px; background: #E3E3E3; transform: rotate(-4deg); z-index: 7;
+          display: flex; align-items: center; justify-content: center; font: 700 78px/1 'Caveat'; color: #141414; box-shadow: 0 6px 14px rgba(0,0,0,.35); }
+  .note { z-index: 7; text-align: center; font: 400 60px/0.9 'Comforter Brush'; color: var(--mustard); -webkit-text-stroke: 1.2px var(--mustard); }
+</style>
+</head>
+<body>
+<main class="canvas grain-light">
+  <div class="slot bg" style="left: 0; top: 0; width: 1080px; height: 1350px; z-index: 1;" data-ph="assets/ph-006-1.png"
+       data-need="фон: люди в зале, крупные лица — уйдёт в горчичный дуотон" data-label="40,40"></div>
+  <div class="duo"></div>
+  <svg class="art" id="scratch" width="1080" height="1350" viewBox="0 0 1080 1350" style="z-index: 3"></svg>
+  <div class="abs brush title" id="title">Заметки с проповеди</div>
+  <svg class="art" id="person" width="1080" height="1350" viewBox="0 0 1080 1350" style="z-index: 4"></svg>
+  <svg class="art" id="marks" width="1080" height="1350" viewBox="0 0 1080 1350" style="z-index: 6"></svg>
+  <div class="abs note" style="left: 210px; top: 125px; width: 280px; transform: rotate(-8deg);">Бог видит<br>сердце!!!</div>
+  <div class="abs note" style="left: 90px; top: 752px; width: 240px; font-size: 54px; transform: rotate(-20deg);">Пастор Иван</div>
+  <div class="abs tape">18.10.26</div>
+  <div class="need" style="left: 300px; top: 1080px; z-index: 8;">Фото: проповедник с микрофоном, по пояс, без фона (PNG)</div>
+</main>
+<script src="twin.js"></script>
+<script>
+  initSlots();
+  const random = rng(421);
+  const scratch = document.getElementById('scratch');
+  for (let i = 0; i < 60; i++) {
+    const x = random() * 1080;
+    const y = random() * 1350;
+    const len = 40 + random() ** 2 * 360;
+    const a = Math.PI / 2 + (random() - 0.5) * 0.5;
+    svgEl(scratch, 'line', { x1: x, y1: y, x2: x + len * Math.cos(a), y2: y + len * Math.sin(a), stroke: '#fff', 'stroke-width': (0.5 + random()).toFixed(2), 'stroke-opacity': (0.05 + random() * 0.12).toFixed(2) });
+  }
+  // Вырезанный проповедник: заглушка-силуэт с толстой горчичной обводкой.
+  drawBust(document.getElementById('person'), 270, 445, 648, 905, { fill: '#9a968f', outline: '#F0A80C', width: 16 });
+
+  const marks = document.getElementById('marks');
+  const white = { fill: 'none', stroke: '#F4F2EE', 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+  svgEl(marks, 'path', { d: handOval(350, 180, 142, 105, random, 1.06), ...white, transform: 'rotate(-8 350 180)' });
+  svgEl(marks, 'path', { d: handOval(205, 790, 128, 56, random, 1.08), ...white, transform: 'rotate(-20 205 790)' });
+  svgEl(marks, 'path', { d: handArrow([475, 205], [612, 312], -0.12, 30), ...white });
+  svgEl(marks, 'path', { d: handArrow([330, 712], [430, 650], -0.15, 26), ...white });
+
+  afterFonts(["400 100px 'Comforter Brush'", "700 78px 'Caveat'"], () => {
+    fitWidth(document.getElementById('title'), 940);
+  });
+</script>
+</body>
+</html>

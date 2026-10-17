@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Близнец референса 001 — крещение</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="twin.css">
+<style>
+  /* Референс 001 («для крещения»): фото на весь кадр с зерном; на 23 % высоты служебная строка
+     «время — линия — ссылка» (x 14,6–86,2 %); ниже два ряда огромного белого гротеска прописными,
+     x 12–87 %, первая строка начинается на 26,4 % высоты. */
+  body, .canvas { background: #1f3d43; color: #F2F2F2; }
+  .meta { left: 158px; right: 149px; top: 304px; display: flex; align-items: center; gap: 16px; z-index: 5;
+          font: 700 16px/1 'Inter'; text-transform: uppercase; letter-spacing: -0.005em; }
+  .meta i { flex: 1; height: 1.5px; background: #F2F2F2; }
+  .title { left: 128px; font: 900 190px/0.885 'Inter'; letter-spacing: -0.045em; text-transform: uppercase; z-index: 5; white-space: nowrap; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="slot" style="left: 0; top: 0; width: 1080px; height: 1350px;" data-ph="assets/ph-001-1.png"
+       data-need="крещение: человек в воде, брызги, эмоция; рука поверх букв — отдельным вырезанным слоем" data-label="40,1220"></div>
+  <div class="abs meta"><span>10:00</span><i></i><span>Ссылка в профиле</span></div>
+  <div class="abs title" id="title"><span id="t1">День</span><br><span id="t2">крещения</span></div>
+</main>
+<script src="twin.js"></script>
+<script>
+  initSlots();
+  afterFonts(["900 100px 'Inter'"], () => {
+    const title = document.getElementById('title');
+    const t2 = document.getElementById('t2');
+    fitWidth(t2, 810);
+    const f = parseFloat(t2.style.fontSize);
+    title.style.fontSize = `${f}px`;
+    t2.style.fontSize = '';
+    // Верх прописных первой строки — на 26,4 % высоты (356 px).
+    title.style.top = `${356 - 0.079 * f}px`;
+  });
+</script>
+</body>
+</html>
