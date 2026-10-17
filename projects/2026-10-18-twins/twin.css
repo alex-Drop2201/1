@@ -9,6 +9,9 @@ svg.art { position: absolute; inset: 0; }
 .slot { position: absolute; overflow: hidden; background: #5c5a57; }
 .slot .ph { position: absolute; inset: -70px; background-size: cover; background-position: center; filter: blur(34px); }
 .slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Вырезанный человек (PNG без фона); .cutbox обрезает его по низу фото-плашки, голова может выходить вверх. */
+.cut { position: absolute; display: block; }
+.cutbox { position: absolute; overflow: hidden; }
 .need {
   position: absolute; z-index: 40; padding: 8px 12px; max-width: 420px;
   font: 600 15px/1.3 'IBM Plex Mono', monospace; letter-spacing: .05em; text-transform: uppercase;

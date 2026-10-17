@@ -22,6 +22,9 @@
   .date { left: 925px; top: 860px; font: 700 64px/0.9 'Fira Sans Extra Condensed'; text-transform: uppercase; z-index: 5; }
   .date .r { color: var(--red); }
   .spk { left: 0; right: 0; top: 1020px; text-align: center; font: 700 46px/0.95 'Oswald'; color: #fff; text-transform: uppercase; z-index: 5; }
+  /* Фото растворяется в бумаге сверху и справа, как в референсе: подпись и дата лежат на светлом. */
+  .fade { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 26%), linear-gradient(270deg, transparent 0, #000 22%);
+          -webkit-mask-composite: source-in; mask-composite: intersect; }
   .band { position: absolute; left: 0; right: 0; bottom: 0; height: 290px; background: #0f0f0f; clip-path: polygon(0 18%, 100% 4%, 100% 100%, 0 100%); z-index: 4; }
   .bottom { left: 128px; right: 66px; top: 1330px; display: flex; align-items: center; justify-content: space-between; z-index: 5; }
   .join { font: 900 62px/1 'Fira Sans Extra Condensed'; color: var(--red); text-transform: uppercase; }
@@ -36,7 +39,7 @@
   <div class="abs name">Название<br>вашей<br>церкви</div>
   <svg class="art" id="icon" width="1080" height="1440" viewBox="0 0 1080 1440"></svg>
   <div class="abs badge">Служение<br>в среду</div>
-  <div class="slot" style="left: 170px; top: 605px; width: 845px; height: 760px; filter: grayscale(1) contrast(1.15);" data-ph="assets/ph-072-1.png"
+  <div class="slot fade" style="left: 170px; top: 605px; width: 845px; height: 760px; filter: grayscale(1) contrast(1.15);" data-src="assets/072.jpg" data-ph="assets/ph-072-1.png"
        data-need="люди обнимаются кругом, молятся вместе; ч/б, крупно" data-label="190,1150"></div>
   <div class="abs cond t1" id="t1">В Его</div>
   <div class="abs cond t2" id="t2">присутствии</div>

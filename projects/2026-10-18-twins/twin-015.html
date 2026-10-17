@@ -15,6 +15,7 @@
   body, .canvas { background: var(--bg); color: #fff; }
   .ghost { font: 900 300px/0.8 'Fira Sans Extra Condensed'; text-transform: uppercase; white-space: nowrap;
            background: linear-gradient(180deg, #4a4a4a, #1c1c1c 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .singer { left: 455px; top: 112px; width: 360px; filter: grayscale(1) contrast(1.15); }
   .block { position: absolute; background: var(--orange); overflow: hidden; }
   .block span { position: absolute; left: 12px; top: 0; font: 900 200px/0.8 'Fira Sans Extra Condensed'; color: #121212;
                 text-transform: uppercase; white-space: nowrap; transform-origin: left top; }
@@ -35,7 +36,7 @@
   <div class="abs ghost" data-bleed style="left: 800px; top: -40px;">Ждём</div>
   <div class="abs ghost" data-bleed style="left: -60px; top: 880px;">тебя</div>
   <div class="block" style="left: 98px; top: 95px; width: 711px; height: 347px;"><span id="w1" data-bleed>Ждём</span></div>
-  <svg class="art" id="person" width="1080" height="1080" viewBox="0 0 1080 1080"></svg>
+  <img class="cut singer" src="assets/015-singer.png" alt="">
   <div class="block" style="left: 341px; top: 490px; width: 578px; height: 283px;"><span id="w2" data-bleed>тебя</span></div>
   <div class="abs date">25<br>10<br>26</div>
   <div class="abs time">10:00<br>12:30</div>
@@ -44,13 +45,9 @@
   <div class="abs spk">Пастор<br>Иван</div>
   <div class="abs info">Подробнее<br>ссылка в профиле</div>
   <div class="abs addr">Наша церковь<br>адрес здесь<br>город, улица</div>
-  <div class="need" style="left: 560px; top: 150px;">Фото: поющий человек с микрофоном, ч/б, без фона (PNG)</div>
 </main>
 <script src="twin.js"></script>
 <script>
-  // Вырезанный человек стоит перед первой плашкой и касается второй.
-  drawBust(document.getElementById('person'), 330, 140, 400, 357, { fill: '#8d8a86' });
-
   afterFonts(["900 100px 'Fira Sans Extra Condensed'", "800 52px 'Montserrat'"], () => {
     // Слово растягиваем по ширине плашки и по высоте до ~95 %, как сверхузкий шрифт референса.
     for (const [id, w, h] of [['w1', 690, 347], ['w2', 556, 283]]) {

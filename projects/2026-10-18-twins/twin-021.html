@@ -20,6 +20,9 @@
   .card { position: absolute; background: var(--card); border-radius: 34px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
   .pic { position: absolute; background: var(--mustard); border-radius: 24px; }
   .txt { position: absolute; }
+  /* Люди без фона в ч/б: низ обрезан по плашке, головы выходят вверх. */
+  .cutbox { border-radius: 0 0 24px 24px; }
+  .cutbox img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); filter: grayscale(1) contrast(1.1); }
   .txt .d { font: 500 33px/1 'Montserrat'; letter-spacing: -0.01em; text-transform: uppercase; }
   .txt .c { margin-top: 12px; font: 400 21px/1.1 'Montserrat'; text-transform: uppercase; }
   .txt .n { margin-top: 10px; font: 700 28px/1 'Montserrat'; color: var(--mustard); text-transform: uppercase; letter-spacing: -0.01em; }
@@ -52,9 +55,11 @@
   <div class="pic" style="left: 633px; top: 990px; width: 317px; height: 196px;"></div>
   <div class="txt" style="left: 294px; top: 994px;"><div class="d">Вс 25 окт</div><div class="c">Служение | 10:00</div><div class="n">Первое служение</div><hr><div class="c" style="margin-top: 0">Служение | 12:30</div><div class="n">Второе служение</div></div>
 
-  <svg class="art" id="people" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="cutbox" style="left: 119px; top: 123px; width: 313px; height: 309px;"><img src="assets/021-1.png" style="width: 200px;" alt=""></div>
+  <div class="cutbox" style="left: 633px; top: 373px; width: 317px; height: 316px;"><img src="assets/021-2.png" style="width: 370px;" alt=""></div>
+  <div class="cutbox" style="left: 119px; top: 622px; width: 313px; height: 310px;"><img src="assets/021-3.png" style="width: 300px;" alt=""></div>
+  <div class="cutbox" style="left: 633px; top: 870px; width: 317px; height: 316px;"><img src="assets/021-4.png" style="width: 290px;" alt=""></div>
   <div class="abs foot"><span>Адрес церкви<br>город, улица, дом</span><i></i><span class="r">Вопросы:<br>ссылка в профиле</span></div>
-  <div class="need" style="left: 640px; top: 1210px; max-width: 380px;">Фото: люди со служений без фона (PNG), по 1–3 на карточку</div>
 </main>
 <script src="twin.js"></script>
 <script>
@@ -67,13 +72,6 @@
     for (let x = -40; x <= 1120; x += 80) pts.push([x, base + Math.sin(x / 160 + k) * 40 + random() * 20]);
     svgEl(topo, 'path', { d: smoothOpen(pts), fill: 'none', stroke: '#3a342c', 'stroke-width': 1.2, 'stroke-opacity': 0.6 });
   }
-  // Люди без фона в фото-плашках: голова первого выходит за верх плашки, как в референсе.
-  const people = document.getElementById('people');
-  const gray = { fill: '#8f8b85' };
-  drawBust(people, 190, 205, 170, 227, gray);
-  drawBust(people, 660, 520, 120, 169, gray); drawBust(people, 760, 505, 120, 184, gray); drawBust(people, 850, 525, 100, 164, gray);
-  drawBust(people, 140, 725, 130, 207, gray); drawBust(people, 250, 735, 140, 197, gray);
-  drawBust(people, 660, 970, 140, 216, gray); drawBust(people, 790, 985, 140, 201, gray);
 </script>
 </body>
 </html>
