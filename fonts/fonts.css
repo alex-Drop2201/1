@@ -1,6 +1,14 @@
 /* Сгенерировано scripts/get_font.py — не редактировать вручную. */
+@font-face { font-family: 'Amatic SC'; font-style: normal; font-weight: 700; font-display: block; src: url('Amatic-SC/Amatic-SC-700.ttf') format('truetype'); }
 @font-face { font-family: 'Caveat'; font-style: normal; font-weight: 400; font-display: block; src: url('Caveat/Caveat-400.ttf') format('truetype'); }
 @font-face { font-family: 'Caveat'; font-style: normal; font-weight: 700; font-display: block; src: url('Caveat/Caveat-700.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-300-italic.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-300.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-500-italic.ttf') format('truetype'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-500.ttf') format('truetype'); }
+@font-face { font-family: 'Fira Sans Extra Condensed'; font-style: normal; font-weight: 700; font-display: block; src: url('Fira-Sans-Extra-Condensed/Fira-Sans-Extra-Condensed-700.ttf') format('truetype'); }
+@font-face { font-family: 'Fira Sans Extra Condensed'; font-style: normal; font-weight: 900; font-display: block; src: url('Fira-Sans-Extra-Condensed/Fira-Sans-Extra-Condensed-900.ttf') format('truetype'); }
+@font-face { font-family: 'Great Vibes'; font-style: normal; font-weight: 400; font-display: block; src: url('Great-Vibes/Great-Vibes-400.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: block; src: url('Inter/Inter-400.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: block; src: url('Inter/Inter-500.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: block; src: url('Inter/Inter-700.ttf') format('truetype'); }
