@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>10 — Вера</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём C + D — одно огромное слово с фактурой, стих мелко. Референсы: 010, 011. */
+  :root { --paper: #EEE9DF; --ink: #1E1A17; --sage: #5F7A4E; --soft: #857c6e; }
+  body, .canvas { background: var(--paper); color: var(--ink); }
+  .meta { left: 80px; right: 80px; top: 70px; display: flex; justify-content: space-between; font-size: 21px; color: var(--soft); }
+  .labels { left: 80px; right: 80px; display: flex; justify-content: space-between; font: 800 26px/1 'Inter'; letter-spacing: .12em; text-transform: uppercase; }
+  /* Полутон внутри букв: растр поверх зелёного, обрезанный по форме слова. */
+  .word {
+    left: 80px; font: 900 300px/0.8 'Fira Sans Extra Condensed'; text-transform: uppercase; padding-top: .06em;
+    background: radial-gradient(circle, rgba(238,233,223,.42) 1.7px, transparent 2.2px) 0 0 / 9px 9px, var(--sage);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .verse { left: 110px; right: 110px; text-align: center; font: 600 28px/1.35 'Inter'; letter-spacing: .02em; text-transform: uppercase; }
+  .ref { left: 80px; right: 80px; display: flex; align-items: center; gap: 26px; font: 500 46px/1 'Cormorant Garamond'; letter-spacing: .06em; }
+  .ref i { flex: 1; height: 1.5px; background: var(--ink); opacity: .6; }
+  .foot { left: 80px; right: 80px; bottom: 68px; display: flex; justify-content: space-between; font-size: 21px; color: var(--soft); }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="abs meta mono"><span>Цитата недели</span><span>№ 12</span></div>
+  <div class="abs labels" id="labels"><span>Осуществление</span><span>ожидаемого</span></div>
+  <div class="abs word fit" id="word">Вера</div>
+  <div class="abs verse" id="verse">Вера же есть осуществление ожидаемого<br>и уверенность в невидимом.</div>
+  <div class="abs ref" id="ref"><i></i><span>Евреям 11:1</span><i></i></div>
+  <div class="abs foot mono"><span>Воскресное служение</span><span>Ссылка в профиле</span></div>
+</main>
+<script src="kit.js"></script>
+<script>
+  afterFonts(["900 100px 'Fira Sans Extra Condensed'", "500 46px 'Cormorant Garamond'"], () => {
+    const $ = (id) => document.getElementById(id);
+    fitWidth($('word'), 920);
+    // Блок «подписи — слово — стих — ссылка» по вертикальному центру между служебными строками.
+    const gaps = [22, 90, 56];
+    const parts = ['labels', 'word', 'verse', 'ref'].map($);
+    const total = parts.reduce((s, el) => s + el.offsetHeight, 0) + gaps.reduce((a, b) => a + b, 0);
+    let y = 110 + (1170 - total) / 2;
+    parts.forEach((el, i) => {
+      el.style.top = `${y}px`;
+      y += el.offsetHeight + (gaps[i] || 0);
+    });
+  });
+</script>
+</body>
+</html>

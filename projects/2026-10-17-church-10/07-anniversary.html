@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>07 — 10 лет церкви</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём H — большие цифры, золото. Референсы: 031, 032. */
+  :root { --paper: #EFE8DC; --ink: #1E1A17; --soft: #8a7f70; }
+  body, .canvas { background: var(--paper); color: var(--ink); }
+  .corner { font-size: 21px; color: var(--soft); }
+  .num {
+    left: 0; right: 0; top: 150px; text-align: center;
+    font: 900 700px/0.9 'Unbounded'; letter-spacing: -0.06em;
+    background: linear-gradient(115deg, #7a5a22 0%, #c9a03a 22%, #f3dc93 40%, #b98c32 55%, #e9c66b 72%, #8a6526 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .num span { display: inline-block; }
+  .script { left: 0; right: 0; top: 800px; text-align: center; font: 400 190px/1 'Great Vibes'; color: var(--ink); }
+  .what { left: 0; right: 0; top: 1050px; text-align: center; font: 800 46px/1.1 'Inter'; letter-spacing: -0.02em; }
+  .when { left: 0; right: 0; top: 1112px; text-align: center; font: 500 32px/1.2 'Inter'; color: var(--soft); }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="abs corner mono" style="left: 80px; top: 70px;">2016</div>
+  <div class="abs corner mono" style="right: 80px; top: 70px;">2026</div>
+  <div class="abs num"><span id="num">10</span></div>
+  <div class="abs script">лет вместе</div>
+  <div class="abs what">Праздничное служение</div>
+  <div class="abs when">22 ноября · 12:00</div>
+  <div class="abs corner mono" style="left: 80px; bottom: 68px;">Благодарим Бога</div>
+  <div class="abs corner mono" style="right: 80px; bottom: 68px;">Ссылка в профиле</div>
+</main>
+<script src="kit.js"></script>
+<script>
+  afterFonts(["900 100px 'Unbounded'", "400 100px 'Great Vibes'"], () => {
+    fitWidth(document.getElementById('num'), 860);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>06 — Молитвенный вечер (сторис)</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём I — текст по кругу вокруг главного образа. Референсы: 058, 063, 064. */
+  :root { --bg: #121110; --cream: #F1E7D6; --soft: #9c917f; --flame: #F28A2E; }
+  body { background: var(--bg); }
+  .canvas { background: radial-gradient(760px 760px at 50% 47%, #2a1d12, var(--bg) 70%); color: var(--cream); }
+  .verse { left: 0; right: 0; top: 290px; text-align: center; font: italic 300 58px/1.15 'Cormorant Garamond'; }
+  .verse small { display: block; margin-top: 16px; font: 400 20px/1 'IBM Plex Mono'; letter-spacing: .16em; color: var(--soft); font-style: normal; }
+  .title { left: 0; right: 0; top: 1340px; text-align: center; font: 900 134px/0.85 'Fira Sans Extra Condensed'; text-transform: uppercase; }
+  .sub { left: 0; right: 0; top: 1480px; text-align: center; font: 500 32px/1.2 'Inter'; color: var(--soft); }
+</style>
+</head>
+<body>
+<main class="canvas grain-light">
+  <svg class="art" id="art" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+  <div class="abs verse">Непрестанно молитесь<small>1 Фессалоникийцам 5:17</small></div>
+  <div class="abs title">Вторник · 19:00</div>
+  <div class="abs sub">Приходи помолиться вместе</div>
+</main>
+<script src="kit.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const C = [540, 860];
+  const R = 330;
+  const defs = svgEl(svg, 'defs');
+
+  // Свечение и пламя свечи.
+  const glow = svgEl(defs, 'radialGradient', { id: 'glow' });
+  svgEl(glow, 'stop', { offset: '0', 'stop-color': '#F28A2E', 'stop-opacity': '0.55' });
+  svgEl(glow, 'stop', { offset: '0.45', 'stop-color': '#F28A2E', 'stop-opacity': '0.12' });
+  svgEl(glow, 'stop', { offset: '1', 'stop-color': '#F28A2E', 'stop-opacity': '0' });
+  svgEl(svg, 'circle', { cx: C[0], cy: C[1] - 70, r: 290, fill: 'url(#glow)' });
+  const fl = svgEl(defs, 'linearGradient', { id: 'flame', x1: '0', y1: '1', x2: '0', y2: '0' });
+  svgEl(fl, 'stop', { offset: '0', 'stop-color': '#F05A1A' });
+  svgEl(fl, 'stop', { offset: '0.55', 'stop-color': '#FFB347' });
+  svgEl(fl, 'stop', { offset: '1', 'stop-color': '#FFF1C9' });
+  const fy = C[1] - 40;
+  svgEl(svg, 'path', { d: `M${C[0]},${fy - 150} C${C[0] + 42},${fy - 70} ${C[0] + 40},${fy - 12} ${C[0]},${fy} C${C[0] - 40},${fy - 12} ${C[0] - 42},${fy - 70} ${C[0]},${fy - 150} Z`, fill: 'url(#flame)' });
+  svgEl(svg, 'path', { d: `M${C[0]},${fy - 70} C${C[0] + 14},${fy - 38} ${C[0] + 13},${fy - 10} ${C[0]},${fy - 6} C${C[0] - 13},${fy - 10} ${C[0] - 14},${fy - 38} ${C[0]},${fy - 70} Z`, fill: '#FFF8E6' });
+  // Фитиль и свеча.
+  svgEl(svg, 'line', { x1: C[0], y1: fy, x2: C[0], y2: fy + 18, stroke: '#2b2118', 'stroke-width': 4, 'stroke-linecap': 'round' });
+  svgEl(svg, 'rect', { x: C[0] - 38, y: fy + 18, width: 76, height: 230, rx: 6, fill: '#F1E7D6' });
+  svgEl(svg, 'rect', { x: C[0] - 38, y: fy + 18, width: 24, height: 230, rx: 6, fill: '#ffffff', 'fill-opacity': 0.35 });
+
+  // Текст по кругу.
+  const ring = svgEl(defs, 'path', { id: 'ring', d: `M${C[0]},${C[1] - R} a${R},${R} 0 1,1 -0.01,0` });
+  const phrase = 'Молитвенный вечер · каждый вторник · 19:00 · ';
+  const text = svgEl(svg, 'text', {
+    fill: '#F1E7D6', style: "font: 600 30px 'Inter'; letter-spacing: .14em; text-transform: uppercase",
+  });
+  const tp = svgEl(text, 'textPath', { href: '#ring', textLength: (2 * Math.PI * R - 6).toFixed(1), lengthAdjust: 'spacing' }, phrase + phrase);
+  svgEl(svg, 'circle', { cx: C[0], cy: C[1], r: R - 44, fill: 'none', stroke: '#F1E7D6', 'stroke-opacity': 0.18, 'stroke-width': 1.2 });
+</script>
+</body>
+</html>

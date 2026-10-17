@@ -132,6 +132,8 @@ async function renderFile(browser, port, file, opts) {
   const [width, height] = size;
   await page.setViewportSize({ width, height });
   await page.evaluate(() => document.fonts.ready);
+  // Макет может отложить рендер, пока подгоняет текст: window.renderReady = Promise.
+  await page.evaluate(() => window.renderReady);
   await page.waitForTimeout(100);
 
   const missingFonts = await page.evaluate(() =>

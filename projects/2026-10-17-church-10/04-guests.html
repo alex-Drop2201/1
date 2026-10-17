@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>04 — Для гостей</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём F — рисованная линия, тёплое приглашение. Референсы: 015 («для гостей»), 045, 047, 066. */
+  :root { --cream: #F3EEE3; --ink: #2B2118; --orange: #F05A1A; --soft: #8a7f70; }
+  body, .canvas { background: var(--cream); color: var(--ink); }
+  .meta { left: 80px; right: 80px; top: 70px; display: flex; justify-content: space-between; font-size: 21px; color: var(--soft); }
+  .note { left: 736px; top: 280px; font: 700 54px/1 'Caveat'; color: var(--orange); transform: rotate(-5deg); }
+  h1 { position: absolute; left: 72px; top: 930px; font: 900 124px/0.9 'Inter'; letter-spacing: -0.045em; }
+  .sub { left: 80px; top: 1170px; font: 500 32px/1.3 'Inter'; color: var(--soft); }
+  .foot { right: 80px; bottom: 68px; font-size: 21px; color: var(--soft); }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <svg class="art" id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="abs meta mono"><span>Для гостей</span><span>Вс · 10:00 и 12:30</span></div>
+  <div class="abs note">это место —<br>для тебя</div>
+  <h1>Приходи<br>как есть.</h1>
+  <div class="abs sub">Без дресс-кода и подготовки.<br>Мы просто рады тебе.</div>
+  <div class="abs foot mono">Ссылка в профиле</div>
+</main>
+<script src="kit.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const defs = svgEl(svg, 'defs');
+  sketchFilter(defs, 'sketch', 3.2, 0.035, 7);
+  const g = svgEl(svg, 'g', {
+    filter: 'url(#sketch)', fill: 'none', stroke: '#2B2118', 'stroke-width': 3.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+  });
+  // Пустой деревянный стул в три четверти — линия от руки.
+  const lines = [
+    'M455,505 C452,420 448,330 445,250', // левая стойка спинки
+    'M690,520 C690,430 690,345 690,265', // правая стойка спинки
+    'M445,250 C520,236 620,244 690,265', // верхняя перекладина
+    'M447,322 C525,312 615,318 690,334',
+    'M449,392 C525,384 615,390 690,404',
+    'M400,560 L640,580 L690,520 L455,505 Z', // сиденье
+    'M400,560 L400,576 L640,596 L690,536 L690,520', // толщина сиденья
+    'M404,576 C404,650 405,725 407,804', // ножки
+    'M638,596 C638,670 639,745 640,824',
+    'M462,520 C462,600 463,670 464,736',
+    'M688,536 C688,610 688,680 688,752',
+    'M405,722 C480,728 560,736 639,742', // царга между передними ножками
+  ];
+  for (const d of lines) svgEl(g, 'path', { d });
+  // Лёгкая штриховка тени на полу.
+  for (let i = 0; i < 9; i++) {
+    const x = 430 + i * 30;
+    svgEl(g, 'path', { d: `M${x},${842 - i * 2} l26,-18`, 'stroke-width': 2, 'stroke-opacity': 0.55 });
+  }
+  // Стрелка от надписи к сиденью.
+  svgEl(svg, 'path', {
+    d: handArrow([800, 420], [676, 512], 0.28, 24),
+    fill: 'none', stroke: '#F05A1A', 'stroke-width': 4.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+  });
+</script>
+</body>
+</html>

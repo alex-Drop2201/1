@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>03 — Расписание недели (сторис)</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём D — тихий минимализм, швейцарская сетка. Референсы: 021 («для расписания»), 037. */
+  :root { --paper: #F1ECE2; --ink: #141414; --orange: #F05A1A; --soft: #7d766b; }
+  body, .canvas { background: var(--paper); color: var(--ink); }
+  .meta { left: 80px; right: 80px; top: 262px; display: flex; justify-content: space-between; font-size: 22px; color: var(--soft); }
+  h1 { position: absolute; left: 70px; top: 330px; font: 900 176px/0.86 'Inter'; letter-spacing: -0.05em; }
+  .rows { left: 80px; right: 80px; top: 760px; border-bottom: 2px solid var(--ink); }
+  .row { display: grid; grid-template-columns: 170px 1fr auto; align-items: baseline; padding: 30px 0 30px; border-top: 2px solid var(--ink); }
+  .d { font: 400 24px/1.35 'IBM Plex Mono'; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); }
+  .e { font: 700 46px/1.05 'Inter'; letter-spacing: -0.02em; }
+  .t { font: 500 34px/1.2 'IBM Plex Mono'; text-align: right; }
+  .hot .e, .hot .t, .hot .d { color: var(--orange); }
+  .foot { left: 80px; right: 80px; top: 1420px; display: flex; align-items: flex-end; justify-content: space-between; }
+  .foot p { font: 500 34px/1.25 'Inter'; letter-spacing: -0.01em; }
+  .foot .mono { font-size: 20px; color: var(--soft); }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <svg class="art" id="art" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+  <div class="abs meta mono"><span>Расписание</span><span>19—25 октября</span></div>
+  <h1>эта<br>неделя</h1>
+  <div class="abs rows">
+    <div class="row"><span class="d">Вт 20.10</span><span class="e">Молитвенный вечер</span><span class="t">19:00</span></div>
+    <div class="row"><span class="d">Чт 22.10</span><span class="e">Изучение Библии</span><span class="t">19:30</span></div>
+    <div class="row"><span class="d">Пт 23.10</span><span class="e">Молодёжный вечер</span><span class="t">19:00</span></div>
+    <div class="row hot"><span class="d">Вс 25.10</span><span class="e">Воскресное<br>служение</span><span class="t">10:00<br>12:30</span></div>
+  </div>
+  <div class="abs foot"><p>Приходи как есть —<br>двери открыты.</p><span class="mono">Ссылка в профиле</span></div>
+</main>
+<script src="kit.js"></script>
+<script>
+  // Нарисованная от руки звёздочка — единственный жест на строгой сетке.
+  const svg = document.getElementById('art');
+  const cx = 930;
+  const cy = 470;
+  for (let i = 0; i < 4; i++) {
+    const a = (i * Math.PI) / 4 + 0.15;
+    svgEl(svg, 'line', {
+      x1: cx - 58 * Math.cos(a), y1: cy - 58 * Math.sin(a), x2: cx + 58 * Math.cos(a), y2: cy + 58 * Math.sin(a),
+      stroke: '#F05A1A', 'stroke-width': 7, 'stroke-linecap': 'round',
+    });
+  }
+</script>
+</body>
+</html>

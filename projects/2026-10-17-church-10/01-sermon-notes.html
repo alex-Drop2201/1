@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>01 — Заметки с проповеди</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём B — гранж и пометки маркером. Референсы: 005, 006, 008. */
+  :root { --bg: #171512; --mustard: #E3B341; --paper: #E9E0CC; --white: #F3EEE4; --soft: #9b937f; }
+  body { background: var(--bg); }
+  .canvas { background: radial-gradient(900px 760px at 28% 22%, #29241a, var(--bg) 72%); color: var(--white); }
+  .tape {
+    left: 772px; top: 92px; width: 216px; height: 76px; transform: rotate(5deg);
+    background: var(--paper); box-shadow: 0 8px 18px rgba(0,0,0,.4);
+    display: flex; align-items: center; justify-content: center;
+    font: 700 54px/1 'Caveat'; color: #1d1a15;
+  }
+  .title { left: 72px; top: 150px; font: 700 172px/0.8 'Amatic SC'; color: var(--mustard); transform: rotate(-3deg); transform-origin: left top; }
+  .quote { left: 80px; top: 540px; font: 700 156px/0.86 'Amatic SC'; transform: rotate(-1.5deg); transform-origin: left top; }
+  .note { font: 700 50px/1 'Caveat'; color: var(--mustard); }
+  .foot { left: 80px; right: 80px; bottom: 68px; display: flex; justify-content: space-between; font-size: 20px; color: var(--soft); }
+</style>
+</head>
+<body>
+<main class="canvas grain-light">
+  <svg class="art" id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="abs tape">18.10</div>
+  <div class="abs title">Заметки<br>с проповеди</div>
+  <div class="abs quote">Унижающий <span id="hl">себя</span><br>возвысится</div>
+  <div class="abs note" id="ref" style="left: 742px; top: 930px;">Лк 14:11</div>
+  <div class="abs note" id="aside" style="left: 96px; top: 1010px; transform: rotate(-4deg);">перечитай<br>вечером!</div>
+  <div class="abs foot mono"><span>воскресное служение</span><span>запись — в профиле</span></div>
+</main>
+<script src="kit.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const random = rng(1411);
+
+  // Царапины и пыль — фактура старого отпечатка.
+  for (let i = 0; i < 70; i++) {
+    const x = random() * 1080;
+    const y = random() * 1350;
+    const len = 30 + random() ** 2 * 380;
+    const a = (random() < 0.7 ? Math.PI / 2 : random() * Math.PI) + (random() - 0.5) * 0.3;
+    svgEl(svg, 'line', {
+      x1: x, y1: y, x2: x + len * Math.cos(a), y2: y + len * Math.sin(a),
+      stroke: '#f3eee4', 'stroke-width': (0.4 + random() * 1.1).toFixed(2), 'stroke-opacity': (0.03 + random() * 0.09).toFixed(2),
+    });
+  }
+  for (let i = 0; i < 140; i++) {
+    svgEl(svg, 'circle', { cx: random() * 1080, cy: random() * 1350, r: (0.5 + random() * 1.6).toFixed(2), fill: '#f3eee4', 'fill-opacity': (0.04 + random() * 0.1).toFixed(2) });
+  }
+
+  afterFonts(["700 100px 'Amatic SC'", "700 50px 'Caveat'"], () => {
+    const marker = { fill: 'none', stroke: '#E3B341', 'stroke-width': 4.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+    const box = (id) => document.getElementById(id).getBoundingClientRect();
+    const hl = box('hl');
+    svgEl(svg, 'path', { d: handOval(hl.x + hl.width / 2 + 14, hl.y + hl.height / 2 + 4, hl.width / 2 + 12, hl.height / 2 - 4, random), ...marker });
+    const ref = box('ref');
+    svgEl(svg, 'path', { d: handArrow([hl.x + hl.width - 10, hl.bottom + 4], [ref.x + 40, ref.y - 14], -0.22), ...marker });
+    // «перечитай вечером» указывает на вторую строку цитаты.
+    const aside = box('aside');
+    const quote = document.querySelector('.quote').getBoundingClientRect();
+    svgEl(svg, 'path', { d: handArrow([aside.right + 16, aside.y + 34], [aside.right + 130, quote.bottom + 26], 0.3, 20), ...marker, 'stroke-width': 3.5 });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>05 — Вечеря Господня</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём G + F — причастие: тёплая темнота, каллиграфия, рисунок линией. Референсы: 049, 053, 057, 061. */
+  :root { --wine: #3a1514; --deep: #1c0c0b; --cream: #EFE3CF; --red: #C0352B; --soft: #b39d86; }
+  body { background: var(--deep); }
+  .canvas { background: radial-gradient(820px 900px at 50% 36%, #4a1a18, var(--wine) 45%, var(--deep) 100%); color: var(--cream); }
+  .meta { left: 80px; right: 80px; top: 70px; display: flex; justify-content: space-between; font-size: 21px; color: var(--soft); }
+  .line1 { left: 0; right: 0; top: 842px; text-align: center; font: italic 300 64px/1 'Cormorant Garamond'; letter-spacing: .01em; }
+  .line2 { left: 0; right: 0; top: 890px; text-align: center; }
+  #script { font: 400 176px/1.25 'Great Vibes'; }
+  .ref { left: 0; right: 0; top: 1140px; text-align: center; font-size: 21px; color: var(--soft); }
+  .foot { left: 80px; right: 80px; bottom: 68px; display: flex; justify-content: space-between; font-size: 21px; color: var(--soft); }
+</style>
+</head>
+<body>
+<main class="canvas grain-light">
+  <svg class="art" id="art" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+  <div class="abs meta mono"><span>Вечеря Господня</span><span>1 ноября · 10:00</span></div>
+  <div class="abs line1">Сие творите в Моё</div>
+  <div class="abs line2"><span class="fit" id="script">воспоминание</span></div>
+  <div class="abs ref mono">Лука 22:19</div>
+  <div class="abs foot mono"><span>Воскресное служение</span><span>Ссылка в профиле</span></div>
+</main>
+<script src="kit.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  const defs = svgEl(svg, 'defs');
+  sketchFilter(defs, 'sketch', 2.6, 0.04, 11);
+  const ink = { fill: 'none', stroke: '#EFE3CF', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+  const g = svgEl(svg, 'g', { filter: 'url(#sketch)' });
+  const cx = 470;
+
+  // Вино в чаше — единственный цветной акцент.
+  svgEl(g, 'ellipse', { cx, cy: 408, rx: 90, ry: 13, fill: '#C0352B' });
+  // Чаша: край, чаша, ножка с узлом, основание.
+  svgEl(g, 'ellipse', { cx, cy: 382, rx: 102, ry: 17, ...ink });
+  svgEl(g, 'path', { d: `M${cx - 102},382 C${cx - 96},476 ${cx - 44},522 ${cx},524 C${cx + 44},522 ${cx + 96},476 ${cx + 102},382`, ...ink });
+  svgEl(g, 'path', { d: `M${cx - 8},523 L${cx - 7},648 M${cx + 8},523 L${cx + 7},648`, ...ink });
+  svgEl(g, 'ellipse', { cx, cy: 584, rx: 17, ry: 9, ...ink });
+  svgEl(g, 'path', { d: `M${cx - 7},648 C${cx - 30},660 ${cx - 64},668 ${cx - 74},690 M${cx + 7},648 C${cx + 30},660 ${cx + 64},668 ${cx + 74},690`, ...ink });
+  svgEl(g, 'ellipse', { cx, cy: 692, rx: 76, ry: 13, ...ink });
+  // Капля над чашей.
+  svgEl(g, 'path', { d: `M${cx},262 C${cx - 14},292 ${cx - 16},306 ${cx},314 C${cx + 16},306 ${cx + 14},292 ${cx},262 Z`, fill: '#C0352B' });
+  // Хлеб справа: каравай с надрезами.
+  svgEl(g, 'path', { d: 'M600,694 C596,636 660,604 730,606 C800,608 846,640 842,694 Z', ...ink });
+  for (const x of [668, 718, 768]) svgEl(g, 'path', { d: `M${x},640 q14,-10 28,-4`, ...ink, 'stroke-width': 2.4 });
+  // Линия стола.
+  svgEl(g, 'path', { d: 'M300,700 C480,706 700,702 860,700', ...ink, 'stroke-width': 2.4, 'stroke-opacity': 0.7 });
+
+  afterFonts(["400 100px 'Great Vibes'", "italic 300 64px 'Cormorant Garamond'"], () => {
+    fitWidth(document.getElementById('script'), 800);
+  });
+</script>
+</body>
+</html>

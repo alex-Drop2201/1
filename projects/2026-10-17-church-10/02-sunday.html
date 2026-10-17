@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>02 — Воскресное служение</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём C — огромный узкий шрифт, один яркий цвет. Референсы: 014, 015, 062. */
+  :root { --bg: #111111; --orange: #F05A1A; --white: #F4F0E8; --soft: #a39d92; }
+  body, .canvas { background: var(--bg); color: var(--white); }
+  .meta { left: 80px; right: 80px; top: 70px; display: flex; justify-content: space-between; font-size: 21px; color: var(--soft); }
+  .big { font: 900 200px/0.8 'Fira Sans Extra Condensed'; text-transform: uppercase; letter-spacing: 0.005em; }
+  #l1 { left: 80px; top: 150px; }
+  .band { left: 0; right: 0; top: 372px; height: 330px; background: var(--orange); overflow: hidden; }
+  #l2 { left: 80px; top: 44px; color: #121212; }
+  .echo { left: 80px; font: 900 150px/0.8 'Fira Sans Extra Condensed'; text-transform: uppercase; color: transparent; -webkit-text-stroke: 2px #2a2a2a; }
+  .date { left: 80px; top: 836px; font: 900 200px/0.8 'Fira Sans Extra Condensed'; }
+  .times { right: 80px; top: 846px; text-align: right; }
+  .times b { display: block; font: 800 64px/1 'Inter'; letter-spacing: -0.02em; }
+  .times span { display: block; margin: 8px 0 26px; font: 500 24px/1 'Inter'; color: var(--soft); }
+  .foot { left: 80px; right: 80px; bottom: 68px; display: flex; justify-content: space-between; font-size: 21px; color: var(--soft); }
+</style>
+</head>
+<body>
+<main class="canvas grain-light">
+  <div class="abs echo fit" id="e1" style="top: 770px;">Воскресенье</div>
+  <div class="abs echo fit" id="e2" style="top: 900px;">Воскресенье</div>
+  <div class="abs echo fit" id="e3" style="top: 1030px;">Воскресенье</div>
+  <div class="abs meta mono"><span>Ждём тебя</span><span>Ссылка в профиле</span></div>
+  <div class="abs big fit" id="l1">Воскресное</div>
+  <div class="abs band"><div class="halftone"></div><div class="abs big fit" id="l2">Служение</div></div>
+  <div class="abs date">18.10</div>
+  <div class="abs times"><b>10:00</b><span>первое служение</span><b>12:30</b><span>второе служение</span></div>
+  <div class="abs foot mono"><span>Воскресенье · 18 октября</span><span>Приходи как есть</span></div>
+</main>
+<script src="kit.js"></script>
+<script>
+  afterFonts(["900 100px 'Fira Sans Extra Condensed'", "800 64px 'Inter'"], () => {
+    for (const id of ['l1', 'l2', 'e1', 'e2', 'e3']) fitWidth(document.getElementById(id), 920);
+    // «СЛУЖЕНИЕ» — по вертикальному центру оранжевой плашки.
+    const l2 = document.getElementById('l2');
+    l2.style.top = `${(330 - l2.getBoundingClientRect().height) / 2 + 6}px`;
+  });
+</script>
+</body>
+</html>

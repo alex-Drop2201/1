@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>09 — Молодёжный вечер (сторис)</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* Приём E — коллаж: рваная бумага, скотч, календарь, наклейка. Референсы: 022, 040, 041. */
+  :root { --kraft: #E7DFCF; --ink: #151515; --lime: #C8F5A0; --paper: #FBF8F1; --soft: #7f776a; }
+  body, .canvas { background: var(--kraft); color: var(--ink); }
+  .word { font: 900 200px/0.8 'Fira Sans Extra Condensed'; text-transform: uppercase; color: var(--paper); }
+  .hand { font: 700 64px/1 'Caveat'; color: var(--ink); }
+  .cal { left: 590px; top: 1130px; width: 380px; padding: 26px 26px 22px; background: var(--paper); transform: rotate(4deg); box-shadow: 0 10px 24px rgba(0,0,0,.18); }
+  .cal h4 { font: 600 18px/1 'IBM Plex Mono'; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 14px; display: flex; justify-content: space-between; }
+  .cal .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px 0; text-align: center; font: 500 19px/1.4 'Inter'; }
+  .cal .grid .h { color: var(--soft); font-size: 15px; }
+  .sticker-text { font: 800 30px/1.05 'Inter'; letter-spacing: -0.01em; text-align: center; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <svg class="art" id="paper" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+  <div class="abs word fit" id="w1" style="left: 110px; top: 360px; transform: rotate(-3deg);">Молодёжный</div>
+  <div class="abs word fit" id="w2" style="left: 150px; top: 640px; transform: rotate(2deg);">вечер</div>
+  <div class="abs hand" id="date" style="left: 110px; top: 950px; transform: rotate(-4deg);">пятница, 23 октября · 19:00</div>
+  <div class="abs cal" id="cal"><h4><span>Октябрь</span><span>2026</span></h4><div class="grid" id="grid"></div></div>
+  <svg class="art" id="top" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+  <div class="abs sticker-text" style="left: 150px; top: 1252px; width: 300px; transform: rotate(-8deg);">вход<br>свободный,<br>бери друзей</div>
+</main>
+<script src="kit.js"></script>
+<script>
+  const random = rng(2310);
+  const paper = document.getElementById('paper');
+  const topLayer = document.getElementById('top');
+
+  // Календарь октября 2026: 1-е число — четверг.
+  const grid = document.getElementById('grid');
+  for (const d of ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']) grid.insertAdjacentHTML('beforeend', `<span class="h">${d}</span>`);
+  for (let i = 0; i < 3; i++) grid.insertAdjacentHTML('beforeend', '<span></span>');
+  for (let d = 1; d <= 31; d++) grid.insertAdjacentHTML('beforeend', `<span ${d === 23 ? 'id="d23"' : ''}>${d}</span>`);
+
+  afterFonts(["900 100px 'Fira Sans Extra Condensed'", "700 64px 'Caveat'"], () => {
+    fitWidth(document.getElementById('w1'), 860);
+    fitWidth(document.getElementById('w2'), 560);
+    // Чёрные полоски рваной бумаги под словами.
+    for (const id of ['w1', 'w2']) {
+      const el = document.getElementById(id);
+      const r = el.getBoundingClientRect();
+      const ang = id === 'w1' ? -3 : 2;
+      const cx = r.x + r.width / 2;
+      const cy = r.y + r.height / 2;
+      const w = el.offsetWidth + 70;
+      // Сверху запас больше: над прописными стоят «Й» и «Ё».
+      const h = el.offsetHeight + 70;
+      svgEl(paper, 'path', {
+        d: tornRect(cx - w / 2, cy - h / 2 - 16, w, h, random, 6, 12), fill: '#151515',
+        transform: `rotate(${ang} ${cx} ${cy})`,
+      });
+    }
+    // Лаймовая полоска бумаги под датой и наклейка-звезда.
+    const date = document.getElementById('date').getBoundingClientRect();
+    svgEl(paper, 'path', {
+      d: tornRect(date.x - 30, date.y - 14, date.width + 60, date.height + 28, random, 5, 12), fill: '#C8F5A0',
+      transform: `rotate(-4 ${date.x + date.width / 2} ${date.y + date.height / 2})`,
+    });
+    const star = [];
+    for (let i = 0; i < 24; i++) {
+      const a = (i / 24) * Math.PI * 2;
+      const r = i % 2 ? 150 : 185 + (random() - 0.5) * 16;
+      star.push([300 + r * Math.cos(a), 1330 + r * Math.sin(a)]);
+    }
+    svgEl(paper, 'path', { d: 'M' + star.map((p) => p.map((v) => v.toFixed(1)).join(',')).join(' L') + 'Z', fill: '#C8F5A0', stroke: '#151515', 'stroke-width': 3 });
+    // Скотч на углах календаря и над заголовком.
+    const tape = (x, y, w, ang) => svgEl(topLayer, 'rect', { x, y, width: w, height: 46, fill: '#efe4c4', 'fill-opacity': 0.82, transform: `rotate(${ang} ${x + w / 2} ${y + 23})` });
+    tape(560, 1110, 150, -32);
+    tape(880, 1110, 150, 34);
+    tape(30, 380, 150, -38);
+    // Маркерный круг вокруг 23-го.
+    const d = document.getElementById('d23').getBoundingClientRect();
+    svgEl(topLayer, 'path', {
+      d: handOval(d.x + d.width / 2, d.y + d.height / 2, 30, 24, random),
+      fill: 'none', stroke: '#151515', 'stroke-width': 4, 'stroke-linecap': 'round',
+    });
+  });
+</script>
+</body>
+</html>
