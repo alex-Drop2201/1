@@ -22,6 +22,8 @@
   .still img { position: absolute; }
   .still .glass { left: 344px; top: 0; width: 220px; }
   .still .bread { left: 414px; top: 318px; width: 380px; }
+  /* Хлеб снят при другом свете — подтянуть к тёплому золотистому, как в референсе. */
+  .still img.bread:not(.sh) { filter: brightness(1.12) saturate(1.12) sepia(.14); }
   /* Тень: тот же силуэт, чёрный, сплющенный и скошенный от основания вниз-влево. */
   .still .sh { filter: brightness(0) blur(5px); transform-origin: 50% 100%; }
   .still .sh.glass { transform: scaleY(-.34) skewX(45deg); opacity: .16; }

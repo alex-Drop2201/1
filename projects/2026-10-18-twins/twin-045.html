@@ -31,14 +31,21 @@
 </main>
 <script src="twin.js"></script>
 <script>
-  // Облака: шум, отсечённый порогом и размытый, белым по небу.
+  // Облака с объёмом, как на фото неба в референсе: один и тот же шум — снизу серо-голубая тень со сдвигом,
+  // сверху белая шапка чуть меньше, так что тень проступает по нижнему краю.
   const sky = document.getElementById('sky');
   const defs = svgEl(sky, 'defs');
-  const f = svgEl(defs, 'filter', { id: 'clouds', x: 0, y: 0, width: '100%', height: '100%' });
-  svgEl(f, 'feTurbulence', { type: 'fractalNoise', baseFrequency: '0.0035 0.006', numOctaves: 5, seed: 12, result: 'n' });
-  svgEl(f, 'feColorMatrix', { in: 'n', type: 'matrix', values: '0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 -3.2 0 1.72', result: 'c' });
-  svgEl(f, 'feGaussianBlur', { in: 'c', stdDeviation: 2.5 });
-  svgEl(sky, 'rect', { width: 1080, height: 1350, filter: 'url(#clouds)', opacity: 0.92 });
+  const cloud = (id, rgb, cut, dx, dy, blur) => {
+    const f = svgEl(defs, 'filter', { id, x: 0, y: 0, width: '100%', height: '100%' });
+    svgEl(f, 'feTurbulence', { type: 'fractalNoise', baseFrequency: '0.0026 0.0046', numOctaves: 5, seed: 12, result: 'n' });
+    svgEl(f, 'feColorMatrix', { in: 'n', type: 'matrix', values: `0 0 0 0 ${rgb[0]}  0 0 0 0 ${rgb[1]}  0 0 0 0 ${rgb[2]}  0 0 -3.2 0 ${cut}`, result: 'c' });
+    svgEl(f, 'feOffset', { in: 'c', dx, dy, result: 'o' });
+    svgEl(f, 'feGaussianBlur', { in: 'o', stdDeviation: blur });
+  };
+  cloud('cloudShade', [0.66, 0.73, 0.84], 1.78, 8, 16, 7);
+  cloud('cloudTop', [1, 1, 1], 1.64, 0, 0, 2.5);
+  svgEl(sky, 'rect', { width: 1080, height: 1350, filter: 'url(#cloudShade)', opacity: 0.9 });
+  svgEl(sky, 'rect', { width: 1080, height: 1350, filter: 'url(#cloudTop)', opacity: 0.95 });
 
   // Конструкция щита: балка с кронштейнами, площадка с перилами, опора с лестницей.
   const fr = document.getElementById('frame');
