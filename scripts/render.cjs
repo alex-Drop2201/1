@@ -169,6 +169,93 @@ async function renderFile(browser, port, file, opts) {
     return hits;
   });
 
+  // Ошибки, которые раньше находила только критика (скил poster-critique), — ловим уже при рендере.
+  const design = await page.evaluate(() => {
+    const out = { faces: [], stretch: [], hanging: [], small: [], dates: [], placeholders: [] };
+    const declared = {};
+    for (const f of document.fonts) {
+      if (f.status === 'error') continue;
+      const fam = f.family.replace(/["']/g, '');
+      (declared[fam] = declared[fam] || new Set()).add(`${f.weight}${f.style === 'italic' ? ' italic' : ''}`);
+    }
+    // Рукописные и кистевые шрифты мельче этого (px при ширине 1080) не читаются.
+    const MIN_PX = { 'Comforter Brush': 100, 'Great Vibes': 56, 'Amatic SC': 28, Caveat: 24, Neucha: 24 };
+    const SHORT = /^(в|во|и|к|ко|с|со|о|об|у|а|но|на|по|за|от|до|из|не|ни|для|при|без|над|под|про)$/i;
+    const k1080 = innerWidth / 1080;
+    const seen = new Set();
+    const once = (key, list, msg) => !seen.has(key) && (seen.add(key), list.push(msg));
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      const el = node.parentElement;
+      const text = node.textContent.trim();
+      if (!el || !text || el.closest('script, style, .need')) continue;
+      const cs = getComputedStyle(el);
+      if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+      const short = `«${text.slice(0, 30)}»`;
+      const fam = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
+      const face = `${cs.fontWeight}${cs.fontStyle === 'italic' ? ' italic' : ''}`;
+      if (!declared[fam]) once(`f:${fam}`, out.faces, `${fam} не подключён — ${short}`);
+      else if (!declared[fam].has(face)) {
+        once(`f:${fam}:${face}`, out.faces, `${fam} ${face} нет (есть ${[...declared[fam]].join(', ')}) — ${short}`);
+      }
+      // Растяжение трансформациями — своими и родителей.
+      let sx = 1, sy = 1;
+      for (let e = el; e && e !== document.body; e = e.parentElement) {
+        const t = getComputedStyle(e).transform;
+        if (!t || t === 'none') continue;
+        const v = t.match(/-?[\d.e]+/g).map(Number);
+        sx *= Math.hypot(v[0], v[1]);
+        sy *= Math.hypot(v[2], v[3]);
+      }
+      if (sx < 0.9 || sy / sx > 1.3 || sy / sx < 0.77) {
+        once(`s:${text}`, out.stretch, `${short} (${fam}): ×${sx.toFixed(2)} по ширине, ×${sy.toFixed(2)} по высоте`);
+      }
+      const px = (parseFloat(cs.fontSize) * Math.min(sx, sy)) / k1080;
+      if (MIN_PX[fam] && px < MIN_PX[fam]) once(`m:${text}`, out.small, `${short} — ${fam} ${Math.round(px)}px (читается от ${MIN_PX[fam]}px)`);
+      // Висячее короткое слово: в конце строки внутри абзаца или перед ручным переносом <br>.
+      const words = [];
+      const re = /\S+/g;
+      for (let m = re.exec(node.textContent); m; m = re.exec(node.textContent)) {
+        const range = document.createRange();
+        range.setStart(node, m.index);
+        range.setEnd(node, m.index + m[0].length);
+        const r = range.getBoundingClientRect();
+        if (r.width || r.height) words.push({ w: m[0], end: m.index + m[0].length, top: r.top, h: r.height });
+      }
+      words.forEach((w, i) => {
+        const next = words[i + 1];
+        const lineEnd = next ? next.top > w.top + w.h * 0.5 : node.nextSibling && node.nextSibling.nodeName === 'BR';
+        if (lineEnd && SHORT.test(w.w) && node.textContent[w.end] !== ' ') {
+          once(`h:${text}`, out.hanging, `«${w.w}» в конце строки ${short}`);
+        }
+      });
+    }
+    // День недели рядом с датой: «Вт 20 окт», «Ср 21-е окт 2026», «Воскресенье · 10:00 · 1 ноября».
+    const WD = { пн: 0, понедельник: 0, вт: 1, вторник: 1, ср: 2, среда: 2, среду: 2, чт: 3, четверг: 3, пт: 4, пятница: 4,
+                 пятницу: 4, сб: 5, суббота: 5, субботу: 5, вс: 6, воскресенье: 6 };
+    const WD_NAMES = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'];
+    const MONTHS = ['янв', 'фев', 'мар', 'апр', 'ма', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+    const all = document.body.innerText.toLowerCase().replace(/\s+/g, ' ');
+    const names = Object.keys(WD).sort((a, b) => b.length - a.length).join('|');
+    const pat = new RegExp(`(?<![а-яё])(${names})(?![а-яё])[^\\d]{0,25}?(?:\\d{1,2}:\\d{2}[^\\d]{0,10}?)?(\\d{1,2})(?:-?е)?\\s+([а-яё]+)(?:\\s+(\\d{4}))?`, 'g');
+    const today = new Date();
+    for (const m of all.matchAll(pat)) {
+      const mi = MONTHS.findIndex((p) => m[3].startsWith(p));
+      if (mi < 0) continue;
+      const day = new Date(m[4] ? +m[4] : today.getFullYear(), mi, +m[2]);
+      if (!m[4] && today - day > 180 * 864e5) day.setFullYear(day.getFullYear() + 1);
+      if (day.getDay() !== (WD[m[1]] + 1) % 7) {
+        out.dates.push(`«${m[0].trim()}»: ${day.toLocaleDateString('ru-RU')} — это ${WD_NAMES[(day.getDay() + 6) % 7]}`);
+      }
+    }
+    // Заглушки, которые нельзя публиковать: [data-placeholder] и типовые слова.
+    const PH = /адрес здесь|адрес церкви|название (вашей )?церкви|ваш город|ваш район|логотип|город, улица|пастор иван/g;
+    const ph = new Set([...all.matchAll(PH)].map((m) => m[0]));
+    document.querySelectorAll('[data-placeholder]').forEach((e) => ph.add(e.textContent.trim().slice(0, 30)));
+    out.placeholders = [...ph];
+    return out;
+  });
+
   const outDir = path.resolve(opts.out || path.join(path.dirname(abs), 'export'));
   fs.mkdirSync(outDir, { recursive: true });
   const base = path.basename(abs, path.extname(abs));
@@ -201,6 +288,12 @@ async function renderFile(browser, port, file, opts) {
   for (const f of missingFonts) console.warn(`⚠ шрифт не загрузился: ${f}`);
   for (const t of overflow) console.warn(`⚠ текст выходит за край макета: «${t}»`);
   for (const e of scriptErrors) console.warn(`⚠ ошибка JavaScript на странице: ${e}`);
+  for (const f of design.faces) console.warn(`⚠ нет начертания — браузер подставит соседнее: ${f}`);
+  for (const s of design.stretch) console.warn(`⚠ шрифт искажён растяжением (допустимо до ×1.3 по высоте): ${s}`);
+  for (const s of design.small) console.warn(`⚠ рукописный шрифт слишком мелкий: ${s}`);
+  for (const h of design.hanging) console.warn(`⚠ висячее слово — перенести или &nbsp;: ${h}`);
+  for (const d of design.dates) console.warn(`⚠ день недели не совпадает с датой: ${d}`);
+  if (design.placeholders.length) console.log(`ℹ заглушки (заменить перед публикацией): ${design.placeholders.join(', ')}`);
 }
 
 async function main() {

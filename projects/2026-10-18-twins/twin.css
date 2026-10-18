@@ -12,6 +12,13 @@ svg.art { position: absolute; inset: 0; }
 /* Вырезанный человек (PNG без фона); .cutbox обрезает его по низу фото-плашки, голова может выходить вверх. */
 .cut { position: absolute; display: block; }
 .cutbox { position: absolute; overflow: hidden; }
+/* Мягкое затемнение под текстом на фото (сила --shade) и тон обработки поверх всех слоёв фото, включая вырезки
+   (режим color не меняет светлоту — белый текст остаётся белым). Цвет --tint, сила --tint-amount. */
+.shade { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+         background: linear-gradient(180deg, rgba(0,0,0,calc(var(--shade, .38) * .5)) 0%, rgba(0,0,0,var(--shade, .38)) 25%,
+                     rgba(0,0,0,calc(var(--shade, .38) * .8)) 50%, rgba(0,0,0,0) 68%); }
+.tint { position: absolute; inset: 0; z-index: 7; pointer-events: none; mix-blend-mode: color;
+        background: var(--tint, #0d5866); opacity: var(--tint-amount, .4); }
 .need {
   position: absolute; z-index: 40; padding: 8px 12px; max-width: 420px;
   font: 600 15px/1.3 'IBM Plex Mono', monospace; letter-spacing: .05em; text-transform: uppercase;

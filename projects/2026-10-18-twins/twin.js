@@ -92,6 +92,33 @@ function fitWidth(el, width) {
   el.style.fontSize = `${(size * width) / w}px`;
 }
 
+// Вписать слово в плашку w×h (узкий жирный гротеск прописными, line-height 0.8): по ширине — кеглем, по высоте —
+// растяжением не больше maxStretch (сильнее — искажаются штрихи), слово по центру плашки. Возвращает растяжение.
+function fitBlock(el, w, h, maxStretch = 1.3, capRatio = 0.69) {
+  fitWidth(el, w);
+  const size = parseFloat(el.style.fontSize);
+  const capH = size * capRatio;
+  const k = Math.min((h * 0.9) / capH, maxStretch);
+  el.style.transformOrigin = 'left top';
+  el.style.transform = `scaleY(${k.toFixed(3)})`;
+  el.style.top = `${(h - capH * k) / 2 - (size * 0.8 - capH) * 0.5 * k}px`;
+  return k;
+}
+
+// Типограф: неразрывный пробел после коротких предлогов, союзов, частиц и перед тире — чтобы они не висели в конце строки.
+const SHORT_WORDS = /(^|[\s(«])(в|во|и|к|ко|с|со|о|об|у|а|но|на|по|за|от|до|из|не|ни|для|при|без|над|под|про) /gi;
+function typograf(root = document.body) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (n.parentElement.closest('script, style')) continue;
+    let t = n.textContent;
+    for (let i = 0; i < 2; i++) t = t.replace(SHORT_WORDS, '$1$2\u00a0'); // дважды — для соседних коротких слов
+    t = t.replace(/ —/g, '\u00a0—');
+    if (t !== n.textContent) n.textContent = t;
+  }
+}
+document.addEventListener('DOMContentLoaded', () => typograf());
+
 // Выполнить подгонку после загрузки шрифтов (specs — например '900 100px "Inter"'); рендер дождётся window.renderReady.
 function afterFonts(specs, fn) {
   window.renderReady = Promise.all(specs.map((s) => document.fonts.load(s)))
