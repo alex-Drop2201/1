@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>021 · Эта неделя</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face { font-family: 'Great Vibes'; font-style: normal; font-weight: 400; font-display: block; src: url(/_blob/2013b304c438587792a1f81f57df49a7); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 400; font-display: block; src: url(/_blob/12531c7d51ec60acaffcea021b949640); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 500; font-display: block; src: url(/_blob/3817f3658e5e95df10e5299087ff51fa); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 600; font-display: block; src: url(/_blob/33ccdfff2bb0423057fba3563dcf2fb1); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 700; font-display: block; src: url(/_blob/051b9175c425bc4a29216444f3cb204b); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 800; font-display: block; src: url(/_blob/96864cfe65ed78b92d6b68d64b1a2714); }
+:root { --bg: #2A2620; --card: #1E1B17; --mustard: #C09C54; --white: #F1EEE8; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { margin: 0; background: #2A2620; color: #F1EEE8; font-family: 'Montserrat', sans-serif; -webkit-font-smoothing: antialiased; }
+.canvas { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: var(--bg); color: var(--white); }
+.abs { position: absolute; }
+.cutbox { position: absolute; overflow: hidden; border-radius: 0 0 24px 24px; }
+.cutbox img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); filter: grayscale(1) contrast(1.1); }
+.grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; background-size: 260px 260px; background-image: url(/_blob/db4977b36a2290c81c36ada632b2d943); opacity: 0.18; mix-blend-mode: multiply; }
+.head { left: 58px; top: 32px; font: 800 82px / 0.78 Montserrat; letter-spacing: -0.06em; color: var(--mustard); }
+.sign { left: 128px; top: 142px; font: 400 58px / 1 "Great Vibes"; color: #d9d2c4; transform: rotate(-10deg); }
+.logo { right: 76px; top: 52px; text-align: center; font: 800 40px / 0.9 Montserrat; letter-spacing: -0.03em; text-transform: uppercase; transform: skewX(-8deg); }
+.logo small { display: block; margin-top: 8px; font: 600 11px / 1 Montserrat; letter-spacing: 0.3em; transform: none; }
+.card { position: absolute; background: var(--card); border-radius: 34px; box-shadow: rgba(0, 0, 0, 0.25) 0 10px 30px; }
+.pic { position: absolute; background: var(--mustard); border-radius: 24px; }
+.txt { position: absolute; }
+.txt .d { font: 500 33px / 1 Montserrat; letter-spacing: -0.01em; text-transform: uppercase; }
+.txt .c { margin-top: 12px; font: 400 21px / 1.1 Montserrat; text-transform: uppercase; }
+.txt .n { margin-top: 10px; font: 700 28px / 1 Montserrat; color: var(--mustard); text-transform: uppercase; letter-spacing: -0.01em; }
+.txt hr { width: 160px; border: 0; border-top: 1.5px solid var(--white); margin: 22px 0 18px; }
+.foot { left: 58px; right: 58px; bottom: 50px; display: flex; align-items: flex-end; gap: 16px; font: 500 13px / 1.25 Montserrat; text-transform: uppercase; }
+.foot i { flex: 1 1 0%; height: 1px; background: var(--white); margin-bottom: 4px; }
+.foot .r { text-align: right; }
+</style>
+</helmet>
+<main class="canvas grain" style="width: 1080px; height: 1350px;">
+  <img src="/_blob/7d478f682a696f66450dbc2b5735f834" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;">
+  <div class="abs head" data-t="1">эта<br>неделя</div>
+  <div class="abs sign" data-t="2">с&nbsp;нами</div>
+  <div class="abs logo" data-t="3">Наша<br>церковь<small data-t="4">логотип</small></div>
+  <div class="card" style="left: 108px; top: 225px; width: 680px; height: 225px;"></div>
+  <div class="pic" style="left: 119px; top: 243px; width: 313px; height: 189px;"></div>
+  <div class="txt" style="left: 480px; top: 280px;"><div class="d" data-t="5">Вт 20 окт</div><div class="c" data-t="6">Молитва | 19:00</div><div class="n" data-t="7">Молитвенный вечер</div></div>
+  <div class="card" style="left: 246px; top: 476px; width: 730px; height: 229px;"></div>
+  <div class="pic" style="left: 633px; top: 493px; width: 317px; height: 196px;"></div>
+  <div class="txt" style="left: 302px; top: 532px;"><div class="d" data-t="8">Чт 22 окт</div><div class="c" data-t="9">Библия | 19:30</div><div class="n" data-t="10">Изучение Библии</div></div>
+  <div class="card" style="left: 108px; top: 724px; width: 680px; height: 221px;"></div>
+  <div class="pic" style="left: 119px; top: 742px; width: 313px; height: 190px;"></div>
+  <div class="txt" style="left: 480px; top: 778px;"><div class="d" data-t="11">Пт 23 окт</div><div class="c" data-t="12">Молодёжь | 19:00</div><div class="n" data-t="13">Молодёжный вечер</div></div>
+  <div class="card" style="left: 246px; top: 970px; width: 730px; height: 232px;"></div>
+  <div class="pic" style="left: 633px; top: 990px; width: 317px; height: 196px;"></div>
+  <div class="txt" style="left: 294px; top: 994px;"><div class="d" data-t="14">Вс 25 окт</div><div class="c" data-t="15">Служение | 10:00</div><div class="n" data-t="16">Первое служение</div><hr><div class="c" style="margin-top: 0" data-t="17">Служение | 12:30</div><div class="n" data-t="18">Второе служение</div></div>
+  <div class="cutbox" style="left: 119px; top: 123px; width: 313px; height: 309px;"><img src="/_blob/904c0b91ca0cacf79e71c4f1ae792478" style="width: 200px;" alt="Человек на молитвенном вечере"></div>
+  <div class="cutbox" style="left: 633px; top: 373px; width: 317px; height: 316px;"><img src="/_blob/a91802ba4858e3747c5741744f2c2586" style="width: 330px;" alt="Группа на изучении Библии"></div>
+  <div class="cutbox" style="left: 119px; top: 622px; width: 313px; height: 310px;"><img src="/_blob/83d83b1b3bf6fa1ac86d0f27fc76e58e" style="width: 300px;" alt="Молодёжь"></div>
+  <div class="cutbox" style="left: 633px; top: 870px; width: 317px; height: 316px;"><img src="/_blob/8f05e145f145884f40a5b742581be487" style="width: 290px;" alt="Двое на служении"></div>
+  <div class="abs foot"><span data-t="19">Адрес церкви<br>город, улица, дом</span><i></i><span class="r" data-t="20">Вопросы:<br>ссылка в&nbsp;профиле</span></div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1350}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>049 · Святая Вечеря</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face { font-family: 'Great Vibes'; font-style: normal; font-weight: 400; font-display: block; src: url(/_blob/2013b304c438587792a1f81f57df49a7); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: block; src: url(/_blob/e48a45bb5aa43a28b287b9316bd99dd4); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 800; font-display: block; src: url(/_blob/96864cfe65ed78b92d6b68d64b1a2714); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 900; font-display: block; src: url(/_blob/4ef5d0d47565b6b7c798e69fc07f8d40); }
+:root { --ink: #111; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { margin: 0; background: #e9e9e7; color: #111; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+.canvas { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: linear-gradient(#f3f3f1 0%, #f1f1ef 60%, #d3d2d0 100%); color: var(--ink); }
+.abs { position: absolute; }
+.grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; background-size: 260px 260px; background-image: url(/_blob/db4977b36a2290c81c36ada632b2d943); opacity: 0.18; mix-blend-mode: multiply; }
+.row { left: 151px; right: 162px; top: 268px; display: flex; justify-content: space-between; font: 800 27px / 1 Montserrat; text-transform: uppercase; letter-spacing: -0.01em; }
+.script { left: 120px; top: 380px; font: 400 230px / 1 "Great Vibes"; color: #2a2a2a; white-space: nowrap; }
+.heavy { left: 97px; top: 590px; font: 900 200px / 0.9 Montserrat; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap; background: linear-gradient(#6d6d6d 0%, #1a1a1a 55%, #000 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.still { position: absolute; left: 108px; top: 845px; width: 864px; height: 620px; }
+.still img { position: absolute; }
+.still .glass { left: 344px; top: 0; width: 220px; }
+.still .bread { left: 414px; top: 318px; width: 380px; }
+.still img.bread:not(.sh) { filter: brightness(1.12) saturate(1.12) sepia(0.14); }
+.still .sh { filter: brightness(0) blur(5px); transform-origin: 50% 100%; }
+.still .sh.glass { transform: scaleY(-0.34) skewX(45deg); opacity: 0.16; }
+.still .sh.bread { transform: translateY(-26px) scaleY(-0.36) skewX(45deg); opacity: 0.26; }
+.still .caustic { position: absolute; left: 312px; top: 466px; width: 140px; height: 42px; border-radius: 50%; background: radial-gradient(closest-side, rgba(225, 25, 25, 0.55), rgba(225, 25, 25, 0)); filter: blur(4px); mix-blend-mode: multiply; }
+.addr { left: 0; right: 0; top: 1500px; text-align: center; font: 400 27px / 1.4 Inter; }
+</style>
+</helmet>
+<main class="canvas grain" style="width: 1080px; height: 1920px;">
+  <div class="abs row"><span data-t="1">Воскресенье</span><span data-t="2">10:00</span><span data-t="3">1 ноября</span></div>
+  <div class="still">
+    <img class="sh glass" src="/_blob/f669f5c3e16c867d70ed90d8c46738b8" alt="">
+    <img class="sh bread" src="/_blob/2385cd1af37fe277f5f23bc7e2273502" alt="">
+    <div class="caustic"></div>
+    <img class="glass" src="/_blob/f669f5c3e16c867d70ed90d8c46738b8" alt="Бокал вина">
+    <img class="bread" src="/_blob/2385cd1af37fe277f5f23bc7e2273502" alt="Хлеб">
+  </div>
+  <div class="abs script" id="script" style="font-size: 243.343px;" data-t="4">Святая</div>
+  <div class="abs heavy" id="heavy" style="font-size: 218.546px;" data-t="5">Вечеря</div>
+  <div class="abs addr" data-t="6">Адрес церкви&nbsp;— улица, дом<br>Название церкви</div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

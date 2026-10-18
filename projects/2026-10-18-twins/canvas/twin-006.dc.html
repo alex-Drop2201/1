@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>006 · Заметки с проповеди</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face { font-family: 'Caveat'; font-style: normal; font-weight: 700; font-display: block; src: url(/_blob/e3d937a0c2657475f77246451086a6fc); }
+@font-face { font-family: 'Comforter Brush'; font-style: normal; font-weight: 400; font-display: block; src: url(/_blob/503d30f368686e5753542bf9c6427fb0); }
+:root { --mustard: #F0A80C; --dark: #1a1a1a; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { margin: 0; background: #1a1a1a; color: #f6f4ef; -webkit-font-smoothing: antialiased; }
+.canvas { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: var(--dark); }
+.abs { position: absolute; }
+.slot { position: absolute; overflow: hidden; background: #5c5a57; }
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slot.bg img { filter: grayscale(1) contrast(1.2) brightness(1.25); }
+.cut { position: absolute; display: block; }
+.grain-light::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; background-size: 260px 260px; background-image: url(/_blob/28b64ec84f3816ea140de44342e7cf4f); opacity: 0.14; mix-blend-mode: screen; }
+.pastor { left: 200px; top: 433px; width: 680px; z-index: 4; filter: url("#outline"); }
+.duo { position: absolute; inset: 0; background: #c48c0e; mix-blend-mode: multiply; z-index: 2; }
+.topdark { position: absolute; inset: 0; z-index: 2; background: linear-gradient(rgba(22, 22, 20, 0.9) 0%, rgba(22, 22, 20, 0.82) 28%, rgba(22, 22, 20, 0.35) 45%, rgba(22, 22, 20, 0) 58%); }
+.brush { font: 400 150px / 1 "Comforter Brush"; color: var(--mustard); -webkit-text-stroke: 6px var(--mustard); white-space: nowrap; }
+.title { left: 94px; top: 280px; transform: rotate(-4deg) scaleY(1.25); transform-origin: left center; z-index: 3; }
+.tape { left: 702px; top: 1120px; width: 302px; height: 135px; background: #e3e3e3; transform: rotate(-4deg); z-index: 7; display: flex; align-items: center; justify-content: center; font: 700 78px / 1 Caveat; color: #141414; box-shadow: rgba(0, 0, 0, 0.35) 0 6px 14px; }
+.note { z-index: 7; text-align: center; font: 700 58px / 0.92 Caveat; color: var(--mustard); }
+</style>
+</helmet>
+<main class="canvas grain-light" style="width: 1080px; height: 1350px;">
+  <div class="slot bg" style="left: 0; top: 0; width: 1080px; height: 1350px; z-index: 1;"><img src="/_blob/c8356ab5777c2407e6e5f29b7878fc12" alt="Зал, слушатели"></div>
+  <div class="duo"></div>
+  <div class="topdark"></div>
+  <img src="/_blob/1c513f27d7224137658514e0fc77d2a9" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3;">
+  <div class="abs brush title" id="title" style="font-size: 146.994px;" data-t="1">Заметки с&nbsp;проповеди</div>
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true"><filter id="outline" x="-10%" y="-10%" width="120%" height="120%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="16" result="d"></feMorphology>
+    <feFlood flood-color="#F0A80C"></feFlood><feComposite in2="d" operator="in" result="o"></feComposite>
+    <feMerge><feMergeNode in="o"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter></svg>
+  <img class="cut pastor" src="/_blob/20ad8862572a4589c4d2f99be47987a3" alt="Проповедник с микрофоном">
+  <img src="/_blob/1514ac386923a728fc41f1b19aa582ba" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 6;">
+  <div class="abs note" style="left: 210px; top: 125px; width: 280px; transform: rotate(-8deg);" data-t="2">Бог видит<br>сердце!!!</div>
+  <div class="abs note" style="left: 90px; top: 752px; width: 240px; font-size: 50px; transform: rotate(-20deg);" data-t="3">Пастор Иван</div>
+  <div class="abs tape" data-t="4">18.10.26</div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1350}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

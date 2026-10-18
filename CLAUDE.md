@@ -40,7 +40,7 @@ templates/          шаблоны: post.html (4:5), story.html (9:16), carousel
 projects/           готовые работы: projects/ГГГГ-ММ-ДД-коротко-латиницей/
 scripts/render.cjs  HTML → PNG/JPG/PDF через Playwright (Chromium)
 scripts/get_font.py скачать шрифт с Google Fonts и пересобрать fonts/fonts.css
-.claude/skills/     скилы проекта (canvas-design, poster-twin, poster-critique)
+.claude/skills/     скилы проекта (canvas-design, poster-twin, poster-critique, poster-canvas)
 ```
 
 Макет — это HTML-страница: вёрстка на CSS, рендер в картинку скриптом. Пути к общим файлам — от корня репозитория
@@ -63,6 +63,9 @@ scripts/get_font.py скачать шрифт с Google Fonts и пересоб�
 5. Отправить пользователю через SendUserFile (status `normal`), коротко подписать.
 6. Сразу закоммитить и запушить в `main`: `git add projects/<папка> && git commit -m "Постер: <что>" && git push -u origin main`.
    Пользователь разрешил коммитить и пушить готовые работы в `main` без отдельного вопроса.
+7. Выложить макет на холст проекта (скил `poster-canvas`, `.claude/skills/poster-canvas/SKILL.md`): там пользователь
+   листает «референс | наш», правит текст руками и оставляет комментарии. На «забери правки» — перенести их
+   в исходный HTML, перерендерить, проверить и обновить холст.
 
 ## Форматы
 

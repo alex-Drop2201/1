@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>003 · Почему стоит прийти</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: block; src: url(/_blob/5c66d05db13036f240766ef02d055f0d); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 900; font-display: block; src: url(/_blob/f3f12a2bc036e4179e9fd32fc30fecc9); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { margin: 0; background: #8f8a86; color: #f4f4f2; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+.canvas { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: #8f8a86; color: #f4f4f2; }
+.abs { position: absolute; }
+.slot { position: absolute; overflow: hidden; background: #5c5a57; }
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; background-size: 260px 260px; background-image: url(/_blob/db4977b36a2290c81c36ada632b2d943); opacity: 0.18; mix-blend-mode: multiply; }
+.shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.38) 25%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 68%); }
+.meta { left: 151px; right: 143px; top: 298px; display: flex; align-items: center; gap: 18px; z-index: 5; font: 700 15px / 1 Inter; text-transform: uppercase; letter-spacing: -0.005em; }
+.meta i { flex: 0 0 310px; height: 1.5px; background: #f4f4f2; }
+.meta .r { margin-left: auto; }
+.line { left: 150px; font: 900 128px / 0.885 Inter; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap; z-index: 5; }
+</style>
+</helmet>
+<main class="canvas grain" style="width: 1080px; height: 1350px;">
+  <div class="slot" style="left: 0; top: 0; width: 1080px; height: 1350px;"><img src="/_blob/e4d66f31273198d9d1fe846d8dea27a8" alt="Поклонение, поднятые руки"></div>
+  <div class="shade"></div>
+  <div class="abs meta"><span data-t="1">Ты приглашён</span><i></i><span class="r" data-t="2">10:00 | 12:30</span></div>
+  <div class="abs line" id="l1" style="font-size: 99.6311px; top: 346.129px;" data-t="3">Почему стоит</div>
+  <div class="abs line" id="l2" style="font-size: 110.521px; top: 463.269px;" data-t="4">прийти в&nbsp;это</div>
+  <div class="abs line" id="l3" style="font-size: 109.806px; top: 581.325px;" data-t="5">воскресенье</div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1350}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

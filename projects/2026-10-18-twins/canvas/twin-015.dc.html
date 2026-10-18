@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>015 · Ждём тебя</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face { font-family: 'Fira Sans Extra Condensed'; font-style: normal; font-weight: 900; font-display: block; src: url(/_blob/e0e1ed54b2d9b26b53515ef3326429ae); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 700; font-display: block; src: url(/_blob/051b9175c425bc4a29216444f3cb204b); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 800; font-display: block; src: url(/_blob/96864cfe65ed78b92d6b68d64b1a2714); }
+:root { --orange: #F4502A; --bg: #181818; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { margin: 0; background: #181818; color: #ffffff; font-family: 'Montserrat', sans-serif; -webkit-font-smoothing: antialiased; }
+.canvas { position: relative; width: 1080px; height: 1080px; overflow: hidden; background: var(--bg); color: #ffffff; }
+.abs { position: absolute; }
+.cut { position: absolute; display: block; }
+.grain-light::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; background-size: 260px 260px; background-image: url(/_blob/28b64ec84f3816ea140de44342e7cf4f); opacity: 0.14; mix-blend-mode: screen; }
+.ghost { font: 900 300px / 0.8 "Fira Sans Extra Condensed"; text-transform: uppercase; white-space: nowrap; background: linear-gradient(#4a4a4a, #1c1c1c 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.singer { left: 478px; top: 168px; width: 330px; filter: grayscale(1) contrast(1.15); }
+.block { position: absolute; background: var(--orange); overflow: hidden; }
+.block span { position: absolute; left: 12px; top: 0; font: 900 200px / 0.8 "Fira Sans Extra Condensed"; color: #121212; text-transform: uppercase; white-space: nowrap; transform-origin: left top; }
+.date { left: 846px; top: 279px; font: 900 58px / 0.92 "Fira Sans Extra Condensed"; letter-spacing: 0.02em; background: linear-gradient(#ffffff, #9a9a9a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.time { left: 130px; top: 662px; font: 800 58px / 0.95 Montserrat; letter-spacing: -0.03em; background: linear-gradient(#ffffff, #a5a5a5); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.free { left: 342px; top: 815px; width: 246px; height: 49px; border: 2px solid var(--orange); display: flex; align-items: center; justify-content: center; font: 700 24px / 1 Montserrat; color: var(--orange); letter-spacing: 0.01em; }
+.spk-label { left: 300px; top: 940px; width: 120px; transform: rotate(-90deg); font: 700 13px / 1 Montserrat; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; }
+.spk { left: 368px; top: 889px; font: 800 52px / 0.92 Montserrat; letter-spacing: -0.03em; color: var(--orange); text-transform: uppercase; }
+.info { left: 708px; top: 830px; font: 700 14px / 1.35 Montserrat; text-transform: uppercase; letter-spacing: 0.02em; }
+.addr { left: 691px; top: 908px; width: 266px; height: 95px; background: #232323; padding: 16px 18px; font: 700 14px / 1.45 Montserrat; text-transform: uppercase; letter-spacing: 0.02em; }
+</style>
+</helmet>
+<main class="canvas grain-light" style="width: 1080px; height: 1080px;">
+  <div class="abs ghost" style="left: 800px; top: -40px;" data-t="1">Ждём</div>
+  <div class="abs ghost" style="left: -60px; top: 880px;" data-t="2">тебя</div>
+  <div class="block" style="left: 98px; top: 95px; width: 711px; height: 347px;"><span id="w1" style="font-size: 279.343px; transform: scaleY(1.3); top: 28.2416px;" data-t="3">Ждём</span></div>
+  <img class="cut singer" src="/_blob/4d834d242f211c78dfb5bf14a8a4ac1f" alt="Певица с микрофоном">
+  <div class="block" style="left: 341px; top: 490px; width: 578px; height: 283px;"><span id="w2" style="font-size: 290.482px; transform: scaleY(1.271); top: -6.15217px;" data-t="4">тебя</span></div>
+  <div class="abs date" data-t="5">25<br>10<br>26</div>
+  <div class="abs time" data-t="6">10:00<br>12:30</div>
+  <div class="abs free" data-t="7">Вход свободный</div>
+  <div class="abs spk-label" data-t="8">Проповедь</div>
+  <div class="abs spk" data-t="9">Пастор<br>Иван</div>
+  <div class="abs info" data-t="10">Подробнее<br>ссылка в&nbsp;профиле</div>
+  <div class="abs addr" data-t="11">Наша церковь<br>адрес здесь<br>город, улица</div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

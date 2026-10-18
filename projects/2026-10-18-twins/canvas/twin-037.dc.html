@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>037 · Дом Отца</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: block; src: url(/_blob/b258384d223e2fbe1752c110c5ad7611); }
+:root { --gray: #DBD9DA; --ink: #141414; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { margin: 0; background: #DBD9DA; color: #141414; font-family: 'IBM Plex Mono', monospace; -webkit-font-smoothing: antialiased; }
+.canvas { position: relative; width: 1080px; height: 1440px; overflow: hidden; background: var(--gray); color: var(--ink); }
+.abs { position: absolute; }
+.slot { position: absolute; overflow: hidden; background: #5c5a57; }
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; background-size: 260px 260px; background-image: url(/_blob/db4977b36a2290c81c36ada632b2d943); opacity: 0.18; mix-blend-mode: multiply; }
+.m { font: 400 27px / 1.2 "IBM Plex Mono"; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
+.c { left: 0; right: 0; text-align: center; }
+</style>
+</helmet>
+<main class="canvas grain" style="width: 1080px; height: 1440px;">
+  <div class="abs m c" style="top: 52px;" data-t="1">Воскресенья<br>в&nbsp;Доме Отца</div>
+  <div class="abs m c" style="top: 222px;" data-t="2">10:00<br>12:30</div>
+  <div class="abs m" style="left: 216px; top: 438px;" data-t="3">Ваш город</div>
+  <div class="abs m" style="left: 708px; top: 438px;" data-t="4">Ваш район</div>
+  <div class="abs m" style="left: 48px; top: 607px;" data-t="5">Дом<br>поклонения</div>
+  <div class="abs m" style="right: 48px; top: 607px; text-align: right;" data-t="6">Место встречи<br>с&nbsp;Иисусом</div>
+  <div class="slot" style="left: 0; top: 720px; width: 1080px; height: 720px;"><img src="/_blob/e723c1ee46599d215f2cec7856dac4e0" alt="Люди на лужайке"></div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1440}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

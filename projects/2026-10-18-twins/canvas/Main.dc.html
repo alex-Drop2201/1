@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>001 · День крещения</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: block; src: url(/_blob/5c66d05db13036f240766ef02d055f0d); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 900; font-display: block; src: url(/_blob/f3f12a2bc036e4179e9fd32fc30fecc9); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: block; src: url(/_blob/0e2e9d4a55dd8f31ecc6f01389eeb221); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { margin: 0; background: #1f3d43; color: #f2f2f2; font-family: 'Manrope', 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+.canvas { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: #1f3d43; color: #f2f2f2; }
+.abs { position: absolute; }
+.slot { position: absolute; overflow: hidden; background: #5c5a57; }
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cut { position: absolute; display: block; }
+.grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; background-size: 260px 260px; background-image: url(/_blob/db4977b36a2290c81c36ada632b2d943); opacity: 0.3; mix-blend-mode: multiply; }
+.meta { left: 158px; right: 149px; top: 304px; display: flex; align-items: center; gap: 16px; z-index: 5; font: 700 16px / 1 Inter; text-transform: uppercase; letter-spacing: -0.005em; }
+.meta i { flex: 1 1 0%; height: 1.5px; background: #f2f2f2; }
+.tint { position: absolute; inset: 0; z-index: 7; background: #0d5866; mix-blend-mode: color; opacity: 0.42; pointer-events: none; }
+.tint2 { position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(8, 30, 36, 0.35), rgba(8, 30, 36, 0) 32%, rgba(8, 30, 36, 0) 60%, rgba(8, 30, 36, 0.25)); }
+.title { left: 128px; font: 900 190px / 0.885 Inter; letter-spacing: -0.045em; text-transform: uppercase; z-index: 5; white-space: nowrap; }
+</style>
+</helmet>
+<main class="canvas grain" style="width: 1080px; height: 1350px;">
+  <div class="slot" style="left: 0; top: 0; width: 1080px; height: 1350px;"><img src="/_blob/5ac8e6d3e6936680d126d03c5020119a" alt="Крещение в реке"></div>
+  <div class="tint"></div><div class="tint2"></div>
+  <div class="abs meta"><span data-t="1">10:00</span><i></i><span data-t="2">Ссылка в&nbsp;профиле</span></div>
+  <div class="abs title" id="title" style="font-size: 146.65px; top: 344.415px;"><span id="t1" data-t="3">День</span><br><span id="t2" data-t="4">крещения</span></div>
+  <img class="cut" src="/_blob/11e5a23bc5d9174655a074ba5425df90" style="left: 405px; top: 471px; width: 525px; z-index: 6;" alt="">
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1350}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
