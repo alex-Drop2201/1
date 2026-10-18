@@ -13,11 +13,11 @@
      и надпись от руки справа. Небо и щит нарисованы, фото не нужно. */
   :root { --board: #DADAD8; --ink: #30240C; --sage: #A9A57E; }
   body { background: #8fb1dc; }
-  .canvas { background: linear-gradient(180deg, #7FA6D8 0%, #9FBDE3 55%, #B4CBE8 100%); }
+  .canvas { background: linear-gradient(180deg, #5E8ACB 0%, #8DB0DE 50%, #B4CBE8 100%); }
   .board { left: 108px; top: 320px; width: 972px; height: 648px;
            background: linear-gradient(180deg, #e2e2e0, var(--board) 60%, #cfcfcc); box-shadow: 0 2px 0 rgba(0,0,0,.08); }
   .msg { left: 160px; top: 528px; font: 800 110px/0.97 'Inter'; letter-spacing: -0.055em; color: var(--ink); white-space: nowrap; }
-  .hand { left: 830px; top: 452px; font: 400 40px/1.02 'Pangolin'; color: var(--ink); text-transform: uppercase; transform: rotate(9deg); letter-spacing: .04em; }
+  .hand { left: 826px; top: 446px; font: 400 42px/1.05 'Neucha'; color: var(--ink); text-transform: uppercase; transform: rotate(9deg); letter-spacing: .04em; }
 </style>
 </head>
 <body>
@@ -54,6 +54,13 @@
   svgEl(fr, 'rect', { x: 0, y: 878, width: 140, height: 6, fill: dark });
   for (let x = 6; x <= 136; x += 16) svgEl(fr, 'line', { x1: x, y1: 884, x2: x, y2: 968, stroke: dark, 'stroke-width': 3 });
   svgEl(fr, 'rect', { x: 0, y: 960, width: 140, height: 8, fill: dark });
+
+  // Надпись от руки: каждая буква чуть повёрнута и сдвинута, как написано маркером на щите.
+  const jitter = rng(4512);
+  const hand = document.querySelector('.hand');
+  hand.innerHTML = hand.innerHTML.split('<br>').map((line) => [...line.replace(/&nbsp;/g, '\u00a0')].map((ch) =>
+    ch.trim() ? `<span style="display:inline-block; transform: translateY(${((jitter() - 0.5) * 6).toFixed(1)}px) rotate(${((jitter() - 0.5) * 8).toFixed(1)}deg)">${ch}</span>` : ch,
+  ).join('')).join('<br>');
 
   // Оливковая звёздочка от руки.
   const star = document.getElementById('star');

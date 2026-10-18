@@ -196,6 +196,23 @@ def main():
         add('minor', f'очень мелкий текст (<20px): {", ".join(small[:6])}{" …" if len(small) > 6 else ""}',
             'на телефоне не прочтётся; если так в референсе — оставить как служебную строку, важное (время, адрес) крупнее')
 
+    # Шрифты: нет подключённого начертания (браузер берёт соседнее или рисует жирность сам) и искажение трансформацией.
+    seen = set()
+    for ln in m['lines']:
+        st = ln.get('fontStatus', 'ok')
+        if st != 'ok' and (ln['fontFamily'], st) not in seen:
+            seen.add((ln['fontFamily'], st))
+            add('warn', f'{ln["fontFamily"]}: {st} — «{ln["text"][:24]}» набрано не тем начертанием',
+                'скачать начертание (scripts/get_font.py) или взять имеющийся вес', ln.get('box'))
+        sx, sy = ln.get('sx', 1), ln.get('sy', 1)
+        ratio_xy = sy / sx if sx else 1
+        if (sx < 0.9 or ratio_xy > 1.15 or ratio_xy < 0.87) and ('stretch', ln['fontFamily'], ln['text'][:10]) not in seen:
+            seen.add(('stretch', ln['fontFamily'], ln['text'][:10]))
+            # До ×1.3 у узких гротесков почти незаметно — мелочь; сильнее — штрихи искажаются заметно.
+            strong = sx < 0.85 or ratio_xy > 1.3 or ratio_xy < 0.77
+            add('warn' if strong else 'minor', f'«{ln["text"][:24]}» ({ln["fontFamily"]}) искажён трансформацией: по ширине ×{sx}, по высоте ×{sy}',
+                'взять шрифт с нужными пропорциями (узкий/широкий) вместо растяжения — см. подбор шрифта в SKILL.md', ln.get('box'))
+
     # Зоны: интерфейс сторис и обрезка поста 4:5 до 3:4 в сетке профиля.
     zones = []
     if (W, H) == (1080, 1920):

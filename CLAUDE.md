@@ -86,7 +86,9 @@ scripts/get_font.py скачать шрифт с Google Fonts и пересоб�
 
 Inter, Manrope, Montserrat, Rubik — текст и универсальные; Unbounded — акцидентный широкий; Oswald и
 Fira Sans Extra Condensed (900) — узкие ударные; Playfair Display (+ italic) и Cormorant Garamond (300/500 + italic) — антиква;
-Great Vibes — каллиграфия; Caveat, Amatic SC и Pangolin (печатный от руки) — рукописные. Образец: `fonts/export/specimen.png`.
+Oranienbaum — узкая контрастная антиква; Great Vibes — каллиграфия; Comforter Brush — сухая кисть (только крупно);
+Caveat (маркер), Neucha (перо), Amatic SC и Pangolin (печатный от руки) — рукописные.
+Какой русский шрифт брать вместо латинского из референса — `.claude/skills/poster-critique/fonts.md`. Образец: `fonts/export/specimen.png`.
 Добавить новый: `python3 scripts/get_font.py "Название" 400 700 [--italic]`, затем `node scripts/render.cjs fonts/specimen.html`
 обновит образец. Проверять, что у шрифта есть кириллица (видно на образце).
 

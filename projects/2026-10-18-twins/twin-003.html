@@ -15,6 +15,8 @@
           font: 700 15px/1 'Inter'; text-transform: uppercase; letter-spacing: -0.005em; }
   .meta i { flex: 0 0 310px; height: 1.5px; background: #F4F4F2; }
   .meta .r { margin-left: auto; }
+  /* Мягкое затемнение под заголовком: белый текст не тонет в светлых пятнах фото. */
+  .shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,.2) 0%, rgba(0,0,0,.38) 25%, rgba(0,0,0,.3) 50%, rgba(0,0,0,0) 68%); }
   .line { left: 150px; font: 900 128px/0.885 'Inter'; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap; z-index: 5; }
 </style>
 </head>
@@ -22,6 +24,7 @@
 <main class="canvas grain">
   <div class="slot" style="left: 0; top: 0; width: 1080px; height: 1350px;" data-src="assets/003.jpg" data-ph="assets/ph-003-1.png"
        data-need="поклонение: зал со спины, поднятые руки; светлый верх кадра под текст" data-label="40,1220"></div>
+  <div class="shade"></div>
   <div class="abs meta"><span>Ты приглашён</span><i></i><span class="r">10:00 | 12:30</span></div>
   <div class="abs line" id="l1">Почему стоит</div>
   <div class="abs line" id="l2">прийти в это</div>

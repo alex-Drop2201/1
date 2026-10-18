@@ -14,14 +14,17 @@
   :root { --mustard: #F0A80C; --dark: #1a1a1a; }
   body, .canvas { background: var(--dark); }
   .slot.bg .ph { filter: blur(34px) grayscale(1) contrast(1.4) brightness(.85); }
-  .slot.bg img { filter: grayscale(1) contrast(1.4) brightness(.85); }
-  .pastor { left: 330px; top: 425px; width: 525px; z-index: 4; filter: url(#outline); }
+  .slot.bg img { filter: grayscale(1) contrast(1.2) brightness(1.25); }
+  .pastor { left: 200px; top: 433px; width: 680px; z-index: 4; filter: url(#outline); }
+  /* Верх тёмный, как гранж в референсе: горчичные надписи не сливаются с горчичной толпой. */
+  .topdark { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(22,22,20,.9) 0%, rgba(22,22,20,.82) 28%, rgba(22,22,20,.35) 45%, rgba(22,22,20,0) 58%); }
   .duo { position: absolute; inset: 0; background: #C48C0E; mix-blend-mode: multiply; z-index: 2; }
   .brush { font: 400 150px/1 'Comforter Brush'; color: var(--mustard); -webkit-text-stroke: 6px var(--mustard); white-space: nowrap; }
-  .title { left: 94px; top: 280px; transform: rotate(-4deg) scaleY(1.45); transform-origin: left center; z-index: 3; }
+  .title { left: 94px; top: 280px; transform: rotate(-4deg) scaleY(1.25); transform-origin: left center; z-index: 3; }
   .tape { left: 702px; top: 1120px; width: 302px; height: 135px; background: #E3E3E3; transform: rotate(-4deg); z-index: 7;
           display: flex; align-items: center; justify-content: center; font: 700 78px/1 'Caveat'; color: #141414; box-shadow: 0 6px 14px rgba(0,0,0,.35); }
-  .note { z-index: 7; text-align: center; font: 400 60px/0.9 'Comforter Brush'; color: var(--mustard); -webkit-text-stroke: 1.2px var(--mustard); }
+  /* Пометки от руки: маркер Caveat 700 — в референсе узкая кисть-маркер, Comforter Brush мелко не читается. */
+  .note { z-index: 7; text-align: center; font: 700 58px/0.92 'Caveat'; color: var(--mustard); }
 </style>
 </head>
 <body>
@@ -29,6 +32,7 @@
   <div class="slot bg" style="left: 0; top: 0; width: 1080px; height: 1350px; z-index: 1;" data-src="assets/006-bg.jpg" data-ph="assets/ph-006-1.png"
        data-need="фон: люди в зале, крупные лица — уйдёт в горчичный дуотон" data-label="40,40"></div>
   <div class="duo"></div>
+  <div class="topdark"></div>
   <svg class="art" id="scratch" width="1080" height="1350" viewBox="0 0 1080 1350" style="z-index: 3"></svg>
   <div class="abs brush title" id="title">Заметки с проповеди</div>
   <svg width="0" height="0" style="position: absolute"><filter id="outline" x="-10%" y="-10%" width="120%" height="120%">
@@ -38,7 +42,7 @@
   <img class="cut pastor" src="assets/006-pastor.png" alt="">
   <svg class="art" id="marks" width="1080" height="1350" viewBox="0 0 1080 1350" style="z-index: 6"></svg>
   <div class="abs note" style="left: 210px; top: 125px; width: 280px; transform: rotate(-8deg);">Бог видит<br>сердце!!!</div>
-  <div class="abs note" style="left: 90px; top: 752px; width: 240px; font-size: 54px; transform: rotate(-20deg);">Пастор Иван</div>
+  <div class="abs note" style="left: 90px; top: 752px; width: 240px; font-size: 50px; transform: rotate(-20deg);">Пастор Иван</div>
   <div class="abs tape">18.10.26</div>
 </main>
 <script src="twin.js"></script>
@@ -60,7 +64,7 @@
   svgEl(marks, 'path', { d: handArrow([475, 205], [612, 312], -0.12, 30), ...white });
   svgEl(marks, 'path', { d: handArrow([330, 712], [430, 650], -0.15, 26), ...white });
 
-  afterFonts(["400 100px 'Comforter Brush'", "700 78px 'Caveat'"], () => {
+  afterFonts(["400 100px 'Comforter Brush'", "700 58px 'Caveat'"], () => {
     fitWidth(document.getElementById('title'), 940);
   });
 </script>

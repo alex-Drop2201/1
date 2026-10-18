@@ -15,7 +15,7 @@
   body, .canvas { background: var(--bg); color: #fff; }
   .ghost { font: 900 300px/0.8 'Fira Sans Extra Condensed'; text-transform: uppercase; white-space: nowrap;
            background: linear-gradient(180deg, #4a4a4a, #1c1c1c 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .singer { left: 455px; top: 112px; width: 360px; filter: grayscale(1) contrast(1.15); }
+  .singer { left: 478px; top: 168px; width: 330px; filter: grayscale(1) contrast(1.15); }
   .block { position: absolute; background: var(--orange); overflow: hidden; }
   .block span { position: absolute; left: 12px; top: 0; font: 900 200px/0.8 'Fira Sans Extra Condensed'; color: #121212;
                 text-transform: uppercase; white-space: nowrap; transform-origin: left top; }
@@ -24,7 +24,7 @@
   .time { left: 130px; top: 662px; font: 800 58px/0.95 'Montserrat'; letter-spacing: -0.03em;
           background: linear-gradient(180deg, #fff, #a5a5a5); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .free { left: 342px; top: 815px; width: 246px; height: 49px; border: 2px solid var(--orange); display: flex; align-items: center; justify-content: center;
-          font: 500 23px/1 'Montserrat'; color: var(--orange); letter-spacing: .01em; }
+          font: 600 24px/1 'Montserrat'; color: var(--orange); letter-spacing: .01em; }
   .spk-label { left: 300px; top: 940px; width: 120px; transform: rotate(-90deg); font: 700 13px/1 'Montserrat'; letter-spacing: .14em; text-transform: uppercase; text-align: center; }
   .spk { left: 368px; top: 889px; font: 800 52px/0.92 'Montserrat'; letter-spacing: -0.03em; color: var(--orange); text-transform: uppercase; }
   .info { left: 708px; top: 830px; font: 700 14px/1.35 'Montserrat'; text-transform: uppercase; letter-spacing: .02em; }
@@ -55,9 +55,10 @@
       fitWidth(el, w);
       const r = el.getBoundingClientRect();
       const capH = parseFloat(el.style.fontSize) * 0.69;
-      const k = (h * 0.9) / capH;
+      // Сверхузкого жирного с кириллицей нет — тянем по высоте не больше ×1.3, чтобы не искажать штрихи.
+      const k = Math.min((h * 0.9) / capH, 1.3);
       el.style.transform = `scaleY(${k.toFixed(3)})`;
-      el.style.top = `${h * 0.05 - (parseFloat(el.style.fontSize) * 0.8 - capH) * 0.5 * k}px`;
+      el.style.top = `${(h - capH * k) / 2 - (parseFloat(el.style.fontSize) * 0.8 - capH) * 0.5 * k}px`;
     }
   });
 </script>

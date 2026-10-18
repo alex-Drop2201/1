@@ -26,6 +26,25 @@ async function main() {
       // Короткие слова, которые не должны висеть в конце строки.
       const SHORT = /^(в|во|и|к|ко|с|со|о|об|обо|у|а|но|на|по|за|от|до|из|не|ни|же|ли|бы|для|при|без|над|под|про|что|как)$/i;
       const lines = [];
+      // Подключённые начертания: семейство → набор весов (normal/italic).
+      const faces = {};
+      for (const f of document.fonts) {
+        if (f.status === 'error') continue;
+        const fam = f.family.replace(/["']/g, '');
+        (faces[fam] = faces[fam] || new Set()).add(`${f.weight}${f.style === 'italic' ? 'i' : ''}`);
+      }
+      // Суммарное растяжение элемента трансформациями (свои и родителей).
+      const stretch = (el) => {
+        let sx = 1, sy = 1;
+        for (let e = el; e && e !== document.body; e = e.parentElement) {
+          const t = getComputedStyle(e).transform;
+          if (!t || t === 'none') continue;
+          const v = t.match(/-?[\d.e]+/g).map(Number);
+          sx *= Math.hypot(v[0], v[1]);
+          sy *= Math.hypot(v[2], v[3]);
+        }
+        return [+sx.toFixed(2), +sy.toFixed(2)];
+      };
       const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
       for (let node = walker.nextNode(); node; node = walker.nextNode()) {
         const el = node.parentElement;
@@ -52,6 +71,11 @@ async function main() {
           } else groups.push({ y: w.y, x: w.x, r: w.r, b: w.b, end: w.end, words: [w.w] });
         }
         const bleed = !!el.closest('[data-bleed]');
+        const family = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
+        const weightKey = `${cs.fontWeight}${cs.fontStyle === 'italic' ? 'i' : ''}`;
+        const fontStatus = !faces[family] ? 'нет шрифта' : faces[family].has(weightKey) ? 'ok'
+          : `нет начертания ${cs.fontWeight}${cs.fontStyle === 'italic' ? ' italic' : ''} (есть ${[...faces[family]].join(', ')})`;
+        const [sx, sy] = stretch(el);
         const gradient = cs.backgroundClip === 'text' || cs.webkitBackgroundClip === 'text';
         groups.forEach((g, i) => {
           const last = g.words[g.words.length - 1];
@@ -61,7 +85,7 @@ async function main() {
             text: g.words.join(' '),
             x: Math.round(g.x), y: Math.round(g.y), w: Math.round(g.r - g.x), h: Math.round(g.b - g.y),
             fontSize: parseFloat(cs.fontSize), fontFamily: cs.fontFamily.split(',')[0].replace(/["']/g, ''),
-            fontWeight: cs.fontWeight, color: cs.color, gradient, bleed,
+            fontWeight: cs.fontWeight, fontStyle: cs.fontStyle, color: cs.color, gradient, bleed, fontStatus, sx, sy,
             // Висячее слово: в конце строки внутри абзаца или перед ручным переносом <br>.
             hangingShort: SHORT.test(last) && nextChar !== '\u00a0'
               && (i < groups.length - 1 || (node.nextSibling && node.nextSibling.nodeName === 'BR')) ? last : null,
