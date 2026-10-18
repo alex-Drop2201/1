@@ -37,7 +37,7 @@ templates/          шаблоны: post.html (4:5), story.html (9:16), carousel
 projects/           готовые работы: projects/ГГГГ-ММ-ДД-коротко-латиницей/
 scripts/render.cjs  HTML → PNG/JPG/PDF через Playwright (Chromium)
 scripts/get_font.py скачать шрифт с Google Fonts и пересобрать fonts/fonts.css
-.claude/skills/     скилы проекта (canvas-design)
+.claude/skills/     скилы проекта (canvas-design, poster-critique)
 ```
 
 Макет — это HTML-страница: вёрстка на CSS, рендер в картинку скриптом. Пути к общим файлам — от корня репозитория
@@ -53,6 +53,8 @@ scripts/get_font.py скачать шрифт с Google Fonts и пересоб�
 4. **Обязательно посмотреть результат самому** (Read на PNG) и прочитать предупреждения скрипта:
    `⚠ текст выходит за край макета`, `⚠ шрифт не загрузился`, `⚠ не загрузилось`, `⚠ ошибка JavaScript на странице` — исправить до показа.
    В скриптах макетов не называть глобальные переменные `top`, `name`, `status`, `parent`, `self` — они заняты браузером, скрипт молча падает.
+   Затем прогнать скил `poster-critique` (`.claude/skills/poster-critique/SKILL.md`): сравнение с референсом, контраст,
+   зоны, кегли, даты — и исправить критичное до показа. Результаты критики пишутся в `tmp/critique/` и не коммитятся.
 5. Отправить пользователю через SendUserFile (status `normal`), коротко подписать.
 6. Сразу закоммитить и запушить в `main`: `git add projects/<папка> && git commit -m "Постер: <что>" && git push -u origin main`.
    Пользователь разрешил коммитить и пушить готовые работы в `main` без отдельного вопроса.

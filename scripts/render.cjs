@@ -112,7 +112,8 @@ async function launch(chromium) {
   }
 }
 
-async function renderFile(browser, port, file, opts) {
+// Открыть макет, выставить размер и дождаться шрифтов и window.renderReady. Нужна и рендеру, и замерам критики.
+async function openPage(browser, port, file, opts) {
   const abs = path.resolve(file);
   if (!fs.existsSync(abs)) throw new Error(`Нет файла ${file}`);
   if (!abs.startsWith(ROOT)) throw new Error('HTML должен лежать внутри репозитория');
@@ -135,6 +136,11 @@ async function renderFile(browser, port, file, opts) {
   // Макет может отложить рендер, пока подгоняет текст: window.renderReady = Promise.
   await page.evaluate(() => window.renderReady);
   await page.waitForTimeout(100);
+  return { page, abs, width, height, failed, scriptErrors };
+}
+
+async function renderFile(browser, port, file, opts) {
+  const { page, abs, width, height, failed, scriptErrors } = await openPage(browser, port, file, opts);
 
   const missingFonts = await page.evaluate(() =>
     [...document.fonts].filter((f) => f.status === 'error').map((f) => `${f.family} ${f.weight}`),
@@ -210,7 +216,11 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error(`✗ ${err.message}`);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(`✗ ${err.message}`);
+    process.exit(1);
+  });
+}
+
+module.exports = { ROOT, loadPlaywright, serve, launch, openPage };
