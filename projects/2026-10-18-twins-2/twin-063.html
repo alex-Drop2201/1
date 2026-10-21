@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Близнец референса 063 — молитва сегодня</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/projects/2026-10-18-twins/twin.css">
+<style>
+  /* Референс 063 (736×1308, сторис): ч/б фото — человек сидит, согнувшись в молитве; вокруг кольца всё закручено
+     вихревым смазом, внутри резко. Кольцо текста — центр 50 % / 50 %, внешний край 60,5 % ширины (r ≈ 326 px),
+     прописные Montserrat Bold высотой 2,1 % ширины (у нас 2,3 %: кириллица короче — плотнее, как в референсе), текст повторяется 4 раза по кругу.
+     Цитата — две строки прописных высотой 1,5 % ширины, по центру, верх на 7,7 %, первая строка x 16,4–83,4 %;
+     ссылка на стих — в конце второй строки через пробел.
+     Заголовок — широкий жирный гротеск, высота прописных 4,8 % ширины, x 17,5–81,1 %, верх на 13,8 %.
+     Отступления: цитата и заголовок опущены на 114 px — верхние 250 px сторис закрывает интерфейс;
+     «СЕГОДНЯ В 20:00» длиннее «HOJE ÁS 20H», поэтому шире блок (по высоте прописных — как в референсе). */
+  body, .canvas { background: #4a4a4a; color: #fff; }
+  .t { left: 0; right: 0; text-align: center; white-space: nowrap; z-index: 5; text-transform: uppercase; }
+  .quote { font: 400 24px/34px 'Montserrat'; letter-spacing: 0.005em; }
+  .quote .ref { margin-left: 46px; }
+  .head { font: 400 56.7px/1 'Dela Gothic One'; letter-spacing: 0.01em; }   /* прописные Dela — 0.9 кегля */
+  /* Затемнение верха под цитатой и заголовком (светлые завитки смаза иначе дают контраст 2.4:1). */
+  .topshade { left: 0; right: 0; top: 0; height: 640px; z-index: 2;
+              background: linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.4) 38%, rgba(0,0,0,.32) 60%, rgba(0,0,0,0) 100%); }
+  .ring { left: 0; top: 0; width: 1080px; height: 1920px; z-index: 5; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <div class="slot" style="left: 0; top: 0; width: 1080px; height: 1920px;" data-src="assets/063.jpg"
+       data-need="ч/б: человек сидит в зале, согнувшись в молитве, вокруг ряды стульев; вихревой смаз по краям" data-label="40,1700"></div>
+  <div class="abs topshade"></div>
+  <div class="abs t quote" id="quote">«Изливайте пред Ним сердце ваше: Бог нам<br>прибежище»<span class="ref">Псалом 61:9</span></div>
+  <div class="abs t head" id="head">Сегодня в 20:00</div>
+  <svg class="abs ring" viewBox="0 0 1080 1920">
+    <defs>
+      <!-- Круг по часовой стрелке от «8 часов»: буквы стоят головами наружу, внизу текст перевёрнут, как в референсе. -->
+      <path id="circle" d="M 278.5 1111 a 302 302 0 1 1 523 -302 a 302 302 0 1 1 -523 302"/>
+    </defs>
+    <text font-family="Montserrat" font-weight="700" font-size="35" fill="#fff" id="ringtext">
+      <textPath href="#circle" startOffset="0" textLength="1862" lengthAdjust="spacing">КОМНАТА МОЛИТВЫ КОМНАТА МОЛИТВЫ КОМНАТА МОЛИТВЫ КОМНАТА МОЛИТВЫ</textPath>
+    </text>
+  </svg>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script>
+  initSlots();
+  afterFonts(["400 24px 'Montserrat'", "700 35px 'Montserrat'", "400 56.7px 'Dela Gothic One'"], () => {
+    // Цитата: верх прописных первой строки на 262 px (Montserrat: прописные 0.70 кегля, строка 34 px).
+    const q = document.getElementById('quote');
+    q.style.top = `${262 - ((34 - 24 * 1.219) / 2 + (0.968 - 0.70) * 24)}px`;
+    // Заголовок: высота прописных как в референсе (51 px), верх прописных на 379 px.
+    const h = document.getElementById('head');
+    h.style.top = `${379 - 0.178 * 56.7}px`;
+  });
+</script>
+</body>
+</html>

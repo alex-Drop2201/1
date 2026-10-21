@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Близнец референса 056 — ищите прежде Царства Божия</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/projects/2026-10-18-twins/twin.css">
+<style>
+  /* Референс 056 (736×1308 → 1080×1920, ×1.467): сторис-фото раскрытой Библии сверху-сбоку на весь кадр;
+     верхние ~29 % — ровная тёплая серая стена #7E7B74, страницы того же тона (фото сильно приглушено),
+     низ и левый край тёмные (чехол, тень стола).
+     Текст кремовый #F3E7D3 по центру x 50 %: три строки узкой контрастной антиквы прописными — верх прописных
+     33,2 / 41,1 / 49,1 %, высота прописных 5,1 %; под ними каллиграфия с росчерком (x 19–80 %, y 54,4–65,3 %),
+     заходит на последнюю строку; ссылка мелкой антиквой по центру на 73,1 %.
+     Шрифты: жирная контрастная антиква → Playfair Display 700 (Oranienbaum слишком тонкий для этой роли),
+     каллиграфия → Great Vibes, ссылка → Playfair Display 400.
+     Отступления: прописные 4,6 % вместо 5,1 % — русские слова длиннее, столбец и так шире (до 55 % против 34 %);
+     фото (Pexels 208397) — Библия лежит на батарее, поэтому низ и левый нижний угол уведены в тень сильнее,
+     чем в референсе; страницы под текстом притемнены — кремовый текст держит контраст 4,8:1 и выше
+     (в референсе ~3,5:1). */
+  body, .canvas { background: #2a2622; color: #F3E7D3; }
+  /* Приглушить и согреть ч/б фото: стена и страницы — в один средний тёплый серый, как в референсе. */
+  .slot img { filter: sepia(.3) contrast(.42) brightness(.97); }
+  /* Тёмный низ и левый край (в референсе — чехол и тень стола), заодно прячут батарею под книгой. */
+  .edge { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+          background: linear-gradient(180deg, transparent 72%, rgba(12,8,4,.86) 86%, rgba(12,8,4,.96) 100%),
+                      linear-gradient(58deg, rgba(12,8,4,.93) 0%, rgba(12,8,4,.86) 30%, rgba(12,8,4,0) 40%); }
+  .edge::after { content: ''; position: absolute; inset: 0; }
+  /* Мягкое затемнение страниц под текстом — чтобы кремовый текст держал контраст. */
+  .under { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+           background: radial-gradient(ellipse 560px 760px at 540px 980px, rgba(20,14,8,.5) 0%, rgba(20,14,8,.42) 48%, rgba(20,14,8,0) 82%); }
+  .t { position: absolute; z-index: 5; white-space: nowrap; line-height: 1; color: #F3E7D3; }
+  .caps { font: 700 140px/1 'Playfair Display'; text-transform: uppercase; }
+  .script { font: 400 200px/1 'Great Vibes'; }
+  .ref { font: 400 34px/1 'Playfair Display'; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="slot" style="left: 0; top: 0; width: 1080px; height: 1920px;" data-src="assets/056.jpg"
+       data-need="раскрытая Библия на столе сверху-сбоку, над ней ровная стена, приглушённый свет"></div>
+  <div class="edge"></div>
+  <div class="under"></div>
+  <div class="t caps" id="l1">Ищите</div>
+  <div class="t caps" id="l2">прежде</div>
+  <div class="t caps" id="l3">Царства</div>
+  <div class="t script" id="l4">Божия</div>
+  <div class="t ref" id="r">Матфея 6:33</div>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script>
+  initSlots();
+  const ctx = document.createElement('canvas').getContext('2d');
+  // Поставить строку по краске: прописные высотой capH с верхом в capTop, по центру/краю от x0.
+  function placeInk(el, { capTop, capH, x0, align = 'center', capLetter = 'Н' }) {
+    const cs = getComputedStyle(el);
+    const font = (size) => `${cs.fontWeight} ${size}px ${cs.fontFamily}`;
+    const text = cs.textTransform === 'uppercase' ? el.textContent.toUpperCase() : el.textContent;
+    ctx.font = font(100);
+    const capRatio = ctx.measureText(capLetter).actualBoundingBoxAscent / 100;
+    const size = capH / capRatio;
+    ctx.font = font(size);
+    const m = ctx.measureText(text);
+    const ink = m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
+    const start = align === 'left' ? x0 : align === 'center' ? x0 - ink / 2 : x0 - ink;
+    el.style.fontSize = `${size}px`;
+    el.style.left = `${start + m.actualBoundingBoxLeft}px`;
+    const base = (size - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
+    el.style.top = `${capTop + capH - base}px`;
+  }
+  afterFonts(["700 100px 'Playfair Display'", "400 100px 'Playfair Display'", "400 100px 'Great Vibes'"], () => {
+    placeInk(document.getElementById('l1'), { capTop: 641, capH: 89, x0: 540 });
+    placeInk(document.getElementById('l2'), { capTop: 792, capH: 89, x0: 540 });
+    placeInk(document.getElementById('l3'), { capTop: 946, capH: 89, x0: 540 });
+    placeInk(document.getElementById('l4'), { capTop: 1045, capH: 170, x0: 535, capLetter: 'Б' });
+    placeInk(document.getElementById('r'), { capTop: 1403, capH: 23.5, x0: 541, capLetter: 'М' });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Близнец референса 048 — причастие</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/projects/2026-10-18-twins/twin.css">
+<style>
+  /* Референс 048 (702×1200, сторис): мягкий тёмный кадр — пластиковые чаши с вином и рука на столе, лилово-коричневый
+     тон (фон #42 2C 2D, свет #7F 62 5F), верх и низ темнее. Все надписи белые, по центру:
+     значок в кольце из адреса — центр 50 % / 9,8 %, кольцо 14,5 % ширины;
+     «JOIN US SUNDAY FOR» — верх прописных 45,0 %, высота 2,6 % ширины, x 13,0–89,3 % (широкая разрядка);
+     «COMMUNION» — 46,9–52,7 %, x 9,4–90,3 %, жирный неогротеск; «JOIN US ONLINE» и время — 67,2 % и 69,8 %,
+     высота 3,3 % ширины; адрес сайта — 90,8 %, высота 2,4 % ширины.
+     Отступления: значок опущен с 9,8 % до 17 % и сайт поднят с 90,8 % до 80 % — верхние 250 и нижние 340 px сторис
+     закрывает интерфейс. «ПРИЧАСТИЕ» по ширине как «COMMUNION», поэтому выше (кириллица у Inter шире не набирается). */
+  body, .canvas { background: #422c2d; color: #fff; }
+  .t { left: 0; right: 0; text-align: center; white-space: nowrap; z-index: 5; text-transform: uppercase; }
+  .pre { font: 500 38px/1 'Inter'; }
+  .title { font: 800 140px/1 'Inter'; letter-spacing: -0.03em; }
+  .when { font: 700 48px/1 'Inter'; letter-spacing: -0.01em; }
+  .site { font: 700 36px/1 'Inter'; letter-spacing: -0.01em; }
+  /* Мягкое затемнение под заголовком: под ним светлая рука и чаша (без него контраст 2.7:1). */
+  .band { left: 0; right: 0; top: 760px; height: 420px; z-index: 2;
+          background: linear-gradient(180deg, rgba(40,20,24,0) 0%, rgba(40,20,24,.42) 28%, rgba(40,20,24,.42) 62%, rgba(40,20,24,0) 100%); }
+  .mark { left: 461px; top: 251px; width: 158px; height: 158px; z-index: 5; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="slot" style="left: 0; top: 0; width: 1080px; height: 1920px;" data-src="assets/048.jpg"
+       data-need="причастие: руки и маленькие чаши с вином на столе, мягкий тёплый свет, кадр не в фокусе" data-label="40,1700"></div>
+  <div class="abs band"></div>
+  <svg class="abs mark" viewBox="0 0 158 158" data-placeholder="логотип и адрес">
+    <defs><path id="ring" d="M79,79 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs>
+    <text font-family="Montserrat" font-weight="500" font-size="14" letter-spacing="2.2" fill="#fff">
+      <textPath href="#ring" startOffset="0" textLength="380" lengthAdjust="spacing">АДРЕС ЦЕРКВИ · ГОРОД, УЛИЦА, ДОМ ·</textPath>
+    </text>
+    <circle cx="79" cy="79" r="34" fill="#fff"/>
+    <path d="M79,58 V100 M66,72 H92" stroke="#422c2d" stroke-width="6" stroke-linecap="square"/>
+  </svg>
+  <div class="abs t pre" id="pre">В воскресенье у нас</div>
+  <div class="abs t title" id="title">Причастие</div>
+  <div class="abs t when" id="w1">В зале и онлайн</div>
+  <div class="abs t when" id="w2">10:00 // 12:30</div>
+  <div class="abs t site" id="site" data-placeholder="сайт">www.нашацерковь.рф</div>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script>
+  initSlots();
+  // Верх прописных: px от верха холста (cap ≈ 0.727 кегля у Inter).
+  const capTop = (el, y) => { el.style.top = `${y - (parseFloat(getComputedStyle(el).fontSize) * (1 - 0.727)) / 2}px`; };
+  afterFonts(["500 38px 'Inter'", "800 140px 'Inter'", "700 48px 'Inter'", "500 14px 'Montserrat'"], () => {
+    // Подзаголовок — на ширину x 13,0–89,3 % разрядкой, как в референсе.
+    const pre = document.getElementById('pre');
+    const n = pre.textContent.length;
+    pre.style.letterSpacing = '0px';
+    const w = pre.getBoundingClientRect().width;
+    const range = document.createRange(); range.selectNodeContents(pre);
+    const tw = range.getBoundingClientRect().width;
+    pre.style.letterSpacing = `${(824 - tw) / (n - 1)}px`;
+    pre.style.paddingLeft = `${(824 - tw) / (n - 1)}px`;   // разрядка добавляется и после последней буквы — уравновесить
+    capTop(pre, 864);
+    const title = document.getElementById('title');
+    title.style.left = 'auto'; title.style.right = 'auto';
+    fitWidth(title, 874);
+    title.style.left = `${(1080 - title.getBoundingClientRect().width) / 2}px`;
+    capTop(title, 864 + 28 + 9);
+    capTop(document.getElementById('w1'), 1290);
+    capTop(document.getElementById('w2'), 1340);
+    capTop(document.getElementById('site'), 1528);
+  });
+</script>
+</body>
+</html>

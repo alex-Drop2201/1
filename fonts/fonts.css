@@ -1,5 +1,6 @@
 /* Сгенерировано scripts/get_font.py — не редактировать вручную. */
 @font-face { font-family: 'Amatic SC'; font-style: normal; font-weight: 700; font-display: block; src: url('Amatic-SC/Amatic-SC-700.ttf') format('truetype'); }
+@font-face { font-family: 'Bitter'; font-style: normal; font-weight: 900; font-display: block; src: url('Bitter/Bitter-900.ttf') format('truetype'); }
 @font-face { font-family: 'Caveat'; font-style: normal; font-weight: 400; font-display: block; src: url('Caveat/Caveat-400.ttf') format('truetype'); }
 @font-face { font-family: 'Caveat'; font-style: normal; font-weight: 700; font-display: block; src: url('Caveat/Caveat-700.ttf') format('truetype'); }
 @font-face { font-family: 'Comforter Brush'; font-style: normal; font-weight: 400; font-display: block; src: url('Comforter-Brush/Comforter-Brush-400.ttf') format('truetype'); }
@@ -7,8 +8,10 @@
 @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-300.ttf') format('truetype'); }
 @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-500-italic.ttf') format('truetype'); }
 @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-500.ttf') format('truetype'); }
+@font-face { font-family: 'Dela Gothic One'; font-style: normal; font-weight: 400; font-display: block; src: url('Dela-Gothic-One/Dela-Gothic-One-400.ttf') format('truetype'); }
 @font-face { font-family: 'Fira Sans Extra Condensed'; font-style: normal; font-weight: 700; font-display: block; src: url('Fira-Sans-Extra-Condensed/Fira-Sans-Extra-Condensed-700.ttf') format('truetype'); }
 @font-face { font-family: 'Fira Sans Extra Condensed'; font-style: normal; font-weight: 900; font-display: block; src: url('Fira-Sans-Extra-Condensed/Fira-Sans-Extra-Condensed-900.ttf') format('truetype'); }
+@font-face { font-family: 'Gabriela'; font-style: normal; font-weight: 400; font-display: block; src: url('Gabriela/Gabriela-400.ttf') format('truetype'); }
 @font-face { font-family: 'Great Vibes'; font-style: normal; font-weight: 400; font-display: block; src: url('Great-Vibes/Great-Vibes-400.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: block; src: url('Inter/Inter-400.ttf') format('truetype'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: block; src: url('Inter/Inter-500.ttf') format('truetype'); }
@@ -37,10 +40,12 @@
 @font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 700; font-display: block; src: url('Playfair-Display/Playfair-Display-700.ttf') format('truetype'); }
 @font-face { font-family: 'Playfair Display'; font-style: italic; font-weight: 900; font-display: block; src: url('Playfair-Display/Playfair-Display-900-italic.ttf') format('truetype'); }
 @font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 900; font-display: block; src: url('Playfair-Display/Playfair-Display-900.ttf') format('truetype'); }
+@font-face { font-family: 'Prata'; font-style: normal; font-weight: 400; font-display: block; src: url('Prata/Prata-400.ttf') format('truetype'); }
 @font-face { font-family: 'Rubik'; font-style: normal; font-weight: 400; font-display: block; src: url('Rubik/Rubik-400.ttf') format('truetype'); }
 @font-face { font-family: 'Rubik'; font-style: normal; font-weight: 500; font-display: block; src: url('Rubik/Rubik-500.ttf') format('truetype'); }
 @font-face { font-family: 'Rubik'; font-style: normal; font-weight: 700; font-display: block; src: url('Rubik/Rubik-700.ttf') format('truetype'); }
 @font-face { font-family: 'Rubik'; font-style: normal; font-weight: 900; font-display: block; src: url('Rubik/Rubik-900.ttf') format('truetype'); }
+@font-face { font-family: 'Sofia Sans Condensed'; font-style: normal; font-weight: 900; font-display: block; src: url('Sofia-Sans-Condensed/Sofia-Sans-Condensed-900.ttf') format('truetype'); }
 @font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 400; font-display: block; src: url('Unbounded/Unbounded-400.ttf') format('truetype'); }
 @font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 700; font-display: block; src: url('Unbounded/Unbounded-700.ttf') format('truetype'); }
 @font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 900; font-display: block; src: url('Unbounded/Unbounded-900.ttf') format('truetype'); }

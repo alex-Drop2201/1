@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Близнец референса 039 — наполним дом</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/projects/2026-10-18-twins/twin.css">
+<style>
+  /* Референс 039: ч/б фото тёмного зала — ряд девушек в профиль на поклонении, лица на 30–50 % высоты; поверх
+     оранжевый (#F35410) контурный дом «от руки», линия ~1,4 % ширины: конёк 46,8 % / 20,3 %, свесы крыши до 7,8 % и 92 %
+     по ширине на 44–46 % высоты, стены x 23,4 % и 78,5 % от 49 % до 78,7 %, труба x 61,7–73,4 % от 21,3 %.
+     Внутри — две строки антиквы строчными тем же оранжевым, по центру x 53,5 %, базовые линии 62,2 % и 72,7 %,
+     ширина строки ~42 % холста (у нас 50 % и по оси дома: кириллическое «наполним» шире). Шрифт: мягкая антиква средней насыщенности → Lora 700 (fonts.md: контрастная/книжная).
+     Фото: ряд девушек сдвинут вниз (слот с 20 % высоты, верх растворяется в тёмной стене), фон зала затемнён по маске
+     людей — как тёмный зал референса. */
+  body, .canvas { background: #262626; color: #F35410; }
+  .slot.photo { left: 0; top: 270px; width: 1080px; height: 1080px; background: #262626;
+                -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12%); mask-image: linear-gradient(180deg, transparent 0, #000 12%); }
+  /* Справа зал в референсе почти чёрный. */
+  .side { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+          background: linear-gradient(90deg, rgba(0,0,0,0) 80%, rgba(0,0,0,.55) 100%); }
+  /* Свет в зале — на лицах, корпуса в тени: под надписью тень гуще (оранжевый на светлой руке не читается). */
+  .lowshade { position: absolute; left: 160px; top: 700px; width: 800px; height: 440px; z-index: 3; pointer-events: none;
+              background: radial-gradient(closest-side, rgba(0,0,0,.8), rgba(0,0,0,.55) 55%, rgba(0,0,0,0)); }
+  svg.art { z-index: 4; }
+  .line { left: 0; width: 1080px; z-index: 5; font: 700 120px/1 'Lora', serif; letter-spacing: -0.025em;
+          white-space: nowrap; color: #F35410; }
+  .line span { position: absolute; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="slot photo" data-src="assets/039.jpg"
+       data-need="поклонение: ряд людей в профиль с поднятыми руками в тёмном зале, лица на 30–50 % высоты" data-label="40,1240"></div>
+  <div class="side"></div>
+  <div class="lowshade"></div>
+  <svg class="art" id="art" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+  <div class="abs line" id="l1"><span>наполним</span></div>
+  <div class="abs line" id="l2"><span>дом.</span></div>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script>
+  initSlots();
+  const W = 1080, H = 1350;
+  const random = rng(39);
+  // Контур дома по замеру референса (доли ширины и высоты), обход от левого нижнего угла.
+  const house = [
+    [0.236, 0.786], [0.233, 0.640], [0.237, 0.496], [0.160, 0.476], [0.080, 0.456],
+    [0.270, 0.326], [0.468, 0.204], [0.540, 0.238], [0.606, 0.272], [0.615, 0.243], [0.617, 0.215],
+    [0.676, 0.213], [0.734, 0.212], [0.733, 0.270], [0.734, 0.334], [0.830, 0.395], [0.921, 0.442],
+    [0.850, 0.458], [0.782, 0.476], [0.786, 0.630], [0.790, 0.788], [0.520, 0.786], [0.236, 0.786],
+  ];
+  // Дробим отрезки и чуть смещаем точки — линия «от руки», углы остаются.
+  const pts = [];
+  house.forEach(([x, y], i) => {
+    const p = [x * W, y * H];
+    if (i > 0) {
+      const q = pts[pts.length - 1];
+      const n = Math.max(1, Math.round(Math.hypot(p[0] - q[0], p[1] - q[1]) / 70));
+      for (let k = 1; k < n; k++) {
+        const t = k / n;
+        pts.push([q[0] + (p[0] - q[0]) * t + (random() - 0.5) * 3, q[1] + (p[1] - q[1]) * t + (random() - 0.5) * 3]);
+      }
+    }
+    pts.push(p);
+  });
+  svgEl(document.getElementById('art'), 'path', { d: smoothOpen(pts), fill: 'none', stroke: '#F35410',
+    'stroke-width': 15, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+
+  afterFonts(["700 120px 'Lora'"], () => {
+    // Строки одним кеглем. «наполним» в 1,5 раза шире «fill the» той же высоты, поэтому кегль по ширине: 540 px
+    // (почти вся ширина дома), центр — по оси дома; интерлиньяж 0,94 кегля, как в референсе.
+    const s1 = document.querySelector('#l1 span');
+    const size = 120 * 540 / s1.getBoundingClientRect().width;
+    for (const [el, base] of [[document.getElementById('l1'), 978 - 0.94 * size], [document.getElementById('l2'), 978]]) {
+      el.style.fontSize = `${size}px`;
+      el.style.top = '0px';
+      const span = el.querySelector('span');
+      span.style.left = `${552 - span.getBoundingClientRect().width / 2}px`;
+      // Базовая линия: нулевой блок на базовой линии строки.
+      const mark = document.createElement('i');
+      mark.style.cssText = 'display:inline-block;width:0;height:0';
+      span.appendChild(mark);
+      el.style.top = `${base - mark.getBoundingClientRect().top}px`;
+      mark.remove();
+    }
+  });
+</script>
+</body>
+</html>
