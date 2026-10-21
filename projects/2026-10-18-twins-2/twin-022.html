@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Близнец референса 022 — молодёжь</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/projects/2026-10-18-twins/twin.css">
+<style>
+  /* Референс 022 (675×1200, ×1,6): жёлтая бумага #E2D537 с крапом, оранжевый ожог по левому краю, светлый сгиб на 25 %.
+     Вверху слева — три строки геометрического гротеска, наклон −3°, прописные 1,6 %, x 13,6 %, верх 12,2 %;
+     ключевые слова на розовых плашках #E82695. Вверху справа — адрес светлым начертанием, правый край 92,3 %.
+     В центре — слово узким сверхжирным гротеском фиолетовым #5B2FE0 четыре раза: прописные 10,6 %, шаг 11,8 %,
+     ширина 65 % (x 17,5–82,5 %), верх 29,2 %. Поверх строк 1–3 — раскрытая Библия в руке (вырезка, x 22,5–84,5 %,
+     y 37,3–57,7 %), поверх строк 3–4 — розовая рваная наклейка (x 26–75 %, y 55,5–66 %) с белым текстом и фиолетовым
+     штрихом у первой буквы. Белые каракули: под текстом вверху слева, звезда справа, штрихи справа внизу, слева внизу.
+     Внизу по центру — логотип: четырёхлучевая звезда и брусковая антиква (y 86,3–90,8 %).
+     Отступления ради безопасных зон сторис: верхний текст опущен до 262 px, центр поднят на 40 px, логотип поднят
+     с 1656 до 1490 px. Кириллица: «МОЛОДЁЖЬ» вдвое шире «JÓVENES» при той же высоте — строки шире (84 %) и ниже (прописные 9,2 %). */
+  body, .canvas { background: #e2d537; color: #141414; }
+  .paper { position: absolute; inset: 0; background:
+           radial-gradient(130% 70% at 50% 45%, rgba(255,250,170,.18), rgba(255,250,170,0) 60%),
+           linear-gradient(90deg, rgba(236,96,30,.85) 0, rgba(240,150,40,.45) 14px, rgba(240,170,50,0) 46px),
+           linear-gradient(270deg, rgba(236,120,30,.45) 0, rgba(240,170,50,0) 22px),
+           linear-gradient(180deg, rgba(236,140,40,.25) 0, rgba(240,170,50,0) 30px),
+           #e2d537; }
+  .fold { position: absolute; left: 0; right: 0; top: 486px; height: 6px; z-index: 1;
+          background: linear-gradient(180deg, rgba(255,255,230,0), rgba(255,255,230,.35) 45%, rgba(170,150,20,.18) 70%, rgba(170,150,20,0)); }
+  svg.tex, svg.scrib { position: absolute; inset: 0; pointer-events: none; }
+  svg.tex { z-index: 1; }
+  svg.scrib { z-index: 9; }
+
+  .top { position: absolute; left: 147px; top: 262px; z-index: 6; transform: rotate(-3deg); transform-origin: 0 0; }
+  .top div { position: absolute; left: 0; white-space: nowrap; text-transform: uppercase; font: 800 43px/1 'Montserrat'; }
+  .top .m { font-weight: 500; }
+  .top b { font: inherit; background: #e82695; padding: 0 6px; margin-left: -2px; }
+  .addr { position: absolute; right: 83px; z-index: 6; text-align: right; white-space: nowrap; text-transform: uppercase;
+          font: 400 31px/1 'Montserrat'; letter-spacing: .01em; }
+
+  .word { position: absolute; left: 0; width: max-content; z-index: 3; white-space: nowrap;
+          font: 900 200px/1 'Fira Sans Extra Condensed'; letter-spacing: -.005em; color: #5b2fe0; text-transform: uppercase; }
+  .bible { position: absolute; left: 231px; top: 702px; width: 692px; z-index: 5;
+           filter: drop-shadow(0 6px 10px rgba(60,40,0,.22)); }
+
+  .sticker { position: absolute; left: 276px; top: 1018px; width: 528px; height: 204px; z-index: 7; transform: rotate(-1.5deg); }
+  .sticker svg { position: absolute; inset: 0; overflow: visible; }
+  .sticker .txt { position: absolute; left: 0; width: max-content; white-space: nowrap; color: #fff;
+                  font: 900 120px/1 'Fira Sans Extra Condensed'; text-transform: uppercase; letter-spacing: .005em; }
+  .slash { position: absolute; left: 302px; top: 1131px; width: 60px; height: 52px; z-index: 8; background: #5b2fe0;
+           clip-path: polygon(38% 0, 100% 0, 62% 100%, 0 100%); }
+
+  .logo { position: absolute; z-index: 6; display: flex; align-items: center; gap: 12px; }
+  .logo svg { flex: none; }
+  .logo .l1 { font: 900 60px/1 'Bitter'; text-transform: uppercase; color: #141414; }
+  .logo .l2 { font: 900 30px/1 'Bitter'; text-transform: uppercase; color: #141414; margin-top: 6px; }
+</style>
+</head>
+<body>
+<main class="canvas grain-light">
+  <div class="paper"></div>
+  <svg class="tex" width="1080" height="1920" viewBox="0 0 1080 1920">
+    <defs>
+      <filter id="mott" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".006" numOctaves="3" seed="5"/>
+        <feColorMatrix values="0 0 0 0 .6  0 0 0 0 .55  0 0 0 0 .1  0 0 0 -1.6 1.0"/>
+      </filter>
+      <filter id="dust" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="2" seed="9"/>
+        <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 .95  0 0 0 -11 6.9"/>
+      </filter>
+    </defs>
+    <rect width="1080" height="1920" filter="url(#mott)" opacity=".18" style="mix-blend-mode: multiply"/>
+    <rect width="1080" height="1920" filter="url(#dust)" opacity=".3"/>
+  </svg>
+  <div class="fold"></div>
+
+  <div class="top" id="top">
+    <div id="t1">Сердце, что</div>
+    <div id="t2" class="m">не <b>перестаёт</b></div>
+    <div id="t3"><b>поклоняться</b></div>
+  </div>
+  <div class="addr" id="ad1" data-placeholder>Улица Примерная, 123</div>
+  <div class="addr" id="ad2" data-placeholder>Ваш город</div>
+
+  <div class="word" id="w1">Молодёжь</div>
+  <div class="word" id="w2">Молодёжь</div>
+  <div class="word" id="w3">Молодёжь</div>
+  <div class="word" id="w4">Молодёжь</div>
+
+  <img class="bible" src="assets/022-bible.png" alt="Раскрытая Библия в руке">
+
+  <div class="sticker">
+    <svg id="stk" width="528" height="204" viewBox="0 0 528 204"></svg>
+    <div class="txt" id="stxt1">Молодёжное</div>
+    <div class="txt" id="stxt2">служение</div>
+  </div>
+  <div class="slash"></div>
+
+  <div class="logo" id="logo" data-placeholder>
+    <svg width="86" height="86" viewBox="-50 -50 100 100"><path d="M0,-50 C5,-12 12,-5 50,0 C12,5 5,12 0,50 C-5,12 -12,5 -50,0 C-12,-5 -5,-12 0,-50Z" fill="#141414"/></svg>
+    <div><div class="l1" id="lg1">Логотип</div><div class="l2" id="lg2">вашей церкви</div></div>
+  </div>
+
+  <svg class="scrib" id="scrib" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script>
+  function capRatio(font) {
+    const c = document.createElement('canvas').getContext('2d');
+    c.font = font;
+    const m = c.measureText('Н');
+    return { cap: m.actualBoundingBoxAscent, asc: m.fontBoundingBoxAscent, desc: m.fontBoundingBoxDescent };
+  }
+  // Верх прописных строки — на capTop (line-height: 1).
+  function capTopAt(el, capTop) {
+    const cs = getComputedStyle(el);
+    const size = parseFloat(cs.fontSize);
+    const m = capRatio(`${cs.fontWeight} ${size}px ${cs.fontFamily}`);
+    const half = (size - (m.asc + m.desc)) / 2;
+    el.style.top = `${capTop - (half + m.asc - m.cap)}px`;
+    return m.cap;
+  }
+  function setCap(el, cap) {
+    const cs = getComputedStyle(el);
+    const r = capRatio(`${cs.fontWeight} 200px ${cs.fontFamily}`).cap / 200;
+    el.style.fontSize = `${cap / r}px`;
+  }
+
+  afterFonts(["900 100px 'Fira Sans Extra Condensed'", "800 40px 'Montserrat'", "500 40px 'Montserrat'",
+              "400 30px 'Montserrat'", "900 60px 'Bitter'"], () => {
+    // Слово ×4. «МОЛОДЁЖЬ» при высоте референса вдвое шире «JÓVENES»: ширина строки 84 % (не 65 %) и растяжение
+    // по высоте ×1,28 — прописные 177 px вместо 204, зазор между строками 0,118 высоты, как в референсе.
+    ['w1', 'w2', 'w3', 'w4'].forEach((id, i) => {
+      const el = document.getElementById(id);
+      fitWidth(el, 908);
+      const size = parseFloat(el.style.fontSize);
+      const m = capRatio(`900 ${size}px 'Fira Sans Extra Condensed'`);
+      const k = 1.28, capOff = (size - (m.asc + m.desc)) / 2 + m.asc - m.cap;
+      el.style.transformOrigin = `0 ${capOff}px`;
+      el.style.transform = `scaleY(${k})`;
+      el.style.left = `${(1080 - el.getBoundingClientRect().width) / 2}px`;
+      el.style.top = `${578 + i * 198 - capOff}px`;
+    });
+
+    // Верхний текст: прописные 30 px, шаг 47 px; вторая строка с отступом, как в референсе.
+    [['t1', 0, 0], ['t2', 47, 30], ['t3', 94, 6]].forEach(([id, y, x]) => {
+      const el = document.getElementById(id);
+      setCap(el, 30);
+      capTopAt(el, y);
+      el.style.left = `${x}px`;
+    });
+    document.querySelectorAll('.top b').forEach((b) => { b.style.paddingTop = '4px'; b.style.paddingBottom = '3px'; });
+
+    // Адрес: прописные 22 px, правый край 997 px.
+    [['ad1', 262], ['ad2', 299]].forEach(([id, y]) => { const el = document.getElementById(id); setCap(el, 22); capTopAt(el, y); });
+
+    // Наклейка: рваный розовый край, текст на всю ширину.
+    const stk = document.getElementById('stk');
+    svgEl(stk, 'path', { d: tornRect(4, 10, 520, 186, rng(22), 7, 22), fill: '#e82695' });
+    // Две строки (по-русски в одну строку буквы вышли бы вдвое ниже, чем в референсе): обе одной высоты,
+    // по ширине — длинная 468 px, растяжение ×1,28; вместе занимают ~76 % высоты наклейки, как «SERVICIO DE».
+    const s1 = document.getElementById('stxt1'), s2 = document.getElementById('stxt2');
+    fitWidth(s1, 468);
+    s2.style.fontSize = s1.style.fontSize;
+    const ssz = parseFloat(s1.style.fontSize);
+    const sm = capRatio(`900 ${ssz}px 'Fira Sans Extra Condensed'`);
+    const sk = 1.28, sOff = (ssz - (sm.asc + sm.desc)) / 2 + sm.asc - sm.cap, sCap = sm.cap * sk, sGap = 14;
+    const sTop = (204 - (2 * sCap + sGap)) / 2;
+    [s1, s2].forEach((el, i) => {
+      el.style.transformOrigin = `0 ${sOff}px`;
+      el.style.transform = `scaleY(${sk})`;
+      el.style.left = `${(528 - el.getBoundingClientRect().width) / 2}px`;
+      el.style.top = `${sTop + i * (sCap + sGap) - sOff}px`;
+    });
+
+    // Логотип по центру, низ — над безопасной зоной.
+    const lg2 = document.getElementById('lg2');
+    fitWidth(lg2, document.getElementById('lg1').getBoundingClientRect().width);
+    const logo = document.getElementById('logo');
+    const lr = logo.getBoundingClientRect();
+    logo.style.left = `${(1080 - lr.width) / 2}px`;
+    logo.style.top = `${1576 - lr.height}px`;
+
+    // Каракули белым маркером.
+    const sc = document.getElementById('scrib');
+    const R = rng(7);
+    const line = (pts, w = 3, o = .9) => svgEl(sc, 'path', { d: smoothOpen(pts), fill: 'none', stroke: '#fbfbf2',
+      'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: o });
+    const jit = (pts, a = 4) => pts.map(([x, y]) => [x + (R() - .5) * a, y + (R() - .5) * a]);
+    // под верхним текстом: длинные петли влево-вниз
+    line(jit([[520, 412], [380, 418], [230, 426], [90, 436], [40, 446], [70, 452], [210, 448], [380, 440], [470, 438]]), 3.2);
+    line(jit([[430, 452], [300, 470], [160, 492], [70, 516], [110, 524], [240, 508], [330, 492]]), 2.4, .8);
+    line(jit([[150, 520], [120, 560], [140, 600], [190, 590], [170, 548], [120, 552], [100, 590]]), 2.4, .8);
+    line(jit([[40, 360], [60, 380], [50, 410], [30, 440]]), 2, .7);
+    // звезда справа от верхней строки
+    const star = [];
+    for (let k = 0; k <= 11; k++) {
+      const a = -Math.PI / 2 + k * Math.PI * 4 / 5 + (R() - .5) * .12;
+      star.push([906 + 48 * Math.cos(a), 498 + 52 * Math.sin(a)]);
+    }
+    line(star, 2.8);
+    line(jit([[870, 560], [930, 548], [978, 566]]), 2.2, .8);
+    // штрихи справа внизу у последней строки
+    line(jit([[742, 1428], [820, 1404], [900, 1386], [960, 1372]]), 2.6);
+    line(jit([[760, 1460], [850, 1420], [930, 1398], [948, 1430], [880, 1446], [800, 1470]]), 2.2, .85);
+    line(jit([[800, 1368], [850, 1410], [900, 1448], [940, 1470]]), 2.2, .85);
+    line(jit([[880, 1350], [868, 1400], [890, 1446]]), 2, .8);
+    // слева внизу — крупные петли
+    line(jit([[0, 1620], [60, 1660], [110, 1720], [70, 1760], [20, 1730], [60, 1690], [150, 1700], [180, 1780], [120, 1860], [60, 1920]], 8), 4, .95);
+    line(jit([[0, 1760], [50, 1800], [90, 1860], [70, 1920]], 6), 3, .9);
+    line(jit([[30, 1600], [80, 1650], [140, 1700], [190, 1760]], 6), 2.4, .8);
+  });
+</script>
+</body>
+</html>
