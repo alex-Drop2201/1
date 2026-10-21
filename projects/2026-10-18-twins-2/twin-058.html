@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1350">
+<title>Близнец референса 058 — семья важна</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/projects/2026-10-18-twins/twin.css">
+<style>
+  /* Референс 058 (1102×1370, 4:5): тёмный тёплый кадр с малой глубиной резкости — два кулака касаются в центре
+     (левый x 23–50 %, y 35–64 %, правый x 49–86 %, y 39–68 %, касание x 49 %), фон размыт: центр #211D13,
+     светлее левый край (x 0–12 %, y 10–55 %, #4D3E29) и правая колонна (x 88–100 %, y 0–45 %, #554935), низ #1A1813.
+     Надписи дугами вокруг кулаков — антиква с клиновидными засечками прописными, разрядка ≈ 0,3 em, высота прописных
+     3,2 % высоты, #EBE7DB: «FAMILY» по внешней стороне окружности с центром (53 %, 62 %), r 31 %, буквы от −53° до −14°;
+     «MATTERS» — по внутренней стороне окружности с центром (73 %, 31 %), r 39 %, буквы от −152° до 175°.
+     По углам — узкий жирный гротеск 2 строки, высота прописных 1,3 %, #F8F3E4: слева x 9,7 %, справа выключка
+     по x 90,3 %; верх строк на 18,3 % и 79,3 % высоты. Плёночное зерно. */
+  body, .canvas { background: #1f1c13; }
+  /* Размытый фон комнаты: цветовые поля, снятые с референса. */
+  .room { position: absolute; inset: 0;
+    background:
+      radial-gradient(14% 30% at 1% 33%, rgba(96, 78, 52, .95), rgba(96, 78, 52, 0) 100%),
+      radial-gradient(22% 40% at 0% 34%, rgba(74, 60, 40, .8), rgba(74, 60, 40, 0) 100%),
+      radial-gradient(14% 12% at 0% 2%, rgba(62, 48, 30, .9), rgba(62, 48, 30, 0) 100%),
+      radial-gradient(13% 36% at 100% 20%, rgba(96, 82, 60, .95), rgba(96, 82, 60, 0) 100%),
+      radial-gradient(24% 46% at 100% 22%, rgba(70, 60, 43, .85), rgba(70, 60, 43, 0) 100%),
+      radial-gradient(9% 34% at 81% 16%, rgba(52, 45, 31, .8), rgba(52, 45, 31, 0) 100%),
+      radial-gradient(34% 9% at 70% 100%, rgba(70, 58, 39, .95), rgba(70, 58, 39, 0) 100%),
+      linear-gradient(180deg, #231f14 0%, #1f1c13 45%, #1a1813 100%); }
+  /* Кулаки: вырезка с тёплой приглушённой обработкой, как плёнка в референсе. */
+  .fists { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; z-index: 2;
+           filter: sepia(.32) saturate(.78) brightness(.84) contrast(1.06); }
+  /* Края кадра темнее: руки уходят в тень, как рукава в референсе. */
+  /* Низ по углам темнее: руки уходят в тень, как рукава в референсе. */
+  .vignette { position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: radial-gradient(30% 26% at 0% 78%, rgba(22, 19, 13, .7), rgba(22, 19, 13, 0) 100%),
+                radial-gradient(26% 30% at 100% 70%, rgba(22, 19, 13, .55), rgba(22, 19, 13, 0) 100%); }
+  svg.arcs { position: absolute; inset: 0; z-index: 5; }
+  svg.arcs text { font-family: 'Gabriela'; font-size: 57px; letter-spacing: 0.3em; fill: #ebe7db; text-transform: uppercase; }
+  .corner { position: absolute; z-index: 5; font: 900 25px/0.9 'Fira Sans Extra Condensed'; letter-spacing: -0.01em;
+            text-transform: uppercase; color: #f8f3e4; white-space: nowrap; }
+  .corner.l { left: 105px; }
+  .corner.r { right: 105px; text-align: right; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="room"></div>
+  <img class="fists" src="assets/058-fists.png" alt="Два кулака касаются">
+  <div class="vignette"></div>
+
+  <svg class="arcs" viewBox="0 0 1080 1350" aria-label="Семья важна">
+    <defs>
+      <!-- Дуга «СЕМЬЯ»: окружность (572, 840), радиус базовой линии 400, от −80° до +20° по часовой (буквы наружу). -->
+      <path id="arc-top" d="M 178.1 770.5 A 400 400 0 0 1 708.8 464.1"/>
+      <!-- Дуга «ВАЖНА»: окружность (793, 418), радиус базовой линии 543, от −120° до −220° против часовой (буквы к центру). -->
+      <path id="arc-bottom" d="M 322.8 689.5 A 543 543 0 0 0 1142.0 834.0"/>
+    </defs>
+    <text><textPath href="#arc-top" startOffset="333" text-anchor="middle">Семья</textPath></text>
+    <text><textPath href="#arc-bottom" startOffset="468" text-anchor="middle">Важна</textPath></text>
+  </svg>
+
+  <div class="corner l" style="top: 245px;">Даже если<br>в разладе,</div>
+  <div class="corner r" style="top: 245px;">Семья всё же<br>важна.</div>
+  <div class="corner l" style="top: 1069px;">Даже если<br>в разладе,</div>
+  <div class="corner r" style="top: 1069px;">Семья всё же<br>важна.</div>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+</body>
+</html>

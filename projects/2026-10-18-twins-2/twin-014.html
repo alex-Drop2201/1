@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1080">
+<title>Близнец референса 014 — воскресное служение</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/projects/2026-10-18-twins/twin.css">
+<style>
+  /* Референс 014 (сам постер внутри мокапа 626×626: x 43–583, y 31–571, масштаб ×2). Красный фон с гранжем:
+     светлый коралл слева вверху → тёмно-красный внизу, справа поле 4,6 % тёмно-красное. Справа тёмная полоса
+     x 54,4–95,4 % с рваными волнистыми краями: слово прописными, повёрнутое на 90° по часовой, трижды в столбик;
+     низ полосы растворяется в красном (y 40–100 %). Проповедник в профиль влево, вырезан, холодный тон:
+     макушка 19 %, низ бороды 46 %, кончик носа x 40,7 %, обрезан по пояс низом холста (у нас макушка 20,6 %,
+     нос 42,6 %: сдвиг, чтобы рука с пультом не заходила под имя).
+     Слева колонка x 7,6 %: «SUNDAY SERVICES» — широкий гротеск Black, прописные 3,6 % (верх 8,3 / 12,9 %);
+     дата на насыщенно-красной плашке x 7,8–32,6 %, y 21,2–27,2 %, цифры 3,5 %; время 2,7 % (верх 28,2 %);
+     адрес — 4 строки разрядкой 0,12em, прописные 1,7 %, шаг 2,5 % (верх 41,9 %), две первые полужирные;
+     сайт 1,7 % (57,1 %); имя — тот же широкий Black, прописные 5,1 % (верх 83,4 / 89,4 %).
+     Красный под мелким текстом чуть темнее референса (там белый на коралле 3:1) — ради контраста.
+     Кириллица: «ВОСКРЕСНОЕ», «ВОСКРЕСЕНЬЕ» длиннее «SUNDAY» — заголовок шире, столбцы слова уже и их четыре;
+     «ПАСТОР» длиннее «PAUL» — имя 4,3 % вместо 5,1 %, чтобы не наезжать на фигуру. */
+  body, .canvas { background: #c7392c; color: #fff; }
+  .bg { position: absolute; inset: 0;
+        background: radial-gradient(120% 90% at 18% 6%, #f05238 0%, #e04030 25%, #cc372b 45%, #ae2c24 68%, #8a1e17 100%); }
+  .leftband { position: absolute; left: 0; top: 0; width: 38px; height: 100%;
+              background: linear-gradient(90deg, rgba(246,40,30,.55), rgba(246,40,30,0)); }
+  .rightband { position: absolute; right: 0; top: 0; width: 60px; height: 100%; background: #8c1d17; }
+  /* Мягкое затемнение под адресом: белый мелкий текст ≥ 4.5:1. */
+  .lshade { position: absolute; left: -60px; top: 380px; width: 560px; height: 340px; z-index: 1; pointer-events: none;
+            background: radial-gradient(closest-side, rgba(120,12,10,.42), rgba(120,12,10,0)); mix-blend-mode: multiply; }
+  svg.grunge { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+
+  /* Полоса со словом */
+  .strip { position: absolute; left: 588px; top: 0; width: 446px; height: 1080px; z-index: 2; }
+  .strip .in { position: absolute; inset: 0; background: #2b2627; overflow: hidden; }
+  .strip .warp { filter: url(#wave); }
+  .strip .clean { clip-path: inset(0 46px 0 40px); }
+  .strip .wl { clip-path: inset(0 396px 0 0); }
+  .strip .wr { clip-path: inset(0 0 0 392px); }
+  .vword { position: absolute; top: 0; left: 0; white-space: nowrap; color: #e9e7e6; transform-origin: 0 0;
+           font: 900 100px/1 'Unbounded'; letter-spacing: -0.02em; }
+  /* Растянутые волной штрихи букв на краях полосы — тонкие светлые линии, как в референсе. */
+  .strip svg.streaks { position: absolute; left: 0; top: 0; overflow: visible; }
+  .stripfade { position: absolute; left: 570px; top: 0; width: 470px; height: 1080px; z-index: 3; pointer-events: none;
+               background: linear-gradient(180deg, rgba(200,52,40,0) 34%, rgba(200,52,40,.45) 58%, rgba(196,50,38,.78) 84%, rgba(180,44,34,.86) 100%); }
+
+  /* Проповедник */
+  .man { position: absolute; left: 174px; top: -8px; width: 726px; z-index: 5;
+         filter: saturate(.6) contrast(1.05) brightness(1.06); }
+  /* Холодный тон только на человеке (маска — та же вырезка): в референсе кожа и футболка голубоватые. */
+  .mantone { position: absolute; left: 174px; top: -8px; width: 726px; height: 1088px; z-index: 6; pointer-events: none;
+             background: #6d98d4; mix-blend-mode: color; opacity: .38;
+             -webkit-mask: url(assets/014-preacher.png) 0 0 / 100% 100% no-repeat; mask: url(assets/014-preacher.png) 0 0 / 100% 100% no-repeat; }
+
+  /* Текст слева */
+  .t { position: absolute; left: 82px; z-index: 8; white-space: nowrap; text-transform: uppercase; }
+  .head { font: 900 50px/1 'Unbounded'; letter-spacing: -0.01em; }
+  .datebox { position: absolute; left: 84px; top: 229px; width: 268px; height: 65px; z-index: 7;
+             background: linear-gradient(90deg, #cc2a20, #a8221a); }
+  .date { font: 700 52px/1 'Montserrat'; left: 97px; }
+  .time { font: 700 40px/1 'Montserrat'; left: 96px; }
+  .addr { font: 400 24px/1 'Montserrat'; letter-spacing: .12em; }
+  .addr.b { font-weight: 600; }
+  .site { font: 700 25px/1 'Montserrat'; letter-spacing: .02em; }
+  .name { font: 900 72px/1 'Unbounded'; letter-spacing: -0.01em; }
+</style>
+</head>
+<body>
+<main class="canvas grain">
+  <div class="bg"></div>
+  <div class="leftband"></div>
+  <div class="rightband"></div>
+  <div class="lshade"></div>
+  <svg class="grunge" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <defs>
+      <filter id="blot" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".011" numOctaves="4" seed="7"/>
+        <feColorMatrix values="0 0 0 0 .55  0 0 0 0 .08  0 0 0 0 .06  0 0 0 -2.6 1.55"/>
+      </filter>
+      <filter id="speck" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3"/>
+        <feColorMatrix values="0 0 0 0 1  0 0 0 0 .8  0 0 0 0 .75  0 0 0 -9 5.2"/>
+      </filter>
+      <!-- Волна для рваных краёв полосы: сдвиг только по x, меняется по высоте. -->
+      <filter id="wave" x="-10%" y="0" width="120%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035 0.005" numOctaves="1" seed="11" result="n"/>
+        <feColorMatrix in="n" values="1 0 0 0 0  0 0 0 0 .5  0 0 0 0 0  0 0 0 0 1" result="m"/>
+        <feDisplacementMap in="SourceGraphic" in2="m" scale="90" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+    <rect width="1080" height="1080" filter="url(#blot)" opacity=".42" style="mix-blend-mode: multiply"/>
+    <rect width="1080" height="1080" filter="url(#speck)" opacity=".08" style="mix-blend-mode: screen"/>
+  </svg>
+
+  <div class="strip">
+    <div class="in clean" id="s1"></div>
+    <div class="in warp wl" id="s2"></div>
+    <div class="in warp wr" id="s3"></div>
+    <svg class="streaks" id="streaks" width="446" height="1080" viewBox="0 0 446 1080"></svg>
+  </div>
+  <div class="stripfade"></div>
+
+  <img class="man" src="assets/014-preacher.png" alt="Проповедник с микрофоном">
+  <div class="mantone"></div>
+
+  <div class="t head" id="h1">Воскресное</div>
+  <div class="t head" id="h2">служение</div>
+  <div class="datebox"></div>
+  <div class="t date" id="date">25.10.26</div>
+  <div class="t time" id="time">10:00</div>
+  <div class="t addr b" id="a1" data-placeholder>Здесь будет</div>
+  <div class="t addr b" id="a2" data-placeholder>адрес церкви:</div>
+  <div class="t addr" id="a3" data-placeholder>улица, дом,</div>
+  <div class="t addr" id="a4" data-placeholder>город</div>
+  <div class="t site" id="site" data-placeholder>вашсайт.рф</div>
+  <div class="t name" id="n1" data-placeholder>Пастор</div>
+  <div class="t name" id="n2" data-placeholder>Иван</div>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script>
+  // Высота прописных у шрифта (доля кегля) — по букве «Н» на канвасе.
+  function capRatio(font) {
+    const c = document.createElement('canvas').getContext('2d');
+    c.font = `${font.replace(/\d+px/, '200px')}`;
+    return c.measureText('Н').actualBoundingBoxAscent / 200;
+  }
+  // Поставить строку так, чтобы верх прописных был на capTop, а их высота — cap.
+  function placeCap(id, cap, capTop) {
+    const el = document.getElementById(id);
+    const cs = getComputedStyle(el);
+    const r = capRatio(`${cs.fontWeight} 200px ${cs.fontFamily}`);
+    const size = cap / r;
+    el.style.fontSize = `${size}px`;
+    // line-height 1: верх прописных ниже верха строки на (ascent − cap) в долях кегля
+    const c = document.createElement('canvas').getContext('2d');
+    c.font = `${cs.fontWeight} ${size}px ${cs.fontFamily}`;
+    const m = c.measureText('Н');
+    const asc = m.fontBoundingBoxAscent, desc = m.fontBoundingBoxDescent;
+    const half = (size - (asc + desc)) / 2;            // поля line-height: 1
+    el.style.top = `${capTop - (half + asc - m.actualBoundingBoxAscent)}px`;
+    return el;
+  }
+
+  afterFonts(["900 100px 'Unbounded'", "700 50px 'Montserrat'", "600 24px 'Montserrat'", "400 24px 'Montserrat'"], () => {
+    // Столбцы слова: длина слова = высота полосы, ширина столбца = высота прописных.
+    // Волнистые штрихи: справа пучок из 7 линий, слева 3.
+    const st = document.getElementById('streaks');
+    const rnd = rng(14);
+    const wave = (x0, amp, seed) => {
+      const ph1 = seed * 1.7, ph2 = seed * 0.6;
+      let d = '';
+      for (let y = -10; y <= 1090; y += 12) {
+        const x = x0 + amp * Math.sin(y / 140 + ph1) + amp * 0.45 * Math.sin(y / 53 + ph2);
+        d += `${d ? 'L' : 'M'}${x.toFixed(1)},${y}`;
+      }
+      return d;
+    };
+    [[404, 7], [412, 9], [419, 6], [427, 10], [433, 8], [440, 6], [446, 5], [6, 6], [14, 8], [-4, 5]].forEach(([x, amp], i) => {
+      svgEl(st, 'path', { d: wave(x, amp, i + rnd() * 3), fill: 'none', stroke: '#e6e2e2',
+                          'stroke-width': (1.2 + rnd() * 3).toFixed(1), opacity: (0.55 + rnd() * 0.4).toFixed(2) });
+    });
+
+    const word = 'Воскресенье'.toUpperCase();
+    const L = 1084, cols = 4, gap = 10;
+    const probe = document.createElement('div');
+    probe.className = 'vword'; probe.textContent = word; document.body.appendChild(probe);
+    const size = 100 * L / probe.getBoundingClientRect().width;
+    probe.remove();
+    const cap = size * capRatio("900 200px 'Unbounded'");
+    const c = document.createElement('canvas').getContext('2d');
+    c.font = `900 ${size}px 'Unbounded'`;
+    const asc = c.measureText('Н').fontBoundingBoxAscent;
+    const total = cols * cap + (cols - 1) * gap;
+    const x0 = (446 - total) / 2 + 2;
+    for (const id of ['s1', 's2', 's3']) {
+      const host = document.getElementById(id);
+      for (let i = 0; i < cols; i++) {
+        const w = document.createElement('div');
+        w.className = 'vword'; w.textContent = word; w.style.fontSize = `${size}px`;
+        w.dataset.bleed = '';
+        // поворот на 90° по часовой: верх букв смотрит вправо; правый край столбца = x0 + (i+1)·(cap+gap) − gap
+        const right = x0 + (i + 1) * (cap + gap) - gap;
+        const half = (size - (asc + c.measureText('Н').fontBoundingBoxDescent)) / 2;
+        w.style.transform = `translate(${right + half + asc - cap}px, -2px) rotate(90deg)`;
+        host.appendChild(w);
+      }
+    }
+
+    placeCap('h1', 38, 90);
+    placeCap('h2', 38, 139);
+    placeCap('date', 38, 242);
+    placeCap('time', 29, 305);
+    [['a1', 453], ['a2', 480], ['a3', 507], ['a4', 534]].forEach(([id, y]) => placeCap(id, 17.5, y));
+    placeCap('site', 18, 617);
+    placeCap('n1', 46, 919);
+    placeCap('n2', 46, 974);
+  });
+</script>
+</body>
+</html>
