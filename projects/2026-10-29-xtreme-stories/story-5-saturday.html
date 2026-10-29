@@ -8,25 +8,27 @@
 <link rel="stylesheet" href="pixel.css">
 <style>
   /* Новая сторис серии XTREME: «завтра молодёжки не будет — переносим всё на субботу».
-     Фон — присланный заказчиком (720×1280 → 1080×1920). Устройство — из сторис серии: крупный пиксельный
-     заголовок (как «РОЗЫГРЫШ»), фиолетовый мазок с белыми пиксельными буквами (как «OVEC»), белая карточка
-     на зажиме с персиковой карточкой позади (как «YOUTH CODE»; зажим вырезан из 3-й сторис), квадратные пункты,
-     фиолетовая подпись Comfortaa, звёздочки-блики. Всё в безопасной зоне сторис (250–1580 px). */
-  .title { left: 0; right: 0; top: 290px; text-align: center; }
-  .stroke { left: 150px; top: 424px; width: 780px; height: 150px; transform: rotate(-4.5deg); }
-  .stroke svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-  .stroke .word { position: absolute; left: 0; top: 36px; color: #fff; text-shadow: 6px 6px 0 #3d1bc0; }
-  .back { left: 132px; top: 806px; width: 870px; height: 700px; border-radius: 40px; transform: rotate(2.6deg);
-          background: linear-gradient(170deg, #fbd9bd, #f6b48a); box-shadow: 0 16px 34px rgba(150, 60, 0, .2); }
-  .card { left: 96px; top: 784px; width: 888px; height: 700px; border-radius: 40px; background: #fff;
+     Фон — присланный заказчиком (720×1280 → 1080×1920). Устройство — один в один с 3-й сторис (YOUTH CODE,
+     размеры сняты с export/story-3.png): белая карточка 99–979 × 380–1445 px со скруглением, за ней персиковая,
+     тот же зажим на том же месте (вырезан из 3-й); заголовок пиксельным шрифтом на месте «YOUTH CODE»
+     (прописные 53 px, верх 524); правила — пиксельным шрифтом с квадратным пунктом на оси 151 px, текст от 173 px
+     (прописные 25 и 23 px, шаг строк 47); список — жирный узкий курсив с круглыми пунктами на строках
+     «героя / персонажа / актёра» (прописные 30 px, верх 786 / 845 / 903); фиолетовая подпись Comfortaa по центру.
+     Фиолетовый — #5D1AE4, как в 3-й. Пиксельный шрифт (Tiny5) растянут ровно до ширины букв автора, список — Fira Sans
+     Black Italic (по пропорциям ближе к «ГЕРОЯ / ПЕРСОНАЖА», чем узкий Fira Extra Condensed), подпись — Comfortaa
+     с тонкой обводкой в цвет, чтобы штрих был как у автора. */
+  body, .canvas { color: #111; }
+  .back { left: 140px; top: 408px; width: 872px; height: 1050px; border-radius: 40px; transform: rotate(2.6deg);
+          background: linear-gradient(170deg, #f8ca93, #f3a484); box-shadow: 0 16px 34px rgba(150, 60, 0, .2); }
+  .card { left: 99px; top: 380px; width: 880px; height: 1065px; border-radius: 38px; background: #fff;
           box-shadow: 0 22px 44px rgba(150, 60, 0, .22); }
-  .clip { left: 430px; width: 220px; }
-  .item { position: absolute; left: 172px; }
-  .b2::before { top: 19px; width: 16px; height: 16px; }
-  .wrap { white-space: normal; width: calc(720px / 1.45); line-height: 1.3; }
-  .item::before { content: ''; position: absolute; left: -36px; top: 10px; width: 14px; height: 14px; background: #111; }
-  .days { position: absolute; left: 96px; width: 888px; top: 1040px; height: 150px; }
-  .note { left: 96px; width: 888px; text-align: center; color: #6129fb; font: 700 46px/1.25 'Comfortaa'; }
+  .clip { left: 440px; top: 198px; width: 220px; z-index: 5; }
+  .t { position: absolute; z-index: 6; white-space: nowrap; }
+  .sq { position: absolute; z-index: 6; width: 15px; height: 15px; background: #111; }
+  .dot { position: absolute; z-index: 6; width: 13px; height: 13px; border-radius: 50%; background: #111; }
+  .note { position: absolute; z-index: 6; left: 99px; width: 880px; text-align: center; color: #5d1ae4;
+          font: 700 50px/1.2 'Comfortaa'; letter-spacing: -0.01em; -webkit-text-stroke: 2px #5d1ae4; }
+  .v { color: #5d1ae4; }
 </style>
 </head>
 <body>
@@ -34,79 +36,94 @@
   <img class="base" src="assets/bg-saturday.jpg" alt="">
   <div class="abs back"></div>
   <div class="abs card"></div>
-  <img class="abs clip" id="clip" src="assets/clip.png" alt="">
-  <div class="abs title"><div class="px-line" id="title" style="display: inline-block;">Перенос</div></div>
-  <div class="abs stroke" id="stroke"><svg id="brush" viewBox="0 0 780 150" preserveAspectRatio="none"></svg><div class="px-line word" id="word">на субботу</div></div>
-  <div class="item px-line wrap b2" id="i1" style="top: 880px; font-size: 46px;">Завтра молодёжки не будет</div>
-  <div class="days" id="days"></div>
-  <div class="item px-line" id="i3" style="top: 1252px; font-size: 32px;">18:00 · Универмаг, 3-й этаж</div>
-  <div class="abs note" id="note" style="top: 1340px;">(ждём тебя в&nbsp;субботу!)</div>
+  <img class="abs clip" src="assets/clip.png" alt="">
+  <div id="text"></div>
+  <div class="note" id="note" style="top: 1252px;">(ждём тебя<br>в&nbsp;субботу!)</div>
 </main>
-<script src="/projects/2026-10-18-twins/twin.js"></script>
-<script src="pixel.js"></script>
 <script>
-  // Шрифт растянут transform-ом: ширина по экрану = getBoundingClientRect().width.
-  const fitTo = (el, width) => {
+  const X = 173, AXIS = 151, RIGHT = 939;            // левый край текста, ось пунктов, правый край поля
+  let SX = 1.45;                                     // растяжение пиксельного шрифта — подгоняется под ширину букв автора
+  const box = document.getElementById('text');
+  const ctx = document.createElement('canvas').getContext('2d');
+
+  // Строка с верхом прописных в capTop и высотой прописных capH; sx — растяжение по ширине (пиксельный шрифт 1,45).
+  function line(text, { family, weight = 400, style = 'normal', capTop, capH, x = X, sx = 1, center = false, html = null }) {
+    ctx.font = `${style} ${weight} 100px ${family}`;
+    const ratio = ctx.measureText('Н').actualBoundingBoxAscent / 100;
+    const size = capH / ratio;
+    ctx.font = `${style} ${weight} ${size}px ${family}`;
+    const m = ctx.measureText('Н');
+    const el = document.createElement('div');
+    el.className = 't';
+    el.style.font = `${style} ${weight} ${size}px/1 ${family}`;
+    if (html) el.innerHTML = html; else el.textContent = text;
+    if (sx !== 1) { el.style.transform = `scaleX(${sx})`; el.style.transformOrigin = 'left top'; }
+    el.style.textTransform = 'uppercase';
+    box.appendChild(el);
+    // верх прописных: строка высотой в кегль, базовая линия — по метрикам шрифта
+    const base = (size - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
+    el.style.top = `${capTop - (base - m.actualBoundingBoxAscent)}px`;
     const w = el.getBoundingClientRect().width;
-    el.style.fontSize = `${parseFloat(getComputedStyle(el).fontSize) * width / w}px`;
+    el.style.left = `${center ? 539 - w / 2 : x}px`;
+    return { el, w, size };
+  }
+
+  // Абзац пиксельным шрифтом с переносом по словам в поле X…RIGHT; части с классом v — фиолетовые.
+  function para(parts, capTop, capH, pitch) {
+    const words = parts.flatMap(([txt, cls]) => txt.split(' ').map((w) => [w, cls]));
+    let row = [], y = capTop;
+    const html = (r) => r.map(([w, cls]) => (cls ? `<span class="${cls}">${w}</span>` : w)).join(' ');
+    const flush = () => {
+      line('', { family: "'Tiny5'", capTop: y, capH, sx: SX, html: html(row) });
+      row = []; y += pitch;
+    };
+    for (const wd of words) {
+      const probe = line('', { family: "'Tiny5'", capTop: -500, capH, sx: SX, html: html([...row, wd]) });
+      probe.el.remove();
+      if (X + probe.w > RIGHT && row.length) flush();
+      row.push(wd);
+    }
+    if (row.length) flush();
+    return y - pitch;
+  }
+
+  const square = (capTop, capH) => {
+    const s = document.createElement('div');
+    s.className = 'sq';
+    s.style.left = `${AXIS - 7.5}px`;
+    s.style.top = `${capTop + capH / 2 - 7.5}px`;
+    box.appendChild(s);
   };
-  window.renderReady = document.fonts.load("40px 'Tiny5'").then(() => document.fonts.ready).then(() => {
-    // Заголовок — во ширину 860 px, как «РОЗЫГРЫШ» в 4-й сторис; по центру (растяжение — от левого края).
-    const t = document.getElementById('title');
-    t.style.fontSize = '120px';
-    fitTo(t, 860);
-    t.parentElement.style.textAlign = 'left';
-    t.style.marginLeft = `${(1080 - t.getBoundingClientRect().width) / 2}px`;
 
-    // Мазок: скруглённая полоса с неровным краем и мягким ореолом, как под «OVEC».
-    const brush = document.getElementById('brush');
-    brush.innerHTML = `
-      <defs>
-        <filter id="rough" x="-10%" y="-30%" width="120%" height="160%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.035 0.09" numOctaves="2" seed="7" result="n"/>
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G"/>
-        </filter>
-        <filter id="glow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
-      </defs>
-      <rect x="10" y="12" width="760" height="126" rx="63" fill="#6129fb" opacity=".45" filter="url(#glow)"/>
-      <rect x="10" y="14" width="760" height="122" rx="61" fill="#6129fb" filter="url(#rough)"/>`;
-    const word = document.getElementById('word');
-    word.style.fontSize = '64px';
-    fitTo(word, 600);
-    word.style.left = `${(780 - word.getBoundingClientRect().width) / 2}px`;
-    word.style.top = `${(150 - word.getBoundingClientRect().height) / 2 - 4}px`;
-
-    // Зажим — по центру над карточкой: в вырезке край карточки на 182 px от верха.
-    const clip = document.getElementById('clip');
-    clip.style.top = `${784 - 182}px`;
-
-    // Дни: «ПТ 30.10» зачёркнут фиолетовым от руки → пиксельная стрелка → «СБ 31.10» в овале от руки.
-    const days = document.getElementById('days');
-    const fri = document.createElement('div');
-    fri.className = 'px-line'; fri.textContent = 'пт 30.10';
-    fri.style.cssText += 'position:absolute;left:76px;top:44px;font-size:46px;color:#6d6d6d';
-    const sat = document.createElement('div');
-    sat.className = 'px-line'; sat.textContent = 'сб 31.10';
-    sat.style.cssText += 'position:absolute;top:44px;font-size:46px;color:#111';
-    days.append(fri, sat);
-    const fw = fri.getBoundingClientRect().width, sw = sat.getBoundingClientRect().width;
-    sat.style.left = `${888 - 96 - sw}px`;
-    const svg = layer();
-    const random = rng(31);
-    const y0 = 1040 + 44, h = fri.getBoundingClientRect().height;
-    // зачёркивание — два штриха маркером
-    const strike = (a, b) => svgEl(svg, 'path', { d: smoothOpen([a, [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2 + (random() - 0.5) * 8], b]),
-      fill: 'none', stroke: '#6129fb', 'stroke-width': 9, 'stroke-linecap': 'round' });
-    strike([96 + 64, y0 + h * 0.58], [96 + 76 + fw + 14, y0 + h * 0.44]);
-    // овал вокруг субботы
-    const sx = 96 + 888 - 96 - sw / 2, sy = y0 + h / 2;
-    svgEl(svg, 'path', { d: handOval(sx, sy, sw / 2 + 30, h / 2 + 30, random, 1.1), fill: 'none', stroke: '#6129fb', 'stroke-width': 8, 'stroke-linecap': 'round' });
-    // пиксельная стрелка между днями
-    const ax0 = 96 + 76 + fw + 34, ax1 = sx - sw / 2 - 44;
-    pixelArrow(svg, [ax0, sy], [ax0 + (ax1 - ax0) * 0.33, sy - 18], [ax0 + (ax1 - ax0) * 0.66, sy - 18], [ax1, sy], { cell: 6, step: 12, fill: '#111', edge: '#111' });
-
-    // Звёздочки-блики серии.
-    sparkle(108, 440, 70); sparkle(985, 720, 56); sparkle(972, 1530, 80); sparkle(118, 1545, 52);
+  window.renderReady = Promise.all([document.fonts.load("40px 'Tiny5'"), document.fonts.load("italic 900 40px 'Fira Sans'"),
+    document.fonts.load("700 40px 'Comfortaa'")]).then(() => {
+    // Ширина пиксельного шрифта как у автора: «ТЫ ДОЛЖЕН ПРИЙТИ» в 3-й сторис — 443 px при прописных 25 px.
+    const probe = line('Ты должен прийти', { family: "'Tiny5'", capTop: -500, capH: 25 });
+    SX = 443 / probe.w;
+    probe.el.remove();
+    // Заголовок — на месте и в размер «YOUTH CODE».
+    line('Перенос', { family: "'Tiny5'", capTop: 524, capH: 53, sx: SX, center: true });
+    // Правило 1 — как «ты должен прийти / в костюме своего любимого:».
+    square(680, 25);
+    para([['Завтра молодёжки не будет —', ''], ['переносим всё на:', '']], 680, 25, 47);
+    // Список — как «героя / персонажа / актёра».
+    [['субботу, 31.10', 786], ['18:00', 845], ['Универмаг, 3-й этаж', 903]].forEach(([txt, capTop]) => {
+      line(txt, { family: "'Fira Sans'", weight: 900, style: 'italic', capTop, capH: 30 });
+      const d = document.createElement('div');
+      d.className = 'dot';
+      d.style.left = `${AXIS - 6.5}px`;
+      d.style.top = `${capTop + 15 - 6.5}px`;
+      box.appendChild(d);
+    });
+    // Правило 2 — как «если придёшь со своими друзьями… ты получишь…», вторая половина фиолетовая.
+    square(983, 23);
+    const last = para([['Если собирался прийти завтра —', ''], ['приходи в субботу и зови друзей!', 'v']], 983, 23, 47);
+    // Подпись — на том же расстоянии от второго правила, что в 3-й сторис (~110 px), карточка — по содержимому.
+    const note = document.getElementById('note');
+    note.style.top = `${last + 23 + 100}px`;
+    const bottom = note.offsetTop + note.offsetHeight + 64;
+    document.querySelector('.card').style.height = `${bottom - 380}px`;
+    document.querySelector('.back').style.height = `${bottom - 380 - 15}px`;
   });
 </script>
 </body>

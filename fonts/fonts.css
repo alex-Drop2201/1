@@ -10,6 +10,8 @@
 @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-500-italic.ttf') format('truetype'); }
 @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: block; src: url('Cormorant-Garamond/Cormorant-Garamond-500.ttf') format('truetype'); }
 @font-face { font-family: 'Dela Gothic One'; font-style: normal; font-weight: 400; font-display: block; src: url('Dela-Gothic-One/Dela-Gothic-One-400.ttf') format('truetype'); }
+@font-face { font-family: 'Fira Sans'; font-style: italic; font-weight: 900; font-display: block; src: url('Fira-Sans/Fira-Sans-900-italic.ttf') format('truetype'); }
+@font-face { font-family: 'Fira Sans'; font-style: normal; font-weight: 900; font-display: block; src: url('Fira-Sans/Fira-Sans-900.ttf') format('truetype'); }
 @font-face { font-family: 'Fira Sans Extra Condensed'; font-style: normal; font-weight: 700; font-display: block; src: url('Fira-Sans-Extra-Condensed/Fira-Sans-Extra-Condensed-700.ttf') format('truetype'); }
 @font-face { font-family: 'Fira Sans Extra Condensed'; font-style: italic; font-weight: 900; font-display: block; src: url('Fira-Sans-Extra-Condensed/Fira-Sans-Extra-Condensed-900-italic.ttf') format('truetype'); }
 @font-face { font-family: 'Fira Sans Extra Condensed'; font-style: normal; font-weight: 900; font-display: block; src: url('Fira-Sans-Extra-Condensed/Fira-Sans-Extra-Condensed-900.ttf') format('truetype'); }
