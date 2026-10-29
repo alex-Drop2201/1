@@ -1,0 +1,41 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="size" content="1080x1920">
+<title>Перенос — вариант В, календарь</title><link rel="stylesheet" href="/brand/brand.css"><link rel="stylesheet" href="../pixel.css">
+<style>
+  /* Вариант В — два листка календаря на розовом скотче: пятница зачёркнута пиксельным крестом, суббота отмечена;
+     между ними пиксельная стрелка. Заголовок и строки — пиксельным шрифтом серии, детали — жирным курсивом. */
+  .day { position: absolute; top: 640px; width: 380px; height: 440px; border-radius: 34px; background: #fff; z-index: 6;
+         box-shadow: 0 20px 40px rgba(150,60,0,.22); }
+  .note { position: absolute; left: 0; right: 0; text-align: center; color: #5d1ae4; font: 700 50px/1.2 'Comfortaa'; -webkit-text-stroke: 2px #5d1ae4; z-index: 9; }
+</style></head><body><main class="canvas">
+  <img class="base" src="../assets/bg-saturday.jpg" alt="">
+  <div class="day" id="fri" style="left: 90px; transform: rotate(-5deg);"></div>
+  <div class="day" id="sat" style="left: 610px; transform: rotate(4deg);"></div>
+  <div class="note" style="top: 1420px;">(ждём тебя!)</div>
+</main>
+<script src="../pixel.js"></script>
+<script src="type.js"></script>
+<script>
+  fontsReady().then(() => {
+    px('Перенос', { capTop: 300, capH: 84, x: 540, align: 'center' });
+    px('Завтра молодёжки не будет —', { capTop: 450, capH: 28, x: 540, align: 'center' });
+    px('всё переносим на субботу', { capTop: 500, capH: 28, x: 540, align: 'center' });
+    const fri = document.getElementById('fri'), sat = document.getElementById('sat');
+    px('пятница', { capTop: 60, capH: 28, x: 190, align: 'center', parent: fri, color: '#9a9a9a' });
+    line('30', { family: "'Fira Sans'", weight: 900, style: 'italic', capTop: 140, capH: 190, x: 190, align: 'center', parent: fri, color: '#b8b8b8' });
+    px('октября', { capTop: 370, capH: 22, x: 190, align: 'center', parent: fri, color: '#9a9a9a' });
+    px('суббота', { capTop: 60, capH: 28, x: 190, align: 'center', parent: sat });
+    line('31', { family: "'Fira Sans'", weight: 900, style: 'italic', capTop: 140, capH: 190, x: 190, align: 'center', parent: sat });
+    px('октября', { capTop: 370, capH: 22, x: 190, align: 'center', parent: sat });
+    tape(170, 600, 220, 90, -9); tape(700, 604, 220, 90, 7);
+    const svg = layer();
+    // пиксельный крест на пятнице
+    const X = ['XX.......XX', '.XX.....XX.', '..XX...XX..', '...XX.XX...', '....XXX....', '...XX.XX...', '..XX...XX..', '.XX.....XX.', 'XX.......XX'];
+    pattern(svg, X, 280 - 5.5 * 22, 860 - 4.5 * 22, 22, '#6129fb');
+    // отметка на субботе
+    checkbox(svg, 868, 960, 5);
+    pixelArrow(svg, [478, 860], [520, 830], [560, 830], [598, 860], { cell: 8, step: 14, fill: '#111', edge: '#111' });
+    line('18:00 · Универмаг, 3-й этаж', { family: "'Fira Sans'", weight: 900, style: 'italic', capTop: 1250, capH: 40, x: 540, align: 'center' });
+    sparkle(80, 600, 60); sparkle(1000, 560, 70); sparkle(980, 1400, 60); sparkle(110, 1350, 50);
+  });
+  window.renderReady = new Promise((ok) => setTimeout(ok, 600));
+</script></body></html>

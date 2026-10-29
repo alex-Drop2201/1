@@ -1,0 +1,54 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="size" content="1080x1920">
+<title>Перенос — вариант А, чек</title><link rel="stylesheet" href="/brand/brand.css"><link rel="stylesheet" href="../pixel.css">
+<style>
+  /* Вариант А — «чек», как во 2-й сторис: мятый чек на скотче, заголовок Montserrat 900 строчными (как «готов?»),
+     пиксельная строка, пунктир, строки «что — значение», ИТОГО и штрихкод. Наклон в другую сторону, чем у 2-й. */
+  .r { position: absolute; left: 120px; top: 360px; width: 840px; height: 1120px; transform: rotate(-2.4deg); z-index: 5; }
+  .r svg.paper { position: absolute; left: -24px; top: -24px; width: 888px; height: 1168px; filter: drop-shadow(0 18px 26px rgba(120,50,0,.28)); }
+  .dash { position: absolute; left: 70px; right: 70px; height: 0; border-top: 4px dashed #3a3a3a; opacity: .75; }
+  .dot { position: absolute; left: 70px; right: 70px; height: 0; border-top: 2px dotted #b5b5b5; }
+</style></head><body><main class="canvas">
+  <img class="base" src="../assets/bg-saturday.jpg" alt="">
+  <div class="r" id="r"><svg class="paper" id="paper" viewBox="0 0 888 1168"></svg></div>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script src="type.js"></script>
+<script>
+  const r = document.getElementById('r');
+  const paper = document.getElementById('paper');
+  const W = 888, H = 1168, tooth = 22, depth = 18, m = 24;
+  let d = `M${m},${m + depth}`;
+  for (let x = m; x < W - m; x += tooth) d += ` L${Math.min(x + tooth / 2, W - m)},${m} L${Math.min(x + tooth, W - m)},${m + depth}`;
+  d += ` L${W - m},${H - m - depth}`;
+  for (let x = W - m; x > m; x -= tooth) d += ` L${Math.max(x - tooth / 2, m)},${H - m} L${Math.max(x - tooth, m)},${H - m - depth}`;
+  paper.innerHTML = `<defs><linearGradient id="pg" x1="0" y1="0" x2=".1" y2="1"><stop offset="0" stop-color="#f7f7f5"/><stop offset=".42" stop-color="#ececea"/>
+    <stop offset=".425" stop-color="#fafaf8"/><stop offset="1" stop-color="#eeeeec"/></linearGradient>
+    <filter id="cr"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="3" seed="9"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 .72"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs>
+    <path d="${d} Z" fill="url(#pg)"/><path d="${d} Z" fill="#000" opacity=".08" filter="url(#cr)"/>`;
+  const add = (cls, top) => { const e = document.createElement('div'); e.className = cls; e.style.top = `${top}px`; r.appendChild(e); };
+  fontsReady().then(() => {
+    tape(330, 300, 300, 120, -6);
+    line('перенос', { family: "'Montserrat'", weight: 900, capTop: 96, capH: 104, x: 420, align: 'center', parent: r, upper: false });
+    px('Завтра молодёжки не будет', { capTop: 255, capH: 26, x: 420, align: 'center', parent: r });
+    add('dash', 320);
+    const rows = [['пт 30.10', 'отменяется', '#9a9a9a'], ['сб 31.10', 'всё здесь', '#111'], ['время', '18:00', '#111'], ['место', 'универмаг, 3-й этаж', '#111']];
+    rows.forEach(([a, b, c], i) => {
+      const y = 380 + i * 110;
+      px(a, { capTop: y, capH: 30, x: 70, parent: r, color: c });
+      line(b, { family: "'Oswald'", weight: 600, capTop: y - 4, capH: 36, x: 770, align: 'right', parent: r, color: c });
+      if (i < rows.length - 1) add('dot', y + 70);
+    });
+    add('dash', 840);
+    line('ИТОГО:', { family: "'Montserrat'", weight: 900, capTop: 884, capH: 42, x: 70, parent: r });
+    line('всё в субботу', { family: "'Montserrat'", weight: 500, capTop: 892, capH: 32, x: 770, align: 'right', parent: r });
+    add('dash', 970);
+    const bars = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    bars.setAttribute('viewBox', '0 0 300 80'); bars.style.cssText = 'position:absolute;left:270px;top:996px;width:300px;height:76px';
+    const rnd = rng(5); for (let x = 0; x < 300;) { const w = [2, 3, 4, 6][Math.floor(rnd() * 4)]; if (rnd() > .38) bars.innerHTML += `<rect x="${x}" y="0" width="${w}" height="80" fill="#111"/>`; x += w + [2, 3, 4][Math.floor(rnd() * 3)]; }
+    r.appendChild(bars);
+    line('x t r e m e', { family: "'Montserrat'", weight: 600, capTop: 1092, capH: 16, x: 420, align: 'center', parent: r, upper: false });
+    // пятница зачёркнута
+    const s = document.createElement('div'); s.style.cssText = 'position:absolute;left:62px;top:394px;width:250px;height:5px;background:#6129fb;transform:rotate(-3deg);z-index:12'; r.appendChild(s);
+  });
+  window.renderReady = new Promise((ok) => setTimeout(ok, 600));
+</script></body></html>

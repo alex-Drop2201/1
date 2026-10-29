@@ -1,0 +1,37 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="size" content="1080x1920">
+<title>Перенос — вариант Б, кнопки</title><link rel="stylesheet" href="/brand/brand.css"><link rel="stylesheet" href="../pixel.css">
+<style>
+  /* Вариант Б — как 4-я сторис: крупный пиксельный заголовок, фиолетовый мазок с белыми пиксельными буквами,
+     белые кнопки с чек-боксами, звёздочки; внизу фиолетовая подпись Comfortaa. */
+  .stroke { position: absolute; left: 160px; top: 430px; width: 760px; height: 140px; transform: rotate(-4.5deg); z-index: 8; }
+  .pill { position: absolute; left: 120px; width: 840px; height: 116px; border-radius: 58px; background: #fff; z-index: 8;
+          box-shadow: 0 10px 22px rgba(150,60,0,.18); }
+  .note { position: absolute; left: 0; right: 0; text-align: center; color: #5d1ae4; font: 700 50px/1.2 'Comfortaa'; -webkit-text-stroke: 2px #5d1ae4; z-index: 9; }
+</style></head><body><main class="canvas">
+  <img class="base" src="../assets/bg-saturday.jpg" alt="">
+  <div class="stroke" id="stroke"><svg viewBox="0 0 760 140" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+    <defs><filter id="rough" x="-10%" y="-30%" width="120%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".035 .09" numOctaves="2" seed="7"/>
+    <feDisplacementMap in="SourceGraphic" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="glow"><feGaussianBlur stdDeviation="9"/></filter></defs>
+    <rect x="8" y="10" width="744" height="120" rx="60" fill="#6129fb" opacity=".45" filter="url(#glow)"/>
+    <rect x="8" y="12" width="744" height="116" rx="58" fill="#6129fb" filter="url(#rough)"/></svg></div>
+  <div class="pill" style="top: 800px;"></div><div class="pill" style="top: 950px;"></div><div class="pill" style="top: 1100px;"></div>
+  <div class="note" style="top: 1300px;">(ждём тебя в&nbsp;субботу!)</div>
+</main>
+<script src="../pixel.js"></script>
+<script src="type.js"></script>
+<script>
+  fontsReady().then(() => {
+    px('Перенос', { capTop: 300, capH: 84, x: 540, align: 'center' });
+    const st = document.getElementById('stroke');
+    const w = px('на субботу', { capTop: 42, capH: 50, x: 380, align: 'center', parent: st, color: '#fff', z: 12 });
+    w.el.style.textShadow = '6px 6px 0 #3d1bc0';
+    px('Завтра молодёжки не будет', { capTop: 680, capH: 30, x: 540, align: 'center' });
+    const svg = layer();
+    [['суббота, 31.10', 858], ['18:00', 1008], ['Универмаг, 3-й этаж', 1158]].forEach(([t, cy]) => {
+      checkbox(svg, 156, cy - 24, 4);
+      line(t, { family: "'Fira Sans'", weight: 900, style: 'italic', capTop: cy - 17, capH: 34, x: 236, z: 12 });
+    });
+    sparkle(110, 420, 70); sparkle(985, 640, 56); sparkle(970, 1300, 70); sparkle(120, 1250, 50);
+  });
+  window.renderReady = new Promise((ok) => setTimeout(ok, 600));
+</script></body></html>
