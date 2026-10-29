@@ -209,7 +209,7 @@ class Canvas:
             - ((1 - u) * (1 - v) * c00 + u * (1 - v) * c10 + (1 - u) * v * c01 + u * v * c11)
         return F
 
-    def cut_object(self, box, thr=30, pad=12, min_area=150):
+    def cut_object(self, box, thr=30, pad=12, min_area=150, fill_holes=True):
         """Вырезать цветной предмет целиком (мазок с надписью, стикер, звёздочку) и стереть его: фон под ним —
         Coons-заливка по краям рамки (рамка должна лежать на чистом фоне), предмет — всё, что заметно отличается
         от этого фона по цвету (мелкие пятна меньше min_area отбрасываются)."""
@@ -225,8 +225,9 @@ class Canvas:
         lab, n = ndi.label(ndi.binary_closing(m, iterations=2))
         sizes = ndi.sum(np.ones_like(lab), lab, range(1, n + 1))
         m = np.isin(lab, [i + 1 for i, sz in enumerate(sizes) if sz >= min_area])
-        m = ndi.binary_fill_holes(m)
-        m = ndi.binary_dilation(m, iterations=2)
+        if fill_holes:  # False — у предмета есть «окна» на фон (петли зажима, ручки)
+            m = ndi.binary_fill_holes(m)
+        m = ndi.binary_dilation(m, iterations=2 if fill_holes else 1)
         alpha = ndi.gaussian_filter(m.astype(np.float32), 0.8)
         piece = Piece(inner.copy(), alpha, x0, y0)
         ring = np.ones(reg.shape[:2], bool)

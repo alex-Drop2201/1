@@ -1,0 +1,7 @@
+/* Общее для пиксельного декора серии XTREME. */
+body, .canvas { background: #f7d9a8; color: #111; }
+.base { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+.abs { position: absolute; }
+/* Пиксельный шрифт серии: Tiny5, растянутый по ширине в 1,45 раза, как у автора. */
+.px-line { font-family: 'Tiny5', monospace; text-transform: uppercase; white-space: nowrap; line-height: 1;
+           transform: scaleX(1.45); transform-origin: left top; letter-spacing: 0.03em; }

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Сторис 4 — розыгрыш, с чек-листом</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="pixel.css">
+<!-- Поверх причёсанной 4-й сторис (private/story-4.png, собирается build.py) по выбору заказчика:
+     чек-бокс внутри каждой кнопки-условия (текст кнопок уже сдвинут вправо, в поле за квадратом),
+     пиксельная стрелка от профиля в телефоне к условию «подписаться», реплика парня в пиксельном пузыре —
+     пузырь по размеру фразы, с полями. Рендер — в private/ (на картинке люди): --out projects/…/private -->
+</head>
+<body>
+<main class="canvas">
+  <img class="base" src="private/story-4.png" alt="">
+</main>
+<script src="pixel.js"></script>
+<script>
+  window.renderReady = document.fonts.load("30px 'Tiny5'").then(() => {
+    const svg = layer();
+    // Чек-боксы: квадрат 48 px внутри кнопки, на 25 px от её левого края; центры кнопок 790 / 940 / 1090.
+    [790, 940, 1090].forEach((cy) => checkbox(svg, 466, cy - 24, 4));
+    // Стрелка: от имени профиля в телефоне дугой над ним к первому условию.
+    pixelArrow(svg, [236, 812], [262, 742], [356, 722], [432, 778], { cell: 8, step: 15 });
+    // Реплика над головой парня, хвост — к его макушке.
+    bubble(svg, 'Что?! Призы?!', 470, 1252, { size: 34, tail: [690, 1420] });
+  });
+</script>
+</body>
+</html>
