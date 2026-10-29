@@ -102,7 +102,10 @@ MONTHS = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 
 def date_mentions(text):
     """Пары «день недели — дата» в тексте макета. Год — из текста, иначе ближайший к сегодняшнему дню."""
     found = []
-    pat = r'\b(' + '|'.join(sorted(WD, key=len, reverse=True)) + r')\b[^\d]{0,25}?(?:\d{1,2}:\d{2}[^\d]{0,10}?)?(\d{1,2})(?:-?е)?\s+([а-яё]+)(?:\s+(\d{4}))?'
+    names = '|'.join(sorted(WD, key=len, reverse=True))
+    # Между днём недели и числом не должно быть другого дня недели («…на субботу · пятница 30 октября» — пятница).
+    gap = r'(?:(?!\b(?:' + names + r')\b)[^\d]){0,25}?'
+    pat = r'\b(' + names + r')\b' + gap + r'(?:\d{1,2}:\d{2}[^\d]{0,10}?)?(\d{1,2})(?:-?е)?\s+([а-яё]+)(?:\s+(\d{4}))?'
     for m in re.finditer(pat, text.lower()):
         wd, d, mon, y = m.groups()
         mi = next((i for i, p in enumerate(MONTHS) if mon.startswith(p) or (p == 'мая' and mon.startswith('май'))), None)

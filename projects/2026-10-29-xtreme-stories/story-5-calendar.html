@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Сторис 5 — перенос на субботу, листки календаря</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="pixel.css">
+<style>
+  /* Сторис серии XTREME «Перенос»: завтра (пятница) молодёжки нет — всё в субботу.
+     Устройство — вариант «листки календаря». Сетка: ось 540, поля 96 px (как карточка 3-й сторис), между
+     блоками одинаковые зазоры 76 px, всё в безопасной зоне 250–1580. Два листка — близнецы (380×440, скругление 34,
+     как у карточек серии), наклоны ±4°, скотч ±6° — зеркально; внутри одинаково: плашка дня, число, месяц.
+     Пятница — серая, перечёркнута пиксельным крестом; суббота — чёрная, плашка дня фиолетовая.
+     Шрифты и цвета серии: пиксельный (Tiny5, растянут до ширины букв автора), жирный курсив (Fira Sans Black
+     Italic, как список в 3-й), фиолетовая подпись Comfortaa; белая кнопка — как условия в 4-й; розовый скотч —
+     как во 2-й; звёздочки — как в 4-й. Фон — присланный заказчиком. */
+  .tile { position: absolute; top: 0; width: 380px; height: 440px; border-radius: 34px; background: #fff; z-index: 6;
+          box-shadow: 0 20px 40px rgba(150, 60, 0, .22); }
+  .chip { position: absolute; left: 50%; top: 58px; height: 58px; border-radius: 29px; transform: translateX(-50%); }
+  .pill { position: absolute; left: 96px; width: 888px; height: 112px; border-radius: 56px; background: #fff; z-index: 6;
+          box-shadow: 0 10px 22px rgba(150, 60, 0, .18); }
+  /* Подпись — белым по фиолетовому мазку (как «OVEC» в 4-й): фиолетовый по оранжевому фону не читался (2.1:1). */
+  .note { position: absolute; z-index: 9; transform: rotate(-3deg); }
+  .note svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .note span { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-54%); text-align: center; color: #fff;
+               font: 700 48px/1 'Comfortaa'; -webkit-text-stroke: 1.2px #fff; letter-spacing: -0.01em; white-space: nowrap; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <img class="base" src="assets/bg-saturday.jpg" alt="">
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script src="pixel.js"></script>
+<script src="type.js"></script>
+<script>
+  const main = document.querySelector('main');
+  const GAP = 76, TILE_W = 380, TILE_H = 440, TILT = 4;
+  const PURPLE = '#6129fb', GREY = '#6b6b6b', GREY_NUM = '#8f8f8f';   // серые пятницы — читаются (5.3:1 и 3.2:1)
+
+  function tile(x, y, deg) {
+    const t = document.createElement('div');
+    t.className = 'tile';
+    t.style.left = `${x}px`; t.style.top = `${y}px`; t.style.transform = `rotate(${deg}deg)`;
+    main.appendChild(t);
+    return t;
+  }
+
+  // Содержимое листка: плашка дня, число, месяц — одинаково на обоих.
+  function fill(t, { day, num, active }) {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.style.background = active ? PURPLE : '#ededed';
+    t.appendChild(chip);
+    const label = px(day, { capTop: 0, capH: 24, x: 0, parent: chip, color: active ? '#fff' : GREY, z: 7 });
+    const cw = label.w + 52;
+    chip.style.width = `${cw}px`;
+    label.el.style.left = `${(cw - label.w) / 2}px`;
+    label.el.style.top = `${parseFloat(label.el.style.top) + (58 - 24) / 2}px`;
+    line(num, { family: "'Fira Sans'", weight: 900, style: 'italic', capTop: 156, capH: 186, x: TILE_W / 2 - 4, align: 'center',
+                parent: t, color: active ? '#111' : GREY_NUM, z: 7 });
+    px('октября', { capTop: 380, capH: 22, x: TILE_W / 2, align: 'center', parent: t, color: active ? '#111' : GREY, z: 7 });
+  }
+
+  window.renderReady = fontsReady().then(() => {
+    let y = 388;                                             // верх прописных заголовка: блок — по центру безопасной зоны
+    px('Перенос', { capTop: y, capH: 84, x: 540, align: 'center' });
+    y += 84 + 54;
+    px('Завтра молодёжки не будет —', { capTop: y, capH: 28, x: 540, align: 'center' });
+    px('всё переносим на субботу', { capTop: y + 50, capH: 28, x: 540, align: 'center' });
+    y += 50 + 28 + GAP + 14;                                 // +14 — под скотч над листками
+
+    // Листки: поля 96, между ними 128 под стрелку; зеркальные наклоны.
+    const left = tile(96, y, -TILT), right = tile(1080 - 96 - TILE_W, y, TILT);
+    fill(left, { day: 'пятница', num: '30', active: false });
+    fill(right, { day: 'суббота', num: '31', active: true });
+    tape(96 + TILE_W / 2 - 100, y - 38, 200, 76, -6);
+    tape(1080 - 96 - TILE_W / 2 - 100, y - 38, 200, 76, 6);
+
+    const svg = layer();
+    // Пиксельный крест на числе пятницы (по центру числа).
+    const X = ['XX.......XX', '.XX.....XX.', '..XX...XX..', '...XX.XX...', '....XXX....', '...XX.XX...', '..XX...XX..', '.XX.....XX.', 'XX.......XX'];
+    const cell = 18;
+    const cx = 96 + TILE_W / 2, cyNum = y + 156 + 93;
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('transform', `rotate(${-TILT} ${96 + TILE_W / 2} ${y + TILE_H / 2})`);
+    svg.appendChild(g);
+    pattern(g, X, cx - 5.5 * cell, cyNum - 4.5 * cell, cell, PURPLE);
+    // Пиксельная стрелка между листками — по центру зазора, на высоте середины листков.
+    const ay = y + TILE_H / 2;
+    pixelArrow(svg, [506, ay], [528, ay], [552, ay], [580, ay], { cell: 8, step: 8, fill: '#111', edge: '#111' });
+    y += TILE_H + GAP;
+
+    // Время и место — белая кнопка, как условия в 4-й сторис.
+    const pill = document.createElement('div');
+    pill.className = 'pill'; pill.style.top = `${y}px`;
+    main.appendChild(pill);
+    line('18:00 · Универмаг, 3-й этаж', { family: "'Fira Sans'", weight: 900, style: 'italic', capTop: y + 56 - 17, capH: 34,
+                                           x: 540, align: 'center', z: 8 });
+    y += 112 + GAP - 10;
+    const note = document.createElement('div');
+    note.className = 'note';
+    note.innerHTML = `<svg viewBox="0 0 700 116" preserveAspectRatio="none">
+      <defs><filter id="rough" x="-10%" y="-30%" width="120%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".035 .09" numOctaves="2" seed="4"/>
+      <feDisplacementMap in="SourceGraphic" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="glow"><feGaussianBlur stdDeviation="8"/></filter></defs>
+      <rect x="6" y="8" width="688" height="100" rx="50" fill="${PURPLE}" opacity=".45" filter="url(#glow)"/>
+      <rect x="6" y="10" width="688" height="96" rx="48" fill="${PURPLE}" filter="url(#rough)"/></svg><span>ждём тебя в\u00a0субботу!</span>`;
+    main.appendChild(note);
+    // Ширина мазка — по фразе (замер отдельной строкой без растяжки на всю ширину) плюс поля по 60 px.
+    const meas = document.createElement('span');
+    meas.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap;font:700 48px/1 'Comfortaa';letter-spacing:-0.01em";
+    meas.textContent = note.querySelector('span').textContent;
+    main.appendChild(meas);
+    const tw = meas.getBoundingClientRect().width;
+    meas.remove();
+    const nw = tw + 120;
+    Object.assign(note.style, { left: `${540 - nw / 2}px`, top: `${y}px`, width: `${nw}px`, height: '116px' });
+
+    // Звёздочки серии — по углам композиции, не на тексте.
+    sparkle(132, 360, 64); sparkle(950, 480, 72); sparkle(80, 1420, 54); sparkle(1012, 1420, 64);
+  });
+</script>
+</body>
+</html>

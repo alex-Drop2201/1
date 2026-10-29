@@ -239,7 +239,9 @@ async function renderFile(browser, port, file, opts) {
     const MONTHS = ['янв', 'фев', 'мар', 'апр', 'ма', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
     const all = document.body.innerText.toLowerCase().replace(/\s+/g, ' ');
     const names = Object.keys(WD).sort((a, b) => b.length - a.length).join('|');
-    const pat = new RegExp(`(?<![а-яё])(${names})(?![а-яё])[^\\d]{0,25}?(?:\\d{1,2}:\\d{2}[^\\d]{0,10}?)?(\\d{1,2})(?:-?е)?\\s+([а-яё]+)(?:\\s+(\\d{4}))?`, 'g');
+    // Между днём недели и числом не должно быть другого дня недели: «…на субботу · пятница 30 октября» — берётся пятница.
+    const gap = `(?:(?!(?<![а-яё])(?:${names})(?![а-яё]))[^\\d]){0,25}?`;
+    const pat = new RegExp(`(?<![а-яё])(${names})(?![а-яё])${gap}(?:\\d{1,2}:\\d{2}[^\\d]{0,10}?)?(\\d{1,2})(?:-?е)?\\s+([а-яё]+)(?:\\s+(\\d{4}))?`, 'g');
     const today = new Date();
     for (const m of all.matchAll(pat)) {
       const mi = MONTHS.findIndex((p) => m[3].startsWith(p));
