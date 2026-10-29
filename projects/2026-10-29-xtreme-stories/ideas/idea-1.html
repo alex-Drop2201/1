@@ -1,0 +1,30 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="size" content="1080x1920">
+<title>Идеи — сторис 1</title><link rel="stylesheet" href="/brand/brand.css"><link rel="stylesheet" href="ideas.css">
+<style>
+  .rays { left: 0; top: 0; width: 1080px; height: 760px; z-index: 5; mix-blend-mode: screen; opacity: .75;
+          background: repeating-conic-gradient(from 160deg at 540px -120px, rgba(255,250,225,.55) 0deg 3deg, rgba(255,250,225,0) 3deg 9deg);
+          -webkit-mask: linear-gradient(180deg, #000 0%, #000 45%, transparent 95%); mask: linear-gradient(180deg, #000 0%, #000 45%, transparent 95%); }
+  .count { left: 260px; top: 1340px; width: 560px; height: 190px; }
+  .count b { position: absolute; left: 0; right: 0; top: 30px; text-align: center; font: 700 26px/1 'Inter'; letter-spacing: .12em; color: #555; }
+  .count i { position: absolute; left: 0; right: 0; top: 76px; text-align: center; font: 800 76px/1 'Inter'; font-style: normal; letter-spacing: .02em; }
+</style></head><body><main class="canvas">
+  <img class="base" src="../export/story-1.png" alt="">
+  <div class="abs rays"></div>
+  <div class="hud"><span class="px">XTREME ▸ 1/4</span><span id="h"></span></div>
+  <div class="slot-ig count"><b>ДО ВЕЧЕРА</b><i>02 : 14 : 33</i><div class="ig-label">стикер Instagram «Обратный отсчёт» — до 31.10, 18:00</div></div>
+  <div class="tag" style="left: 70px; top: 214px;">1 · счётчик серии + «жизни»</div>
+  <div class="tag" style="left: 640px; top: 420px;">2 · лучи света сверху</div>
+  <div class="tag" style="left: 640px; top: 1270px;">3 · звёздочки серии</div>
+  <div class="tag" style="left: 260px; top: 1600px;">4 · живой отсчёт</div>
+</main>
+<script src="ideas.js"></script>
+<script>
+  hearts(860, 276);
+  // Звёздочки-блики из 4-й сторис — общий элемент серии.
+  [[110, 690, 1], [930, 1150, .8], [960, 700, .6]].forEach(([x, y, k]) => {
+    const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', '-50 -50 100 100'); s.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${90 * k}px;height:${90 * k}px;z-index:20`;
+    s.innerHTML = '<path d="M0,-48 C4,-8 8,-4 48,0 C8,4 4,8 0,48 C-4,8 -8,4 -48,0 C-8,-4 -4,-8 0,-48Z" fill="#fff"/>';
+    document.querySelector('main').appendChild(s);
+  });
+</script></body></html>

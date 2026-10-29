@@ -1,0 +1,15 @@
+/* Наброски идей поверх причёсанных сторис — черновик, не финал. */
+body, .canvas { background: #f7d9a8; }
+.base { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+.abs { position: absolute; }
+/* Пиксельный шрифт серии (Tiny5, растянут по ширине, как в сторис). */
+.px { font-family: 'Tiny5', monospace; text-transform: uppercase; display: inline-block; white-space: nowrap;
+      transform: scaleX(1.45); transform-origin: left top; line-height: 1; }
+/* Ярлык идеи: номер из плана. */
+.tag { position: absolute; z-index: 50; padding: 6px 12px 7px; border-radius: 10px; background: #ffe14d; color: #111;
+       font: 700 24px/1.15 'Inter'; box-shadow: 0 3px 0 #111; border: 2px solid #111; white-space: nowrap; }
+/* Место под родной стикер Instagram — пунктир. */
+.slot-ig { position: absolute; border: 4px dashed #5b2be0; border-radius: 28px; background: rgba(255,255,255,.92); color: #111; }
+.ig-label { position: absolute; left: 0; right: 0; bottom: -40px; text-align: center; font: 500 22px/1.2 'Inter'; color: #3d1aa8; }
+.hud { position: absolute; left: 70px; right: 70px; top: 268px; height: 40px; display: flex; justify-content: space-between; align-items: center; z-index: 20; }
+.hud .px { font-size: 30px; color: #111; }
