@@ -207,7 +207,9 @@ async function renderFile(browser, port, file, opts) {
         sx *= Math.hypot(v[0], v[1]);
         sy *= Math.hypot(v[2], v[3]);
       }
-      if (sx < 0.9 || sy / sx > 1.3 || sy / sx < 0.77) {
+      // Пиксельный шрифт растягивается по ширине без искажения штриха (пиксель просто становится шире).
+      const pixel = /^(Tiny5|Press Start 2P|Pixelify Sans|Silkscreen|DotGothic16)$/.test(fam);
+      if (sx < 0.9 || sy / sx > 1.3 || (sy / sx < 0.77 && !pixel)) {
         once(`s:${text}`, out.stretch, `${short} (${fam}): ×${sx.toFixed(2)} по ширине, ×${sy.toFixed(2)} по высоте`);
       }
       const px = (parseFloat(cs.fontSize) * Math.min(sx, sy)) / k1080;

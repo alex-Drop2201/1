@@ -7,3 +7,6 @@ tmp/
 .cache/
 .claude/settings.local.json
 __pycache__/
+
+# Фото людей и скриншоты с людьми — не в публичный репозиторий
+projects/*/private/

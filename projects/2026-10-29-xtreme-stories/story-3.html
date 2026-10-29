@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Сторис 3 — YOUTH CODE</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="xs.css">
+<style>
+  /* Черновик (assets/drafts/story-3.webp): белая карточка на зажиме-бульдоге, за ней персиковая; «YOUTH CODE»
+     пиксельным шрифтом, правило про костюм со списком «героя / персонажа / актёра», правило про друзей
+     (вторая половина фиолетовым), внизу фиолетовым «(за самую креативную анимацию и костюм будет вознаграждение)».
+     Сохранено всё содержимое и элементы. Исправлено: одна левая линия у правил и списка, пункты-квадраты
+     одинаковые, пиксельный текст крупнее и с переносами по словам, абзацы разделены воздухом, карточка
+     и текст в безопасной зоне. Текст правил отредактирован без потери смысла: «прийдешь» → «придёшь»,
+     «актера» → «актёра», «и их будет как много больше то ты получаешь тоже» → «чем их больше, тем лучше, —
+     ты получишь». */
+  .back { left: 128px; top: 398px; width: 880px; height: 1108px; border-radius: 40px; transform: rotate(2.6deg);
+          background: linear-gradient(170deg, #fbd9bd, #f6b48a); box-shadow: 0 16px 34px rgba(150, 60, 0, .2); }
+  .card { left: 86px; top: 372px; width: 908px; height: 1120px; border-radius: 40px; background: #fff;
+          box-shadow: 0 22px 44px rgba(150, 60, 0, .22); }
+  .clip { left: 440px; top: 206px; width: 200px; }
+  .head { top: 556px; left: 136px; width: 808px; }
+  .head .px { font-size: 92px; line-height: 1; letter-spacing: 0.02em; }
+  .rule { left: 156px; width: 760px; }
+  .rule .px { font-size: 36px; line-height: 1.32; }
+  .rule::before { content: ''; position: absolute; left: -34px; top: 13px; width: 14px; height: 14px; background: var(--ink); }
+  .r1 { top: 716px; }
+  .list { left: 156px; top: 830px; }
+  .list div { position: relative; font: italic 900 66px/1.08 'Fira Sans Extra Condensed'; text-transform: uppercase; letter-spacing: 0.01em; }
+  .list div::before { content: ''; position: absolute; left: -34px; top: 30px; width: 14px; height: 14px; border-radius: 50%; background: var(--ink); }
+  .r2 { top: 1080px; }
+  .r2 .v { color: var(--violet); }
+  .prize { left: 136px; width: 808px; top: 1300px; text-align: center; color: var(--violet);
+           font: 700 46px/1.26 'Comfortaa'; letter-spacing: -0.005em; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <img class="bg" src="assets/s3-bg.jpg" alt="">
+  <div class="abs back"></div>
+  <div class="abs card"></div>
+  <svg class="abs clip" id="clip" viewBox="0 0 200 250" width="200" height="250"></svg>
+  <div class="abs head"><div class="px center">Youth code</div></div>
+  <div class="abs rule r1"><div class="px">Ты должен прийти в костюме своего любимого:</div></div>
+  <div class="abs list"><div>героя</div><div>персонажа</div><div>актёра</div></div>
+  <div class="abs rule r2"><div class="px">Если придёшь со своими друзьями — чем их больше, тем лучше, — <span class="v">ты получишь очень хороший приз. И твои друзья тоже!</span></div></div>
+  <div class="abs prize">(за самую креативную анимацию и костюм будет вознаграждение)</div>
+</main>
+<script src="/projects/2026-10-18-twins/twin.js"></script>
+<script>
+  // Зажим-бульдог, как в черновике: чёрная трапеция-корпус и две стальные ручки-петли.
+  const clip = document.getElementById('clip');
+  const defs = svgEl(clip, 'defs');
+  const steel = svgEl(defs, 'linearGradient', { id: 'steel', x1: 0, y1: 0, x2: 1, y2: 0 });
+  [['0', '#6f7377'], ['0.45', '#e9ecef'], ['0.6', '#c4c8cc'], ['1', '#7a7e82']].forEach(([o, c]) => svgEl(steel, 'stop', { offset: o, 'stop-color': c }));
+  const body = svgEl(defs, 'linearGradient', { id: 'body', x1: 0, y1: 0, x2: 0, y2: 1 });
+  [['0', '#2a2a2c'], ['0.5', '#111'], ['1', '#000']].forEach(([o, c]) => svgEl(body, 'stop', { offset: o, 'stop-color': c }));
+  // Ручки: две петли из проволоки, сходятся к верху.
+  svgEl(clip, 'path', { d: 'M62,150 L74,52 C76,22 124,22 126,52 L138,150', fill: 'none', stroke: 'url(#steel)', 'stroke-width': 9, 'stroke-linecap': 'round' });
+  svgEl(clip, 'path', { d: 'M74,150 L86,64 C88,46 112,46 114,64 L126,150', fill: 'none', stroke: 'url(#steel)', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: 0.9 });
+  // Корпус.
+  svgEl(clip, 'path', { d: 'M18,128 L182,128 L194,232 Q194,240 186,240 L14,240 Q6,240 6,232 Z', fill: 'url(#body)' });
+  svgEl(clip, 'rect', { x: 12, y: 226, width: 176, height: 12, rx: 3, fill: '#000' });
+  svgEl(clip, 'path', { d: 'M24,134 L176,134', stroke: '#4a4a4c', 'stroke-width': 3 });
+  window.renderReady = document.fonts.ready;
+</script>
+</body>
+</html>

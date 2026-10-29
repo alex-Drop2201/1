@@ -206,7 +206,10 @@ def main():
                 'скачать начертание (scripts/get_font.py) или взять имеющийся вес', ln.get('box'))
         sx, sy = ln.get('sx', 1), ln.get('sy', 1)
         ratio_xy = sy / sx if sx else 1
-        if (sx < 0.9 or ratio_xy > 1.15 or ratio_xy < 0.87) and ('stretch', ln['fontFamily'], ln['text'][:10]) not in seen:
+        # Пиксельный шрифт по ширине тянется без искажения штриха — расширение для него не ошибка.
+        pixel = ln['fontFamily'] in ('Tiny5', 'Press Start 2P', 'Pixelify Sans', 'Silkscreen', 'DotGothic16')
+        widened_ok = pixel and sx >= 1 and ratio_xy <= 1
+        if not widened_ok and (sx < 0.9 or ratio_xy > 1.15 or ratio_xy < 0.87) and ('stretch', ln['fontFamily'], ln['text'][:10]) not in seen:
             seen.add(('stretch', ln['fontFamily'], ln['text'][:10]))
             # До ×1.3 у узких гротесков почти незаметно — мелочь; сильнее — штрихи искажаются заметно.
             strong = sx < 0.85 or ratio_xy > 1.3 or ratio_xy < 0.77

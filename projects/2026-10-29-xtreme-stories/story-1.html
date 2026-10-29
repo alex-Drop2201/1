@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Сторис 1 — Будь светом этой ночью</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<style>
+  /* Черновик продакшена (assets/drafts/story-1.webp): размытое оранжевое пятно с зерном, по центру надпись
+     «Будь светом / этой ночью» его шрифтом, дата слева сверху, время справа снизу, место снизу.
+     Сохранено всё: фон (очищен от текста), буквы (вырезаны из черновика — такой кириллицы нет в Google Fonts),
+     диагональ «дата слева сверху — время справа снизу».
+     Исправлено: строки заголовка одной ширины и по центру, дата и время стоят точно по краям заголовка,
+     место — под заголовком слева на одной линии со временем, крупнее; «3й-этаж» → «3-й этаж».
+     Блок по центру сторис (интерфейс сверху и снизу его не закрывает). */
+  body, .canvas { background: #f3ad72; }
+  .bg { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  .ink { position: absolute; display: block; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <img class="bg" src="assets/s1-bg.jpg" alt="">
+  <div id="block" style="position: absolute; left: 0; top: 0;"></div>
+</main>
+<script>
+  // Слова из черновика — PNG с прозрачностью. Обе строки заголовка в одном масштабе k (одна высота букв),
+  // первая — шириной W по центру; мелкие надписи в том же масштабе, место чуть крупнее (было мелко).
+  const W = 880;                        // ширина первой строки, 81 % холста
+  const block = document.getElementById('block');
+  const load = (n) => new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.src = `assets/${n}.png`; });
+  const put = (img, x, y, k) => {
+    Object.assign(img.style, { left: `${x}px`, top: `${y}px`, width: `${img.naturalWidth * k}px`, height: `${img.naturalHeight * k}px` });
+    img.className = 'ink';
+    block.appendChild(img);
+    return [img.naturalWidth * k, img.naturalHeight * k];
+  };
+  window.renderReady = Promise.all(['s1-title-1', 's1-title-2', 's1-date', 's1-time', 's1-place-1', 's1-place-3',
+    's1-place-dash', 's1-place-y', 's1-place-2'].map(load)).then(([t1, t2, date, time, univ, three, dash, y, etazh]) => {
+    const k = W / t1.naturalWidth;
+    const left = (1080 - W) / 2;
+    const right = left + W;
+    // Сверху строка «когда»: дата по левому краю заголовка, время — по правому; ниже заголовок; под ним «где».
+    const [wTime, hTime] = [time.naturalWidth * k, time.naturalHeight * k];
+    const hDate = date.naturalHeight * k;
+    const h1 = t1.naturalHeight * k;
+    const [w2, h2] = [t2.naturalWidth * k, t2.naturalHeight * k];
+    const pk = k * 1.05;
+    const hPlace = univ.naturalHeight * pk;
+    const total = hTime + 26 + h1 + 36 + h2 + 46 + hPlace;
+    let yy = Math.round(960 - total / 2);
+    put(date, left + 6, yy + hTime - hDate, k);         // дата и время на одной нижней линии
+    put(time, right - wTime - 6, yy, k);
+    yy += hTime + 26;
+    put(t1, left, yy, k);
+    yy += h1 + 36;
+    put(t2, (1080 - w2) / 2, yy, k);
+    yy += h2 + 46;
+    // «Универмаг · 3-й этаж» по центру.
+    const pieces = [[univ, 44], [three, 3], [dash, 3], [y, 17], [etazh, 0]];
+    const width = pieces.reduce((s, [img, gap]) => s + img.naturalWidth * pk + gap, 0);
+    let x = (1080 - width) / 2;
+    pieces.forEach(([img, gap], i) => {
+      const [w] = put(img, x, yy, pk);
+      if (i === 0) {                                      // точка-разделитель после «Универмаг»
+        const dot = document.createElement('div');
+        Object.assign(dot.style, { position: 'absolute', width: '9px', height: '9px', borderRadius: '50%', background: '#000',
+          left: `${x + w + gap / 2 - 4.5}px`, top: `${yy + hPlace * 0.58}px` });
+        block.appendChild(dot);
+      }
+      x += w + gap;
+    });
+  });
+</script>
+</body>
+</html>

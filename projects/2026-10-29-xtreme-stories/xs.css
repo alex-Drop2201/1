@@ -1,0 +1,21 @@
+/* Общее для сторис XTREME: фон из черновика, пиксельный шрифт (Tiny5, растянут по ширине, как в черновиках),
+   цвета серии. */
+body, .canvas { background: #f7d9a8; color: #111; }
+.bg { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+.abs { position: absolute; }
+
+:root {
+  --ink: #111;
+  --violet: #5b2be0;     /* фиолетовый из черновиков: выделение текста и мазок под OVEC */
+  --pink: #f28ab8;       /* скотч */
+  --paper: #f3f3f1;
+}
+
+/* Пиксельный шрифт: в черновиках буквы примерно в 1,45 раза шире, чем у Tiny5. Блок .px растягивается
+   целиком (строки переносятся по нужной ширине): внутренняя ширина = ширина контейнера / 1,45. */
+.px { font-family: 'Tiny5', monospace; text-transform: uppercase; line-height: 1.25; letter-spacing: 0.04em;
+      width: calc(100% / 1.45); transform: scaleX(1.45); transform-origin: left top; }
+.px.center { text-align: center; }
+
+/* Звёздочка-блик из черновика 4 (тонкий четырёхлучевой крест). */
+.spark { position: absolute; width: 64px; height: 64px; }
