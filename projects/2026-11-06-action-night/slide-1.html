@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Action Night — 1, анонс</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="story.css">
+<style>
+  /* По референсу FUCK UP STAND UP: строка бренда сверху, под ней подзаголовок с курсивными акцентами, заголовок
+     с «линзой», красные дата слева и время справа, люди-наклейки на втором этаже автобуса, отражение, место внизу.
+     Каждый факт — один раз: бренд, дата с днём недели, время, место. Автобус — свой пиксельный рисунок (bus.js). */
+  .canvas { --gy: 66%; }
+  #art { position: absolute; left: 0; top: 0; z-index: 4; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <div class="glow"></div>
+  <div class="abs c brand" style="top: 262px;">xtreme</div>
+  <div class="abs c t" style="top: 336px;">«Камера видит <em>всех</em>, но&nbsp;запоминает тех,<br>кто не&nbsp;боится быть <em>собой</em>»</div>
+  <img class="abs title" src="assets/t-action.png" alt="Action" style="left: 130px; top: 462px; width: 820px;">
+  <img class="abs title" src="assets/t-night.png" alt="Night" style="left: 160px; top: 628px; width: 760px;">
+  <div class="abs t red" style="left: 96px; top: 880px; font-weight: 500;">6&nbsp;ноября, пятница</div>
+  <div class="abs t red" style="right: 96px; top: 880px; font-weight: 500;">19:00</div>
+  <svg id="art" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+  <div class="abs c t" style="top: 1514px; font-size: 38px;">Универмаг, 3-й&nbsp;этаж</div>
+  <div class="grain"></div>
+</main>
+<script src="bus.js"></script>
+<script src="stickers.js"></script>
+<script>
+  const svg = document.getElementById('art');
+  drawBus(svg, 148, 1080, 5.6);                            // 784×347, по центру
+  // Люди — как в референсе: три сверху (головы над крышей), два ниже между ними, по центру между датой и временем.
+  personSticker(svg, 'private/p1.png', { x: 198, y: 944, w: 222, h: 226, seed: 3 });
+  personSticker(svg, 'private/p4.png', { x: 430, y: 930, w: 214, h: 232, seed: 7 });
+  personSticker(svg, 'private/p2.png', { x: 656, y: 946, w: 224, h: 224, seed: 11 });
+  personSticker(svg, 'private/p3.png', { x: 312, y: 1124, w: 216, h: 214, seed: 5 });
+  personSticker(svg, 'private/p5.png', { x: 548, y: 1126, w: 222, h: 214, seed: 9 });
+  window.renderReady = document.fonts.ready;
+</script>
+</body>
+</html>

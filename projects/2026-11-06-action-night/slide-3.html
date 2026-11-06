@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="1080x1920">
+<title>Action Night — 3, кофе</title>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="story.css">
+<style>
+  /* «Тебе и другу»: заголовок с «линзой», строка контекста, стаканчики — наклейки с белой обводкой (как люди
+     на 1-й), подписи со стрелками от руки, подпись бренда внизу (единственное упоминание бренда здесь). */
+  .canvas { --gy: 70%; }
+  .cup { position: absolute; z-index: 4; filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .6)); }
+  .lbl { font: italic 400 50px/1 'Playfair Display'; }
+  #arrows { position: absolute; left: 0; top: 0; z-index: 6; }
+</style>
+</head>
+<body>
+<main class="canvas">
+  <div class="glow"></div>
+  <img class="abs title" src="assets/t-tebe.png" alt="Тебе и" style="left: 190px; top: 286px; width: 700px;">
+  <img class="abs title" src="assets/t-drugu.png" alt="другу" style="left: 160px; top: 466px; width: 760px;">
+  <div class="abs c t" style="top: 724px;">Кофе и&nbsp;какао на&nbsp;двоих&nbsp;— <span class="red">угощаем на&nbsp;вечере</span></div>
+  <img class="cup" src="private/cup-coffee-st.png" alt="Кофе" style="left: 90px; top: 950px; width: 430px; transform: rotate(-6deg);">
+  <img class="cup" src="private/cup-cocoa-st.png" alt="Какао" style="left: 560px; top: 1000px; width: 400px; transform: rotate(5deg);">
+  <div class="abs lbl" style="left: 120px; top: 846px;">кофе</div>
+  <div class="abs lbl" style="right: 110px; top: 846px;">какао</div>
+  <svg id="arrows" width="1080" height="1920" viewBox="0 0 1080 1920">
+    <g fill="none" stroke="#f5f3ef" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M262,876 C318,872 342,906 334,970"/><path d="M318,952 L334,972 L348,950"/>
+      <path d="M798,876 C744,874 722,908 732,982"/><path d="M716,962 L732,984 L748,964"/>
+    </g>
+  </svg>
+  <div class="abs c t" style="top: 1530px; font-size: 32px; color: var(--grey);"><em>With love,</em> xtreme</div>
+  <div class="grain"></div>
+</main>
+<script>window.renderReady = document.fonts.ready;</script>
+</body>
+</html>
